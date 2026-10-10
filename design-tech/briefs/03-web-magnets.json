@@ -1,0 +1,69 @@
+{
+  "id": "03-web-magnets",
+  "title": "Web Magnets — Caption Split",
+  "oneLiner": "Tear a phrase and photo from two pages into a floating margin; slide words through the photo to open a tiny poster with source threads.",
+  "targetFeeling": "I made those two things say something together: playful editorial surprise through spatial juxtaposition.",
+  "gesture": "Drag a verbatim phrase across a photo's horizontal seam; attraction within 24 pixels previews the snap. Release to compose; pull the phrase away to unpair.",
+  "magicMoment": "KEEP MOVING splits a snail photo into two intact halves around a white text band: an absurd motivational poster. TAKE YOUR TIME changes its meaning using the same rule.",
+  "example": [
+    "Select KEEP MOVING on the authored Instructions for a busy day fixture; pin the words into the margin.",
+    "Pin the team's own snail photo from Things outside my window; one board holds three phrases and two photos.",
+    "Snap words into the snail's seam, then unpair and swap to TAKE YOUR TIME; both sources remain attached."
+  ],
+  "must": [
+    "Two labelled localhost fixtures with three authored phrases and two team-owned photos: KEEP MOVING, TAKE YOUR TIME, DO NOT DISTURB, snail, spinning fan.",
+    "Explicit selection or image context-menu capture pins only the chosen item, with a lift animation; originals stay on the page.",
+    "One floating board shared across page invocations, local coordinates and provenance, maximum six inputs; five in the demo.",
+    "One physical snap grammar: separate intact image halves around a fitted verbatim text band, retain source tags, drag to unpair, one pair at a time.",
+    "Preserve exact text, owned asset ID, URL/title and anchor; a thin thread highlights a visible origin, while an off-page source uses a labelled return chip.",
+    "Live source return, phrase replacement after unpairing, and reset; both source tags remain visible on the composition."
+  ],
+  "nonGoals": [
+    "Searchable archive, folders, accounts, or summariser.",
+    "AI rewriting or inferred relationships, multiple snap grammars, multi-image layouts, or typography editing.",
+    "Universal site support, arbitrary third-party artwork capture, or image/PDF export."
+  ],
+  "demo": [
+    {"seconds": "0–15", "action": "Select KEEP MOVING on fixture A and pin it; show the lift into the margin."},
+    {"seconds": "15–30", "action": "Switch to B, invoke the margin, and pin the snail; three preloaded fixture selections complete the five-item board."},
+    {"seconds": "30–50", "action": "Snap the phrase into the photo seam; pause on the absurd split-photo poster."},
+    {"seconds": "50–65", "action": "Unpair and snap TAKE YOUR TIME into the same photo; explain that the person supplies the interpretation."},
+    {"seconds": "65–80", "action": "Hover both source tags, follow A's return chip, and show the exact original phrase highlighted."},
+    {"seconds": "80–90", "action": "Return to the poster: a thought made by putting two sources together."}
+  ],
+  "buildHours": 5,
+  "buildPlan": [
+    "Hour 1: prove seam transformation, reversal, and readable poster; cut decorative motion if needed.",
+    "Hour 2: connect live selection and owned-image capture on both fixtures; choose fallback if capture is unreliable.",
+    "Hour 3: shared local board state, provenance anchors, source return, and reset.",
+    "Hour 4: phrase swapping, pointer feedback, text fitting, and five-item layout.",
+    "Hour 5: acceptance checks, rehearsal, and scope freeze."
+  ],
+  "minimumStack": "Plain JavaScript/CSS/SVG overlay, Manifest V3 extension, local state, two local HTML fixtures and team-owned photos; no framework, backend, or model.",
+  "realVsAuthored": "Live: selection, drag, snap, unpair, source return. Authored: labelled fixture pages, phrases, owned photos, asset mappings, seam geometry and motion. Text and photos remain unchanged; juxtaposition and layout create the new composition. No semantic detection.",
+  "acceptanceChecks": [
+    "Both source pages contribute to one five-item board without losing positions.",
+    "An unfamiliar tester snaps then unpairs a phrase/photo within ten seconds of seeing the seam cue.",
+    "Both source tags return to exact fixture origins; verbatim text survives phrase swapping."
+  ],
+  "risk": "Reliable cross-page capture and source return within five hours; controlled anchors and owned assets bound the risk, while arbitrary web image retrieval is unproven.",
+  "fallback": "The same two fixture documents inside one local demo shell with a persistent margin and live capture/snapping; disclose simulated navigation and absent extension integration.",
+  "verdict": "Recommend the bounded fixture version. Improve magnetic clippings by making words physically open an image to become its voice; the transformation earns the concept beyond a moodboard.",
+  "sources": [
+    {
+      "title": "Chrome activeTab",
+      "url": "https://developer.chrome.com/docs/extensions/develop/concepts/activeTab",
+      "takeaway": "Observed: user invocation grants temporary page access, revoked across origins. Inference: invoke on each source page and maintain board continuity separately in local state."
+    },
+    {
+      "title": "Chrome contextMenus",
+      "url": "https://developer.chrome.com/docs/extensions/reference/api/contextMenus",
+      "takeaway": "Observed: selectionText, pageUrl and srcUrl are supplied. Inference: text capture is straightforward; an image URL does not establish retrievable bytes or reuse permission, so map owned fixture assets."
+    },
+    {
+      "title": "Whitney Museum: John Baldessari",
+      "url": "https://whitney.org/artists/55",
+      "takeaway": "Observed: Whitney describes snapshots paired with didactic text and meaning changing with context. Inference: one verbatim imperative plus an incongruous owned photo can carry the demo; no artwork is copied."
+    }
+  ]
+}

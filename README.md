@@ -2,6 +2,8 @@
 
 **Start with [the interactive collection](index.html), then read [the recommendation](DECISION.md).**
 
+**New exploration:** [Five Design × Tech briefs](design-tech/index.html), including the browser Dot concept and [Gmail feasibility](design-tech/FEASIBILITY.md).
+
 This is a decision pack: five distinct directions, five small playable interaction sketches, researched references, and editable tldraw storyboards. It is not five finished hackathon submissions. Each proposed product uses one principal scene; its storyboard frames describe successive states and recovery branches.
 
 Open `index.html` directly in a browser, or run `python3 -m http.server 8879 --bind 127.0.0.1` from this directory and visit http://127.0.0.1:8879. The sketches are self-contained and require no build step, credentials, or package installation. Sound is opt-in. The gallery's inline player and full-size links both work from the local file.

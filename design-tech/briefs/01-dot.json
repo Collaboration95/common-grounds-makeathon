@@ -1,0 +1,73 @@
+{
+  "id": "01-dot",
+  "title": "Dot — the living footnote",
+  "oneLiner": "A small expressive dot carries a question to the exact on-page words or link that answer it, then anchors your local note there.",
+  "targetFeeling": "A little reader shares your attention; you see exactly where its answer comes from.",
+  "gesture": "Drag Dot onto a paragraph, menu section, or captioned photo; ask one short question; follow its landing; select text to pin a note.",
+  "magicMoment": "Dot leaves the terrace photo, rolls to the policy sentence, and replies beside the highlighted words; missing evidence brings it home.",
+  "example": [
+    "Drop Dot onto the restaurant terrace photo and ask: Smoking allowed? The caption sets context.",
+    "Dot lands beside Smoking permitted only in the designated terrace area and preserves the qualification.",
+    "On the unstated-policy variant, Dot returns to the photo: Page does not say. An outdoor photo is not permission."
+  ],
+  "must": [
+    "Toolbar-invoked unpacked MV3 extension with activeTab, scripting and storage; three localhost reference pages: /permitted.html, /prohibited.html, /unstated.html; reject unsupported pages.",
+    "Expressive 28-pixel draggable body; highlighted paragraph/menu/photo target; caption or alt text for photos; one question up to 160 characters; smoking and Book intents.",
+    "Scroll and travel to exact highlighted source text; adjacent reply up to 30 words preserving qualifications; distinguish absent evidence, unsupported question, and extraction failure.",
+    "One real constrained model call if credentials are ready: Ask previews explicitly selected context and local evidence, at most 1,200 characters; validate returned evidence ID and verbatim quote, then render a reviewed reply preserving qualifications; fixed code controls actions.",
+    "One editable local text-anchored note; URL, exact quote, and surrounding text stored locally; reload restore and scroll/resize positioning; missing anchor shows Original text changed.",
+    "Point to original Book anchor and destination; only the user's click opens /booking-info.html, the fictional booking-information landing page; no booking form interaction."
+  ],
+  "nonGoals": [
+    "Universal sites, Gmail, PDFs, iframes, hidden content, image understanding, and dynamic-page anchor repair.",
+    "Chat history, multiple pets, proactive advice, general browsing, and cross-page research.",
+    "Completed bookings, form filling, messages, accounts, note sync, and publishing."
+  ],
+  "demo": [
+    {
+      "seconds": "0–12",
+      "action": "Invoke Dot on the fictional restaurant; drag it for a squishy landing."
+    },
+    {
+      "seconds": "12–30",
+      "action": "Drop on the terrace photo; ask Smoking allowed?; submit bounded evidence preview."
+    },
+    {
+      "seconds": "30–45",
+      "action": "Follow Dot to the exact permission sentence and designated-area condition."
+    },
+    {
+      "seconds": "45–60",
+      "action": "Repeat on the unstated variant; Dot returns with Page does not say."
+    },
+    {
+      "seconds": "60–72",
+      "action": "Select text, pin Ask about terrace seating, and scroll to show attachment."
+    },
+    {
+      "seconds": "72–90",
+      "action": "Ask Where can I book?; follow Dot to the original Book link; click and stop at booking information."
+    }
+  ],
+  "buildHours": 5,
+  "risk": "Stable source extraction, precise text anchoring, and legible travel across page layouts are harder than giving Dot personality; static fixtures do not establish arbitrary-site competence.",
+  "fallback": "Reviewed smoking/Book intents resolve deterministically to checked DOM quotes or reviewed page absence. Label Local evidence. Unsupported questions abstain; failed extraction or quote mismatch never means page does not say. Cut model integration after 45 minutes without a reliable round trip.",
+  "verdict": "Recommend the living-footnote version: every answer has a landing place; missing evidence brings Dot home. Spend the five hours on pointing, evidence travel, one local pin, and the original Book link.",
+  "sources": [
+    {
+      "title": "Chrome Extensions — activeTab",
+      "url": "https://developer.chrome.com/docs/extensions/develop/concepts/activeTab",
+      "takeaway": "Observed documentation: explicit invocation grants temporary current-tab access; scripting allows injection; same-origin navigation can retain access. Design inference: enforce a separate three-page support boundary."
+    },
+    {
+      "title": "Chrome Extensions — Content scripts",
+      "url": "https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts",
+      "takeaway": "Observed documentation: content scripts access page DOM from isolated JavaScript execution. Design inference: a resident overlay is plausible, but layout compatibility remains unproven."
+    },
+    {
+      "title": "W3C CSSOM View — Range.getClientRects",
+      "url": "https://www.w3.org/TR/cssom-view-1/#dom-range-getclientrects",
+      "takeaway": "Observed specification: selected text has rectangles; returned geometry is not live. Design inference: exact landings and pins need recomputation after scroll or resize."
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "02-peel",
+  "title": "Peel — the useful side of a website",
+  "oneLiner": "Pull a website’s corner back to reveal its existing reservation doorway, field entrances and policy text, tethered to their origins.",
+  "targetFeeling": "Curiosity followed by relief: the useful bits were inside this object.",
+  "gesture": "Drag one raised corner inward for a continuous reveal; release to latch open, reverse to close. Escape and keyboard equivalents remain available.",
+  "magicMoment": "The original reservation label lifts from its outlined navigation source into the folded underside while a visible tether stays attached; closing retracts it.",
+  "example": [
+    "Pull the corner on Linen, a prepared fictional restaurant page; a shaded flap follows your hand while the original website stays visible.",
+    "Choose Table for two; the reservation doorway, guest-field entrance and original booking condition gather underneath. Tap the entrance and manually choose two in the original selector.",
+    "Reopen for literal smoking text and its source; refold to restore the page. Roof, a second prepared fixture, explicitly has no smoking policy to reveal."
+  ],
+  "must": [
+    "Exactly two local restaurant fixtures, Linen and Roof, with declared DOM selectors and disclosed prepared mapping; derive content from the page rather than hardcoded answers.",
+    "One continuously draggable corner, latched open state, reverse/Escape closure, keyboard equivalent and reduced-motion behavior.",
+    "Exactly two intent chips, Table for two and Smoking policy, with at most three revealed items; include literal booking conditions and a page-scoped missing-policy state.",
+    "Origin labels, tethers to visible source outlines or labelled offscreen edge markers, and Show original that closes, scrolls to and highlights the actual source node.",
+    "Preserve source link destinations; project fields only as entrances that focus native controls for manual edits. Never duplicate widgets or submit reservations.",
+    "Add only an overlay; retain source nodes and restore pre-open scroll/focus on closure except explicit origin handoff. Preserve native field edits."
+  ],
+  "nonGoals": [
+    "Arbitrary websites, third-party booking-widget reconstruction, availability checks or booking automation.",
+    "Summaries, chatbots, open-ended page questions or AI-generated policies.",
+    "Persistent redesign, blanket content stripping, accounts or saved workspaces."
+  ],
+  "demo": [
+    { "seconds": "0–10", "action": "Pull Linen’s corner and show the reservation label rise from its outlined origin." },
+    { "seconds": "10–30", "action": "Choose Table for two; show the tether and unchanged booking condition." },
+    { "seconds": "30–45", "action": "Tap the guest-field entrance; manually set the original selector to two. Stop before submission." },
+    { "seconds": "45–65", "action": "Reopen for smoking text; Show original reveals the matching passage." },
+    { "seconds": "65–80", "action": "Switch to Roof and demonstrate No smoking policy found on this page." },
+    { "seconds": "80–90", "action": "Reverse the fold and reveal the intact website: Same website, useful side." }
+  ],
+  "buildHours": 5,
+  "buildPlan": [
+    { "hours": "0–1", "action": "Prove corner motion and one tethered link; refine the gesture before adding features." },
+    { "hours": "1–2", "action": "Prepare the second fixture and declared DOM maps; read literal content and destinations." },
+    { "hours": "2–3", "action": "Finish both intents, native-field handoff and source highlighting." },
+    { "hours": "3–4", "action": "Finish absence state, restoration, keyboard control and reduced motion." },
+    { "hours": "4–5", "action": "Verify both fixtures and rehearse; cut sound, complex curl geometry and extra fields first." }
+  ],
+  "minimumStack": "Local HTML/CSS/JavaScript, pointer events and CSS/SVG flap/tethers; two labelled fictional restaurant fixtures, one native guest field and short source passages. No model, backend or installation required for the demo.",
+  "acceptance": [
+    "Two of three unfamiliar viewers identify the revealed control’s origin within ten seconds without narration.",
+    "Projected destinations and policy text match their source; handoff focuses the correct native guest selector and preserves its edit.",
+    "Ten open/close cycles restore scroll/focus and retain source nodes; Roof reports absence without inventing a rule."
+  ],
+  "risk": "Tactile motion needs early proof. Copying arbitrary interactive widgets may lose behavior; this MVP keeps native fields at their source and makes no broad compatibility claim.",
+  "fallback": "Replace realistic curl geometry with a triangular hinged flap; preserve continuous drag, source tethers, both fixtures and reversal.",
+  "verdict": "Credible five-hour interaction demo with prepared mappings. Make the tether the central invention: each useful piece visibly remains attached to its website. Broad site compatibility remains unproven.",
+  "sources": [
+    {
+      "title": "Chrome for Developers — Content scripts",
+      "url": "https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts",
+      "takeaway": "Observed: content scripts inspect shared DOM while JavaScript environments are isolated. Inference: future extension projections are plausible, but copied widget behavior is not established."
+    },
+    {
+      "title": "Apple Support — Hide distractions when reading articles in Safari on Mac",
+      "url": "https://support.apple.com/guide/safari/hide-distractions-when-reading-sfri32632/mac",
+      "takeaway": "Observed: Reader reformats supported articles without navigation distractions. Inference: Peel needs an action surface, source attachment and reversible movement to distinguish itself."
+    },
+    {
+      "title": "Dishoom — Bookings and Reservations",
+      "url": "https://www.dishoom.com/reservations/",
+      "takeaway": "Observed: time/group booking restrictions and an external SevenRooms link appear on the page. Inference: reveal original conditions with the doorway; link extraction does not establish booking feasibility."
+    }
+  ]
+}
