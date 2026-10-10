@@ -1,0 +1,63 @@
+{
+  "boardId": "VXMrudwLPzcNYmChpVg6z",
+  "url": "https://www.tldraw.com/f/VXMrudwLPzcNYmChpVg6z",
+  "name": "01 · Kopi Shift — Word Cast Counter",
+  "createdViaAuthenticatedTool": true,
+  "editRoute": "T3 browser window.editor fallback",
+  "ownTabId": "tab_a",
+  "browserEditingVerified": true,
+  "frameCount": 12,
+  "shapeCount": 759,
+  "pages": [
+    {
+      "id": "page:ks01-hero",
+      "name": "01 · Hero / words become objects",
+      "shapeCount": 244
+    },
+    {
+      "id": "page:ks01-core",
+      "name": "02 · Core / mix and compare",
+      "shapeCount": 259
+    },
+    {
+      "id": "page:ks01-recovery",
+      "name": "03 · Recovery / patient counter",
+      "shapeCount": 256
+    }
+  ],
+  "screenshotVerification": {
+    "status": "visually inspected twice; all three storyboard pages inspected",
+    "files": [
+      "evidence/board-hero.png",
+      "evidence/board-core.png",
+      "evidence/board-recovery.png"
+    ]
+  },
+  "persistence": {
+    "reloadVerified": true,
+    "shapeCountAfterReload": 759,
+    "framesAfterReload": 12,
+    "pageCountAfterReload": 3,
+    "remotePersistenceVerified": true,
+    "reason": "Final manager cross-check opened the existing board in a fresh independent browser context without source replay or snapshot injection; all 759 shapes, 12 frames and 3 pages were present.",
+    "editableExport": "storyboard.snapshot.json",
+    "exportFormat": "SDK getSnapshot() document + session, wrapped with boardId and exportedAt",
+    "sha256": "a1999f6f322da9bb18e0ca048b230ad618fd46f687aef5358418276f47935702",
+    "replaySource": "storyboard.js",
+    "independentContextEvidence": "../04-table-chorus/shared-board-persistence.json"
+  },
+  "preview": {
+    "path": "preview.html",
+    "url": "http://127.0.0.1:8879/ideas/01-kopi-shift/preview.html",
+    "ownTabId": "tab_g",
+    "screenshots": [
+      "evidence/preview-final.png",
+      "evidence/preview-ending.png"
+    ],
+    "externalAssetRequests": 0,
+    "liveVoice": false,
+    "liveAI": false
+  },
+  "childAgentId": null,
+  "childAgentReason": "No callable spawn/delegate tool was available; proceeded locally."
+}

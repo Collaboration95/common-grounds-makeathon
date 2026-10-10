@@ -1,0 +1,188 @@
+{
+  "verifiedAt": "2026-10-10T17:26:59.925Z",
+  "method": "Existing remote URLs opened in two separate fresh anonymous browser contexts. First populated document read only; no source replay, snapshot loading, page switching, editor mutations or source drawing.",
+  "allMatchExpected": true,
+  "boards": [
+    {
+      "title": "Kopi Shift",
+      "url": "https://www.tldraw.com/f/VXMrudwLPzcNYmChpVg6z",
+      "expected": {
+        "shapes": 759,
+        "frames": 12,
+        "pages": 3
+      },
+      "observedAt": "2026-10-10T17:26:59.917Z",
+      "observed": {
+        "counts": {
+          "shapes": 759,
+          "frames": 12,
+          "pages": 3
+        },
+        "pages": [
+          {
+            "id": "page:ks01-hero",
+            "name": "01 · Hero / words become objects",
+            "shapes": 244,
+            "frames": 4
+          },
+          {
+            "id": "page:ks01-core",
+            "name": "02 · Core / mix and compare",
+            "shapes": 259,
+            "frames": 4
+          },
+          {
+            "id": "page:ks01-recovery",
+            "name": "03 · Recovery / patient counter",
+            "shapes": 256,
+            "frames": 4
+          }
+        ],
+        "frames": [
+          {
+            "id": "shape:ks01-frame-1",
+            "name": "01 / The whole toy, already here",
+            "pageId": "page:ks01-hero"
+          },
+          {
+            "id": "shape:ks01-frame-2",
+            "name": "02 / Lift a labelled object",
+            "pageId": "page:ks01-hero"
+          },
+          {
+            "id": "shape:ks01-frame-3",
+            "name": "03 / The word pours",
+            "pageId": "page:ks01-hero"
+          },
+          {
+            "id": "shape:ks01-frame-4",
+            "name": "04 / An ingredient-shaped absence",
+            "pageId": "page:ks01-hero"
+          },
+          {
+            "id": "shape:ks01-frame-10",
+            "name": "10 / The wrong pour stays wrong",
+            "pageId": "page:ks01-recovery"
+          },
+          {
+            "id": "shape:ks01-frame-5",
+            "name": "05 / C becomes its milk",
+            "pageId": "page:ks01-core"
+          },
+          {
+            "id": "shape:ks01-frame-11",
+            "name": "11 / The counter waits",
+            "pageId": "page:ks01-recovery"
+          },
+          {
+            "id": "shape:ks01-frame-6",
+            "name": "06 / Build the contrast",
+            "pageId": "page:ks01-core"
+          },
+          {
+            "id": "shape:ks01-frame-12",
+            "name": "12 / Try O, then close the shift",
+            "pageId": "page:ks01-recovery"
+          },
+          {
+            "id": "shape:ks01-frame-7",
+            "name": "07 / Stir is the punctuation",
+            "pageId": "page:ks01-core"
+          },
+          {
+            "id": "shape:ks01-frame-8",
+            "name": "08 / Two cups, two meanings",
+            "pageId": "page:ks01-core"
+          },
+          {
+            "id": "shape:ks01-frame-9",
+            "name": "09 / Milk is not specified",
+            "pageId": "page:ks01-recovery"
+          }
+        ]
+      },
+      "matchExpected": true,
+      "beforeAnyMutation": {
+        "confirmed": true,
+        "freshIndependentContext": true,
+        "initialCookieCount": 0,
+        "initialOriginCount": 0,
+        "sourceExecuted": false,
+        "snapshotLoaded": false,
+        "agentEditorMutationCalls": 0,
+        "readAPIs": [
+          "editor.store.allRecords()",
+          "editor.getPages()"
+        ],
+        "documentSha256": "d982b5eef48ccf9e6872f0f7e433d4f13981c926f6bd4a76bf92a655f12d0774"
+      }
+    },
+    {
+      "title": "Manager overview",
+      "url": "https://www.tldraw.com/f/Ulim0f0KWaETvnqEu-O5a",
+      "expected": {
+        "shapes": 77,
+        "frames": 5,
+        "pages": 1
+      },
+      "observedAt": "2026-10-10T17:26:59.693Z",
+      "observed": {
+        "counts": {
+          "shapes": 77,
+          "frames": 5,
+          "pages": 1
+        },
+        "pages": [
+          {
+            "id": "page:cg5-selection",
+            "name": "Five one-screen wonders",
+            "shapes": 77,
+            "frames": 5
+          }
+        ],
+        "frames": [
+          {
+            "id": "shape:cg5-overview-card-0",
+            "name": "01 / KOPI SHIFT",
+            "pageId": "page:cg5-selection"
+          },
+          {
+            "id": "shape:cg5-overview-card-1",
+            "name": "02 / THE TAPE CAN HEAR YOU",
+            "pageId": "page:cg5-selection"
+          },
+          {
+            "id": "shape:cg5-overview-card-2",
+            "name": "03 / CAN LAH!",
+            "pageId": "page:cg5-selection"
+          },
+          {
+            "id": "shape:cg5-overview-card-3",
+            "name": "04 / TABLE CHORUS",
+            "pageId": "page:cg5-selection"
+          },
+          {
+            "id": "shape:cg5-overview-card-4",
+            "name": "05 / POCKET STAGE",
+            "pageId": "page:cg5-selection"
+          }
+        ]
+      },
+      "matchExpected": true,
+      "beforeAnyMutation": {
+        "confirmed": true,
+        "freshIndependentContext": true,
+        "initialCookieCount": 0,
+        "initialOriginCount": 0,
+        "sourceExecuted": false,
+        "snapshotLoaded": false,
+        "agentEditorMutationCalls": 0,
+        "readAPIs": [
+          "editor.store.allRecords()",
+          "editor.getPages()"
+        ],
+        "documentSha256": "2b954f097ca4803c0a93d2d0a9f75c37188a9127bfe96c67406ddfa1dbb6d753"
+      }
+    }
+  ]
+}

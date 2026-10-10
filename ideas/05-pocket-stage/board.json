@@ -1,0 +1,70 @@
+{
+  "boardId": "ooM8LDLiMKoje5OBgYpZb",
+  "url": "https://www.tldraw.com/f/ooM8LDLiMKoje5OBgYpZb",
+  "name": "05 Pocket Stage — The Moth & the Light",
+  "editable": true,
+  "frameCount": 12,
+  "shapeCount": 493,
+  "pageCount": 3,
+  "pages": [
+    {
+      "id": "page:05-pocket-hero",
+      "name": "01 Hero · invitation & transformation",
+      "frames": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "png": "board-hero.png",
+      "svg": "board-hero.svg"
+    },
+    {
+      "id": "page:05-pocket-core",
+      "name": "02 Core · light choreography & payoff",
+      "frames": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "png": "board-core.png",
+      "svg": "board-core.svg"
+    },
+    {
+      "id": "page:05-pocket-recovery",
+      "name": "03 Recovery · ambiguity, stillness & replay",
+      "frames": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "png": "board-recovery.png",
+      "svg": "board-recovery.svg"
+    }
+  ],
+  "drawingMethod": "tldraw tool discovery and create_board, then own T3 tab via window.editor; final exports and persistence check from isolated headless Chromium",
+  "mcpEditorConnection": "MCP list_open_boards returned empty; browser editor was available",
+  "screenshotVerification": {
+    "status": "verified",
+    "hero": "Live T3 screenshot and final export inspected",
+    "core": "Final PNG inspected",
+    "recovery": "Final PNG inspected",
+    "preview": "Desktop and 390px mobile PNGs inspected"
+  },
+  "persistence": {
+    "status": "remote verified",
+    "preReplayFreshBrowserShapeCount": 493,
+    "afterReloadShapeCount": 493,
+    "independentFreshContextShapeCount": 493,
+    "note": "Two clean headless browser contexts loaded the existing document at the actual URL. No recovery replay was needed to obtain the original shapes."
+  },
+  "snapshot": "storyboard.snapshot.json",
+  "replaySource": "storyboard.js",
+  "qaReport": "qa-report.json",
+  "childAgentId": null,
+  "childAgentNote": "No child-agent tool available; completed locally.",
+  "replayIdempotent": true,
+  "previewChecksPassed": 17
+}

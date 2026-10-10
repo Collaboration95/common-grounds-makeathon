@@ -1,0 +1,3008 @@
+{
+  "document": {
+    "schema": {
+      "schemaVersion": 2,
+      "sequences": {
+        "com.tldraw.asset": 1,
+        "com.tldraw.asset.bookmark": 2,
+        "com.tldraw.asset.image": 6,
+        "com.tldraw.asset.video": 5,
+        "com.tldraw.binding.arrow": 1,
+        "com.tldraw.camera": 1,
+        "com.tldraw.comment": 1,
+        "com.tldraw.comment-reaction": 1,
+        "com.tldraw.comment-thread": 3,
+        "com.tldraw.document": 2,
+        "com.tldraw.instance": 26,
+        "com.tldraw.instance_page_state": 5,
+        "com.tldraw.instance_presence": 6,
+        "com.tldraw.page": 1,
+        "com.tldraw.pointer": 1,
+        "com.tldraw.shape": 4,
+        "com.tldraw.shape.arrow": 8,
+        "com.tldraw.shape.bookmark": 2,
+        "com.tldraw.shape.draw": 5,
+        "com.tldraw.shape.embed": 4,
+        "com.tldraw.shape.frame": 1,
+        "com.tldraw.shape.geo": 12,
+        "com.tldraw.shape.group": 0,
+        "com.tldraw.shape.highlight": 4,
+        "com.tldraw.shape.image": 5,
+        "com.tldraw.shape.line": 5,
+        "com.tldraw.shape.note": 13,
+        "com.tldraw.shape.text": 4,
+        "com.tldraw.shape.video": 4,
+        "com.tldraw.store": 5,
+        "com.tldraw.user": 1
+      }
+    },
+    "store": {
+      "document:document": {
+        "gridSize": 10,
+        "id": "document:document",
+        "meta": {
+          "storageUsedPercentage": 1
+        },
+        "name": "Common Ground — Five one-screen wonders",
+        "typeName": "document"
+      },
+      "page:cg5-selection": {
+        "id": "page:cg5-selection",
+        "index": "a2Yc2",
+        "meta": {},
+        "name": "Five one-screen wonders",
+        "typeName": "page"
+      },
+      "shape:cg5-overview-1": {
+        "id": "shape:cg5-overview-1",
+        "index": "a1TvX",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "COMMON GROUND",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1.7,
+          "size": "xl",
+          "textAlign": "start",
+          "w": 1700
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 0,
+        "y": 0
+      },
+      "shape:cg5-overview-10": {
+        "id": "shape:cg5-overview-10",
+        "index": "a7JNf",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "align": "middle",
+          "color": "orange",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 50,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 38
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 408,
+        "y": 232
+      },
+      "shape:cg5-overview-11": {
+        "id": "shape:cg5-overview-11",
+        "index": "a8PGv",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 80,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "KOPI-O",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              },
+              {
+                "content": [
+                  {
+                    "text": "KOSONG",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 151
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 473,
+        "y": 140
+      },
+      "shape:cg5-overview-12": {
+        "id": "shape:cg5-overview-12",
+        "index": "a9zBk",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "autoSize": false,
+          "color": "orange",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "The cup is the explanation.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.9,
+          "size": "s",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 85,
+        "y": 330
+      },
+      "shape:cg5-overview-13": {
+        "id": "shape:cg5-overview-13",
+        "index": "aA79v",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "autoSize": false,
+          "color": "grey",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Culture × Tech · develops culture idea 2",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.94,
+          "size": "s",
+          "textAlign": "start",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 400
+      },
+      "shape:cg5-overview-14": {
+        "id": "shape:cg5-overview-14",
+        "index": "aBZRb",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "autoSize": false,
+          "color": "orange",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Words → ingredients → pour → serve",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.92,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 446
+      },
+      "shape:cg5-overview-15": {
+        "id": "shape:cg5-overview-15",
+        "index": "aCiRr",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Best starting point: your preferred direction.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.95,
+          "size": "s",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 509
+      },
+      "shape:cg5-overview-16": {
+        "id": "shape:cg5-overview-16",
+        "index": "a1Twf",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "autoSize": false,
+          "color": "green",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "02  THE TAPE CAN HEAR YOU",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "l",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 22
+      },
+      "shape:cg5-overview-17": {
+        "id": "shape:cg5-overview-17",
+        "index": "a2vDv",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Talk back to a little fictional past.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 66
+      },
+      "shape:cg5-overview-18": {
+        "id": "shape:cg5-overview-18",
+        "index": "a3LUi",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "align": "middle",
+          "color": "grey",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 264,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 632
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 24,
+        "y": 112
+      },
+      "shape:cg5-overview-19": {
+        "id": "shape:cg5-overview-19",
+        "index": "a44I2",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "align": "middle",
+          "color": "green",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 192,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 441
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 94,
+        "y": 145
+      },
+      "shape:cg5-overview-2": {
+        "id": "shape:cg5-overview-2",
+        "index": "a2q3v",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Five small worlds. One unforgettable gesture each.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1.1,
+          "size": "l",
+          "textAlign": "start",
+          "w": 1700
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 0,
+        "y": 98
+      },
+      "shape:cg5-overview-20": {
+        "id": "shape:cg5-overview-20",
+        "index": "a5GOU",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 146,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 334
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 118,
+        "y": 163
+      },
+      "shape:cg5-overview-21": {
+        "id": "shape:cg5-overview-21",
+        "index": "a6Aoj",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "align": "middle",
+          "color": "orange",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "trapezoid",
+          "growY": 0,
+          "h": 81,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 89
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 214,
+        "y": 203
+      },
+      "shape:cg5-overview-22": {
+        "id": "shape:cg5-overview-22",
+        "index": "a7Y4z",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "align": "middle",
+          "color": "orange",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 40,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 42
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 242,
+        "y": 174
+      },
+      "shape:cg5-overview-23": {
+        "id": "shape:cg5-overview-23",
+        "index": "a8wPj",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 24,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 24
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 480,
+        "y": 177
+      },
+      "shape:cg5-overview-24": {
+        "id": "shape:cg5-overview-24",
+        "index": "a90gf",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 27,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 26
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 479,
+        "y": 227
+      },
+      "shape:cg5-overview-25": {
+        "id": "shape:cg5-overview-25",
+        "index": "aAbcQ",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "arrowheadEnd": "arrow",
+          "arrowheadStart": "none",
+          "bend": 0,
+          "color": "green",
+          "dash": "draw",
+          "elbowMidPoint": 0.5,
+          "end": {
+            "x": -87,
+            "y": -51
+          },
+          "fill": "none",
+          "font": "draw",
+          "kind": "arc",
+          "labelColor": "black",
+          "labelPosition": 0.5,
+          "richText": {
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "start": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "rotation": 0,
+        "type": "arrow",
+        "typeName": "shape",
+        "x": 560,
+        "y": 291
+      },
+      "shape:cg5-overview-26": {
+        "id": "shape:cg5-overview-26",
+        "index": "aBgfr",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "autoSize": false,
+          "color": "green",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "“One kopi, please.”",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.9,
+          "size": "s",
+          "textAlign": "start",
+          "w": 330
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 345,
+        "y": 338
+      },
+      "shape:cg5-overview-27": {
+        "id": "shape:cg5-overview-27",
+        "index": "aCSVM",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "autoSize": false,
+          "color": "grey",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Culture × Tech · develops culture idea 1",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.94,
+          "size": "s",
+          "textAlign": "start",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 400
+      },
+      "shape:cg5-overview-28": {
+        "id": "shape:cg5-overview-28",
+        "index": "aDxlb",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "autoSize": false,
+          "color": "green",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Play → answer → scene reacts → shared lunch",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.92,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 446
+      },
+      "shape:cg5-overview-29": {
+        "id": "shape:cg5-overview-29",
+        "index": "aEhzw",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-1",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Most theatrical narrative reveal.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.95,
+          "size": "s",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 509
+      },
+      "shape:cg5-overview-3": {
+        "id": "shape:cg5-overview-3",
+        "index": "a3GYQ",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "autoSize": false,
+          "color": "grey",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "CULTURE × TECH + DESIGN × TECH  /  ONE MAIN SCREEN PER CONCEPT",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "textAlign": "start",
+          "w": 1700
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 0,
+        "y": 161
+      },
+      "shape:cg5-overview-30": {
+        "id": "shape:cg5-overview-30",
+        "index": "a1p4b",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "autoSize": false,
+          "color": "violet",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "03  CAN LAH!",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "l",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 22
+      },
+      "shape:cg5-overview-31": {
+        "id": "shape:cg5-overview-31",
+        "index": "a267E",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "A tiny phrase. A whole different room.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 66
+      },
+      "shape:cg5-overview-32": {
+        "id": "shape:cg5-overview-32",
+        "index": "a3NbI",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "align": "middle",
+          "color": "grey",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 264,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 632
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 24,
+        "y": 112
+      },
+      "shape:cg5-overview-33": {
+        "id": "shape:cg5-overview-33",
+        "index": "a48vz",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "autoSize": false,
+          "color": "violet",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "CAN",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 2.2,
+          "size": "xl",
+          "textAlign": "start",
+          "w": 700
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 78,
+        "y": 141
+      },
+      "shape:cg5-overview-34": {
+        "id": "shape:cg5-overview-34",
+        "index": "a5OzW",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "align": "middle",
+          "color": "violet",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 72,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "LAH!",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 173
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 388,
+        "y": 189
+      },
+      "shape:cg5-overview-35": {
+        "id": "shape:cg5-overview-35",
+        "index": "a67uQ",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "arrowheadEnd": "arrow",
+          "arrowheadStart": "none",
+          "bend": 0,
+          "color": "violet",
+          "dash": "draw",
+          "elbowMidPoint": 0.5,
+          "end": {
+            "x": 28,
+            "y": 45
+          },
+          "fill": "none",
+          "font": "draw",
+          "kind": "arc",
+          "labelColor": "black",
+          "labelPosition": 0.5,
+          "richText": {
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "start": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "rotation": 0,
+        "type": "arrow",
+        "typeName": "shape",
+        "x": 161,
+        "y": 245
+      },
+      "shape:cg5-overview-36": {
+        "id": "shape:cg5-overview-36",
+        "index": "a71Qz",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "align": "middle",
+          "color": "violet",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 19,
+          "h": 37,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "FRIENDS",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 132
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 101,
+        "y": 308
+      },
+      "shape:cg5-overview-37": {
+        "id": "shape:cg5-overview-37",
+        "index": "a8G1z",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "align": "middle",
+          "color": "violet",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 19,
+          "h": 37,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "DOUBT",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 132
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 255,
+        "y": 308
+      },
+      "shape:cg5-overview-38": {
+        "id": "shape:cg5-overview-38",
+        "index": "a95bv",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "align": "middle",
+          "color": "violet",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 19,
+          "h": 37,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "REASSURE",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 161
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 409,
+        "y": 308
+      },
+      "shape:cg5-overview-39": {
+        "id": "shape:cg5-overview-39",
+        "index": "aAHsj",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "autoSize": false,
+          "color": "grey",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Culture × Tech · a language instrument",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.94,
+          "size": "s",
+          "textAlign": "start",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 400
+      },
+      "shape:cg5-overview-4": {
+        "id": "shape:cg5-overview-4",
+        "index": "a1fOE",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "autoSize": false,
+          "color": "orange",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "01  KOPI SHIFT",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "l",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 22
+      },
+      "shape:cg5-overview-40": {
+        "id": "shape:cg5-overview-40",
+        "index": "aBUrUV",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "autoSize": false,
+          "color": "violet",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Set context → choose delivery → watch meaning shift",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.92,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 446
+      },
+      "shape:cg5-overview-41": {
+        "id": "shape:cg5-overview-41",
+        "index": "aC9Vz",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-2",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Fastest invitation to play.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.95,
+          "size": "s",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 509
+      },
+      "shape:cg5-overview-42": {
+        "id": "shape:cg5-overview-42",
+        "index": "a1NLb",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "autoSize": false,
+          "color": "blue",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "04  TABLE CHORUS",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "l",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 22
+      },
+      "shape:cg5-overview-43": {
+        "id": "shape:cg5-overview-43",
+        "index": "a2LwA",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Make room. Leave a little smile.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 66
+      },
+      "shape:cg5-overview-44": {
+        "id": "shape:cg5-overview-44",
+        "index": "a3cjb",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "align": "middle",
+          "color": "grey",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 264,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 632
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 24,
+        "y": 112
+      },
+      "shape:cg5-overview-45": {
+        "id": "shape:cg5-overview-45",
+        "index": "a4Btj",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "align": "middle",
+          "color": "blue",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 193,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 338
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 166,
+        "y": 148
+      },
+      "shape:cg5-overview-46": {
+        "id": "shape:cg5-overview-46",
+        "index": "a5QFA",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "align": "middle",
+          "color": "orange",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 51,
+          "h": 29,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "SEAT",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 70
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 295,
+        "y": 130
+      },
+      "shape:cg5-overview-47": {
+        "id": "shape:cg5-overview-47",
+        "index": "a6fmv",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "align": "middle",
+          "color": "orange",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 53,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 57
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 220,
+        "y": 194
+      },
+      "shape:cg5-overview-48": {
+        "id": "shape:cg5-overview-48",
+        "index": "a778j",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "align": "middle",
+          "color": "violet",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 53,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 57
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 365,
+        "y": 237
+      },
+      "shape:cg5-overview-49": {
+        "id": "shape:cg5-overview-49",
+        "index": "a8lRf",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 48,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 64
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 400,
+        "y": 179
+      },
+      "shape:cg5-overview-5": {
+        "id": "shape:cg5-overview-5",
+        "index": "a2cQb",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Pour a word. Make it real.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 66
+      },
+      "shape:cg5-overview-50": {
+        "id": "shape:cg5-overview-50",
+        "index": "a96ij",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "arrowheadEnd": "arrow",
+          "arrowheadStart": "none",
+          "bend": 0,
+          "color": "blue",
+          "dash": "draw",
+          "elbowMidPoint": 0.5,
+          "end": {
+            "x": 93,
+            "y": -13
+          },
+          "fill": "none",
+          "font": "draw",
+          "kind": "arc",
+          "labelColor": "black",
+          "labelPosition": 0.5,
+          "richText": {
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "start": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "rotation": 0,
+        "type": "arrow",
+        "typeName": "shape",
+        "x": 87,
+        "y": 260
+      },
+      "shape:cg5-overview-51": {
+        "id": "shape:cg5-overview-51",
+        "index": "aAS8r",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "arrowheadEnd": "arrow",
+          "arrowheadStart": "none",
+          "bend": 0,
+          "color": "violet",
+          "dash": "draw",
+          "elbowMidPoint": 0.5,
+          "end": {
+            "x": -50,
+            "y": 0
+          },
+          "fill": "none",
+          "font": "draw",
+          "kind": "arc",
+          "labelColor": "black",
+          "labelPosition": 0.5,
+          "richText": {
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "start": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "rotation": 0,
+        "type": "arrow",
+        "typeName": "shape",
+        "x": 545,
+        "y": 249
+      },
+      "shape:cg5-overview-52": {
+        "id": "shape:cg5-overview-52",
+        "index": "aBfe2",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "autoSize": false,
+          "color": "blue",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "A seat becomes an invitation.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.9,
+          "size": "s",
+          "textAlign": "start",
+          "w": 480
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 232,
+        "y": 339
+      },
+      "shape:cg5-overview-53": {
+        "id": "shape:cg5-overview-53",
+        "index": "aC58n",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "autoSize": false,
+          "color": "grey",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Culture × Tech · everyday social ritual",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.94,
+          "size": "s",
+          "textAlign": "start",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 400
+      },
+      "shape:cg5-overview-54": {
+        "id": "shape:cg5-overview-54",
+        "index": "aDL1E",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "autoSize": false,
+          "color": "blue",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Invite → slide → tap → cup rings become a portrait",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.92,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 446
+      },
+      "shape:cg5-overview-55": {
+        "id": "shape:cg5-overview-55",
+        "index": "aEcME",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-3",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Best together: two people, one table.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.95,
+          "size": "s",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 509
+      },
+      "shape:cg5-overview-56": {
+        "id": "shape:cg5-overview-56",
+        "index": "a1ZWr",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "autoSize": false,
+          "color": "red",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "05  POCKET STAGE",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "l",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 22
+      },
+      "shape:cg5-overview-57": {
+        "id": "shape:cg5-overview-57",
+        "index": "a2pj2",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "A shadow with a life of its own.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 66
+      },
+      "shape:cg5-overview-58": {
+        "id": "shape:cg5-overview-58",
+        "index": "a3AEr",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "align": "middle",
+          "color": "grey",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 264,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 632
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 24,
+        "y": 112
+      },
+      "shape:cg5-overview-59": {
+        "id": "shape:cg5-overview-59",
+        "index": "a4skz",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "align": "middle",
+          "color": "red",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 210,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 429
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 135,
+        "y": 138
+      },
+      "shape:cg5-overview-6": {
+        "id": "shape:cg5-overview-6",
+        "index": "a3IEj",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "align": "middle",
+          "color": "grey",
+          "dash": "draw",
+          "fill": "none",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 264,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 632
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 24,
+        "y": 112
+      },
+      "shape:cg5-overview-60": {
+        "id": "shape:cg5-overview-60",
+        "index": "a5vTf",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "align": "middle",
+          "color": "orange",
+          "dash": "draw",
+          "fill": "solid",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 39,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 36
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 85,
+        "y": 198
+      },
+      "shape:cg5-overview-61": {
+        "id": "shape:cg5-overview-61",
+        "index": "a6kyM",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "arrowheadEnd": "arrow",
+          "arrowheadStart": "none",
+          "bend": 0,
+          "color": "orange",
+          "dash": "draw",
+          "elbowMidPoint": 0.5,
+          "end": {
+            "x": 149,
+            "y": 0
+          },
+          "fill": "none",
+          "font": "draw",
+          "kind": "arc",
+          "labelColor": "black",
+          "labelPosition": 0.5,
+          "richText": {
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "start": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "rotation": 0,
+        "type": "arrow",
+        "typeName": "shape",
+        "x": 126,
+        "y": 219
+      },
+      "shape:cg5-overview-62": {
+        "id": "shape:cg5-overview-62",
+        "index": "a7rTn",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "fill",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 107,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 81
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 300,
+        "y": 168
+      },
+      "shape:cg5-overview-63": {
+        "id": "shape:cg5-overview-63",
+        "index": "a8aTU",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "fill",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 107,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 81
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 381,
+        "y": 168
+      },
+      "shape:cg5-overview-64": {
+        "id": "shape:cg5-overview-64",
+        "index": "a9pw6",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "fill",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 61,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 67
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 313,
+        "y": 247
+      },
+      "shape:cg5-overview-65": {
+        "id": "shape:cg5-overview-65",
+        "index": "aAxFA",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "fill",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 61,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 67
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 382,
+        "y": 247
+      },
+      "shape:cg5-overview-66": {
+        "id": "shape:cg5-overview-66",
+        "index": "aB8Hb",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "align": "middle",
+          "color": "black",
+          "dash": "draw",
+          "fill": "fill",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "ellipse",
+          "growY": 0,
+          "h": 111,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 24
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 371,
+        "y": 182
+      },
+      "shape:cg5-overview-67": {
+        "id": "shape:cg5-overview-67",
+        "index": "aCi4r",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "autoSize": false,
+          "color": "red",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Move the light. Meet the creature.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.9,
+          "size": "s",
+          "textAlign": "start",
+          "w": 590
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 198,
+        "y": 344
+      },
+      "shape:cg5-overview-68": {
+        "id": "shape:cg5-overview-68",
+        "index": "aDOu2",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "autoSize": false,
+          "color": "grey",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Design × Tech · a miniature puppet theatre",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.94,
+          "size": "s",
+          "textAlign": "start",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 400
+      },
+      "shape:cg5-overview-69": {
+        "id": "shape:cg5-overview-69",
+        "index": "aEF2f",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "autoSize": false,
+          "color": "red",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Move light → pose → shadow transforms → curtain",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.92,
+          "size": "m",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 446
+      },
+      "shape:cg5-overview-7": {
+        "id": "shape:cg5-overview-7",
+        "index": "a4WKn",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "align": "middle",
+          "color": "orange",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "trapezoid",
+          "growY": 0,
+          "h": 105,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "COFFEE",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 90
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 77,
+        "y": 192
+      },
+      "shape:cg5-overview-70": {
+        "id": "shape:cg5-overview-70",
+        "index": "aFEZz",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-4",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Boldest gesture experiment; camera is optional.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 0.95,
+          "size": "s",
+          "textAlign": "start",
+          "w": 650
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 24,
+        "y": 509
+      },
+      "shape:cg5-overview-71": {
+        "id": "shape:cg5-overview-71",
+        "index": "a9VCM",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "autoSize": false,
+          "color": "orange",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "START WITH KOPI SHIFT",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "l",
+          "textAlign": "start",
+          "w": 630
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 1470,
+        "y": 907
+      },
+      "shape:cg5-overview-72": {
+        "id": "shape:cg5-overview-72",
+        "index": "aAaa2",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "autoSize": false,
+          "color": "black",
+          "font": "sans",
+          "richText": {
+            "content": [
+              {
+                "content": [
+                  {
+                    "text": "Choose the gesture you want to rehearse.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              },
+              {
+                "content": [],
+                "type": "paragraph"
+              },
+              {
+                "content": [
+                  {
+                    "text": "Each idea has a playable sketch, 12 storyboard states, sources, a tiny build plan, and a recovery route.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              },
+              {
+                "content": [],
+                "type": "paragraph"
+              },
+              {
+                "content": [
+                  {
+                    "text": "Frames are moments on one screen—not 12 pages.",
+                    "type": "text"
+                  }
+                ],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "textAlign": "start",
+          "w": 640
+        },
+        "rotation": 0,
+        "type": "text",
+        "typeName": "shape",
+        "x": 1470,
+        "y": 969
+      },
+      "shape:cg5-overview-8": {
+        "id": "shape:cg5-overview-8",
+        "index": "a5ItU",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "arrowheadEnd": "arrow",
+          "arrowheadStart": "none",
+          "bend": 0,
+          "color": "orange",
+          "dash": "draw",
+          "elbowMidPoint": 0.5,
+          "end": {
+            "x": 71,
+            "y": 41
+          },
+          "fill": "none",
+          "font": "draw",
+          "kind": "arc",
+          "labelColor": "black",
+          "labelPosition": 0.5,
+          "richText": {
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "m",
+          "start": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "rotation": 0,
+        "type": "arrow",
+        "typeName": "shape",
+        "x": 185,
+        "y": 231
+      },
+      "shape:cg5-overview-9": {
+        "id": "shape:cg5-overview-9",
+        "index": "a69Xj",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "shape:cg5-overview-card-0",
+        "props": {
+          "align": "middle",
+          "color": "orange",
+          "dash": "draw",
+          "fill": "semi",
+          "flipX": false,
+          "flipY": false,
+          "font": "sans",
+          "geo": "rectangle",
+          "growY": 0,
+          "h": 110,
+          "labelColor": "black",
+          "richText": {
+            "content": [
+              {
+                "content": [],
+                "type": "paragraph"
+              }
+            ],
+            "type": "doc"
+          },
+          "scale": 1,
+          "size": "s",
+          "url": "",
+          "verticalAlign": "middle",
+          "w": 125
+        },
+        "rotation": 0,
+        "type": "geo",
+        "typeName": "shape",
+        "x": 290,
+        "y": 212
+      },
+      "shape:cg5-overview-card-0": {
+        "id": "shape:cg5-overview-card-0",
+        "index": "a4i4Q",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "color": "orange",
+          "h": 590,
+          "name": "01 / KOPI SHIFT",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "frame",
+        "typeName": "shape",
+        "x": 0,
+        "y": 240
+      },
+      "shape:cg5-overview-card-1": {
+        "id": "shape:cg5-overview-card-1",
+        "index": "a5N36",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "color": "green",
+          "h": 590,
+          "name": "02 / THE TAPE CAN HEAR YOU",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "frame",
+        "typeName": "shape",
+        "x": 720,
+        "y": 240
+      },
+      "shape:cg5-overview-card-2": {
+        "id": "shape:cg5-overview-card-2",
+        "index": "a6liz",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "color": "violet",
+          "h": 590,
+          "name": "03 / CAN LAH!",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "frame",
+        "typeName": "shape",
+        "x": 1440,
+        "y": 240
+      },
+      "shape:cg5-overview-card-3": {
+        "id": "shape:cg5-overview-card-3",
+        "index": "a7Akb",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "color": "blue",
+          "h": 590,
+          "name": "04 / TABLE CHORUS",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "frame",
+        "typeName": "shape",
+        "x": 0,
+        "y": 880
+      },
+      "shape:cg5-overview-card-4": {
+        "id": "shape:cg5-overview-card-4",
+        "index": "a881r",
+        "isLocked": false,
+        "meta": {},
+        "opacity": 1,
+        "parentId": "page:cg5-selection",
+        "props": {
+          "color": "red",
+          "h": 590,
+          "name": "05 / POCKET STAGE",
+          "w": 680
+        },
+        "rotation": 0,
+        "type": "frame",
+        "typeName": "shape",
+        "x": 720,
+        "y": 880
+      }
+    }
+  },
+  "session": {
+    "currentPageId": "page:cg5-selection",
+    "exportBackground": true,
+    "isDebugMode": false,
+    "isFocusMode": false,
+    "isGridMode": false,
+    "isToolLocked": false,
+    "pageStates": [
+      {
+        "camera": {
+          "x": 139,
+          "y": 307.5,
+          "z": 0.460431654676259
+        },
+        "focusedGroupId": null,
+        "pageId": "page:cg5-selection",
+        "selectedShapeIds": []
+      }
+    ],
+    "version": 0
+  }
+}

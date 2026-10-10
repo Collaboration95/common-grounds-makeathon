@@ -1,0 +1,91 @@
+{
+  "clamped": {
+    "phase": 3,
+    "cupX": 755,
+    "cupY": 220,
+    "taps": 0,
+    "muted": true
+  },
+  "apart": {
+    "phase": 3,
+    "cupX": 690,
+    "cupY": 220,
+    "taps": 1,
+    "muted": true
+  },
+  "together": {
+    "phase": 4,
+    "cupX": 570,
+    "cupY": 220,
+    "taps": 1,
+    "muted": true
+  },
+  "audioLabel": "Sound unavailable",
+  "audioFaultState": {
+    "phase": 6,
+    "cupX": 570,
+    "cupY": 220,
+    "taps": 3,
+    "muted": true
+  },
+  "endState": {
+    "phase": 6,
+    "cupX": 570,
+    "cupY": 220,
+    "taps": 3,
+    "muted": true
+  },
+  "resetState": {
+    "phase": 0,
+    "cupX": 690,
+    "cupY": 220,
+    "taps": 0,
+    "muted": true
+  },
+  "reducedState": {
+    "phase": 6,
+    "cupX": 570,
+    "cupY": 220,
+    "taps": 3,
+    "muted": true
+  },
+  "mobileHorizontalOverflow": false,
+  "errors": [],
+  "boardBefore": {
+    "pages": [
+      {
+        "id": "page:page",
+        "name": "01 Hero · an invitation"
+      },
+      {
+        "id": "page:tc04-core",
+        "name": "02 Core · a table portrait"
+      },
+      {
+        "id": "page:tc04-recovery",
+        "name": "03 Recovery · everyone can play"
+      }
+    ],
+    "count": 300
+  },
+  "boardAfterReload": {
+    "pages": [
+      {
+        "id": "page:page",
+        "name": "01 Hero · an invitation"
+      },
+      {
+        "id": "page:tc04-core",
+        "name": "02 Core · a table portrait"
+      },
+      {
+        "id": "page:tc04-recovery",
+        "name": "03 Recovery · everyone can play"
+      }
+    ],
+    "count": 300,
+    "frames": 12
+  },
+  "fileProtocolTested": true,
+  "assertionsPassed": true
+}

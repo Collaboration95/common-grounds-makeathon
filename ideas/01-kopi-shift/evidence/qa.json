@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-11",
+  "stateChecks": {"passed": 13, "failed": 0, "cases": ["black coffee alone serves without stirring", "sugar in Kosong rejected", "first fresh-cup action preserves contents", "confirmed fresh cup retains ticket", "duplicate ingredient ignored", "C requires final stir", "milk-first C serves after stir", "ambiguity blocks additions and retains cup", "clarification continues same cup", "addition after stir clears mixed flag", "guidance and reduced motion preserve contents", "ending reached under reduced motion", "Kopi-O transfer supported"]},
+  "realBrowserInputs": {"click": "coffee then cup 01 then Serve 1 succeeded", "keyboard": "T3 press 1 / a / Escape adds coffee, cancels selection, preserves cup and clears aria-pressed"},
+  "syntax": {"command": "node --check evidence/preview-script.js", "exitCode": 0},
+  "visual": {"passes": 2, "benchTextColor": "rgb(255, 243, 218)", "quietTrickToFooterGapCssPx": 37.1875, "externalResources": []},
+  "boardReload": {"shapes": 759, "frames": 12, "pages": 3, "remoteSync": "unverified; browser requests sign-in"},
+  "limits": ["Physical pointer drag not separately rehearsed", "Optional audio not device-tested", "No phone optimization", "file:// not separately opened in browser tool", "No cultural-practitioner or new-player study"]
+}
