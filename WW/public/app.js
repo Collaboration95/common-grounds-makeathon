@@ -1,0 +1,339 @@
+const $ = sel => document.querySelector(sel);
+const wall = $('#wall'), worlds = $('#worlds'), game = $('#game'), stage = $('#stage');
+const MOVES = ['nod', 'hop', 'shake', 'wave', 'tilt'];
+const SURPRISES = [
+  ['The Fellowship leaving Rivendell, elves lining the bridges', 'Hagrid, carrying a suspicious egg'],
+  ['The Hunger Games opening ceremony, chariots and roaring Capitol crowds', 'Paddington Bear, offering marmalade sandwiches'],
+  ['A packed MRT train at peak hour on the North-South Line', 'Gandalf, insisting you shall not pass'],
+  ['The Yule Ball at Hogwarts, everyone dancing', 'Shrek, in a tuxedo two sizes too small'],
+  ['The Jurassic Park visitor centre the moment the T-rex breaks in', 'Mary Poppins, entirely unbothered'],
+  ['Woodstock 1969, a sea of fans in the mud', 'Yoda, crowd-surfing'],
+];
+
+const state = { games: [], game: null, found: false, hovered: null };
+const tiles = new Map();
+const sprites = new Map();
+const drift = Object.assign(document.createElement('div'), { className: 'drift' });
+worlds.append(drift);
+
+const guestOf = g => g.characters.find(c => c.id === g.targetId);
+const pick = list => list[Math.floor(Math.random() * list.length)];
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const stageSize = () => { const w = Math.min(innerWidth, innerHeight * 1.5); return { w, h: w / 1.5 }; };
+
+// Sprites: crop to the drawn figure so the click area matches what you see. If the model ignored
+// the transparent background, key out the corner colour.
+async function loadSprite(src) {
+  if (!sprites.has(src)) sprites.set(src, new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(cropToFigure(img));
+    img.onerror = reject;
+    img.src = src;
+  }));
+  return sprites.get(src);
+}
+
+function cropToFigure(img) {
+  const c = Object.assign(document.createElement('canvas'), { width: img.naturalWidth, height: img.naturalHeight });
+  const ctx = c.getContext('2d', { willReadFrequently: true });
+  ctx.drawImage(img, 0, 0);
+  const pixels = ctx.getImageData(0, 0, c.width, c.height);
+  const { data, width, height } = pixels;
+  const [r, g, b, a] = data;
+  for (let i = 0; i < data.length; i += 4) {
+    // Generated sprites carry a faint coloured glow at very low alpha; it would give the guest away.
+    if (data[i + 3] < 48) data[i + 3] = 0;
+    else if (a > 200 && Math.abs(data[i] - r) + Math.abs(data[i + 1] - g) + Math.abs(data[i + 2] - b) < 40) data[i + 3] = 0;
+  }
+  ctx.putImageData(pixels, 0, 0);
+  let minX = width, minY = height, maxX = -1, maxY = -1;
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+    if (data[(y * width + x) * 4 + 3] > 24) {
+      if (x < minX) minX = x; if (x > maxX) maxX = x;
+      if (y < minY) minY = y; if (y > maxY) maxY = y;
+    }
+  }
+  if (maxX < 0) return c;
+  const out = Object.assign(document.createElement('canvas'), { width: maxX - minX + 1, height: maxY - minY + 1 });
+  out.getContext('2d').drawImage(c, minX, minY, out.width, out.height, 0, 0, out.width, out.height);
+  return out;
+}
+
+function copyCanvas(src) {
+  const c = Object.assign(document.createElement('canvas'), { width: src.width, height: src.height });
+  c.getContext('2d', { willReadFrequently: true }).drawImage(src, 0, 0);
+  return c;
+}
+
+// ---------- World of worlds ----------
+
+async function refresh() {
+  const all = await fetch('/api/games').then(r => r.json());
+  const real = all.filter(g => !g.placeholder);
+  const games = real.length ? real : all;
+  const changed = games.map(g => g.id).join() !== state.games.map(g => g.id).join();
+  state.games = games;
+  if (changed) layoutWall();
+  return games;
+}
+
+function layoutWall() {
+  const n = state.games.length;
+  $('#wall-empty').hidden = n > 0;
+  for (const [id, el] of tiles) if (!state.games.some(g => g.id === id)) { el.remove(); tiles.delete(id); }
+  if (!n) return;
+  const ratio = 1.5, overlap = 1.25;
+  let best;
+  for (let cols = 1; cols <= n; cols++) {
+    const rows = Math.ceil(n / cols);
+    // Tiles overlap their neighbours by (overlap - 1); keep the outer feathered edges on screen too.
+    const step = Math.min(innerWidth / (cols + overlap - 1), (innerHeight * ratio) / (rows + overlap - 1));
+    if (!best || step > best.step) best = { cols, rows, step };
+  }
+  const { cols, rows, step } = best;
+  const stepH = step / ratio, tileW = step * overlap, tileH = stepH * overlap;
+  const offX = (innerWidth - cols * step) / 2, offY = (innerHeight - rows * stepH) / 2;
+  state.games.forEach((g, i) => {
+    const row = Math.floor(i / cols), col = i % cols;
+    const inRow = row === rows - 1 ? n - row * cols : cols;
+    let el = tiles.get(g.id);
+    if (!el) {
+      el = Object.assign(document.createElement('button'), { className: 'tile fresh' });
+      el.innerHTML = `<img alt=""><span class="label"></span>`;
+      el.querySelector('.label').innerHTML = `<span></span><small></small>`;
+      el.querySelector('.label span').textContent = g.title;
+      el.querySelector('.label small').textContent = `Find ${guestOf(g).name}`;
+      el.setAttribute('aria-label', `${g.title}. Find ${guestOf(g).name}`);
+      const img = el.querySelector('img');
+      img.onload = () => el.classList.remove('fresh');
+      img.src = g.bg.src;
+      el.onclick = () => zoomInto(g);
+      drift.append(el);
+      tiles.set(g.id, el);
+    }
+    Object.assign(el.style, {
+      left: `${offX + ((cols - inRow) * step) / 2 + col * step - (tileW - step) / 2}px`,
+      top: `${offY + row * stepH - (tileH - stepH) / 2}px`,
+      width: `${tileW}px`, height: `${tileH}px`,
+    });
+  });
+}
+
+// Camera transform that makes a tile land exactly where the game's stage will be.
+function cameraOnto(el) {
+  const r = el.getBoundingClientRect();
+  const { w, h } = stageSize();
+  const s = w / r.width;
+  return `translate(${(innerWidth - w) / 2 - r.left * s}px, ${(innerHeight - h) / 2 - r.top * s}px) scale(${s})`;
+}
+
+async function zoomInto(g) {
+  const el = tiles.get(g.id);
+  const ready = startGame(g);
+  wall.classList.add('zooming');
+  if (el) { worlds.style.transform = cameraOnto(el); await wait(900); }
+  await ready;
+  wall.hidden = true;
+  game.hidden = false;
+}
+
+function backToWall() {
+  const el = state.game && tiles.get(state.game.id);
+  game.hidden = true;
+  wall.hidden = false;
+  if (el) {
+    worlds.style.transition = 'none';
+    worlds.style.transform = cameraOnto(el);
+    worlds.offsetWidth;
+    worlds.style.transition = '';
+  }
+  worlds.style.transform = '';
+  wall.classList.remove('zooming');
+  refresh();
+}
+
+// ---------- The game ----------
+
+async function startGame(g) {
+  state.game = g;
+  state.found = false;
+  state.hovered = null;
+  stage.className = g.baked ? 'baked' : '';
+  stage.style.transform = '';
+  $('#found').hidden = true;
+  $('#hint-box').hidden = true;
+  $('#hint-text').hidden = true;
+  $('#bg').src = g.bg.src;
+
+  const [canvases] = await Promise.all([
+    Promise.all(g.characters.map(c => loadSprite(c.sprite))),
+    $('#bg').decode().then(() => matchLighting($('#bg'))).catch(() => {}),
+  ]);
+  const layer = $('#sprites');
+  layer.replaceChildren(...g.characters
+    .map((c, i) => ({ c, canvas: canvases[i] }))
+    .sort((a, b) => a.c.y - b.c.y)
+    .map(({ c, canvas }) => {
+      const el = Object.assign(document.createElement('div'), { className: 'char' });
+      el.dataset.id = c.id;
+      Object.assign(el.style, { left: `${c.x * 100}%`, top: `${c.y * 100}%`, height: `${c.h * 100}%` });
+      el.append(copyCanvas(canvas), Object.assign(document.createElement('div'), { className: 'bubble' }));
+      return el;
+    }));
+
+  const guest = guestOf(g);
+  const portrait = guest.portrait ? await loadSprite(guest.portrait) : canvases[g.characters.indexOf(guest)];
+  $('#target-portrait').replaceChildren(copyCanvas(portrait));
+  state.portrait = guest.portrait ? portrait : null;
+  $('#target-name').textContent = guest.name;
+}
+
+// Sprites are lit like a studio shot; dim them to the scene's overall brightness so they sit in it.
+function matchLighting(img) {
+  const c = Object.assign(document.createElement('canvas'), { width: 16, height: 16 });
+  const ctx = c.getContext('2d');
+  ctx.drawImage(img, 0, 0, 16, 16);
+  const d = ctx.getImageData(0, 0, 16, 16).data;
+  let sum = 0;
+  for (let i = 0; i < d.length; i += 4) sum += 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+  const lum = sum / (d.length / 4) / 255;
+  const brightness = Math.min(1.05, Math.max(0.7, 0.55 + lum * 0.9));
+  stage.style.setProperty('--sprite-filter', `brightness(${brightness.toFixed(2)}) saturate(0.88) contrast(0.95)`);
+}
+
+function charAt(x, y) {
+  for (const el of document.elementsFromPoint(x, y)) {
+    if (el.tagName !== 'CANVAS' || !el.closest('#sprites')) continue;
+    const r = el.getBoundingClientRect();
+    const ctx = el.getContext('2d', { willReadFrequently: true });
+    // A few pixels of slack so tiny sprites stay clickable.
+    for (const [dx, dy] of [[0, 0], [-3, 0], [3, 0], [0, -3], [0, 3]]) {
+      const px = Math.floor(((x + dx - r.left) / r.width) * el.width);
+      const py = Math.floor(((y + dy - r.top) / r.height) * el.height);
+      if (px >= 0 && py >= 0 && px < el.width && py < el.height && ctx.getImageData(px, py, 1, 1).data[3] > 24) return el.closest('.char');
+    }
+  }
+  return null;
+}
+
+const charData = el => state.game.characters.find(c => c.id === el.dataset.id);
+
+function react(el, text, move, ms = 1800) {
+  el.querySelector('.bubble').textContent = text;
+  el.classList.remove(...MOVES);
+  el.offsetWidth;
+  el.classList.add(move, 'talking');
+  clearTimeout(el.timer);
+  if (ms) el.timer = setTimeout(() => el.classList.remove('talking', move), ms);
+}
+
+stage.addEventListener('click', e => {
+  if (state.found) return;
+  const el = charAt(e.clientX, e.clientY);
+  if (!el) {
+    const r = stage.getBoundingClientRect();
+    const ring = Object.assign(document.createElement('div'), { className: 'ripple' });
+    Object.assign(ring.style, { left: `${e.clientX - r.left}px`, top: `${e.clientY - r.top}px` });
+    stage.append(ring);
+    return setTimeout(() => ring.remove(), 600);
+  }
+  const c = charData(el);
+  if (c.id === state.game.targetId) return found(el, c);
+  // First click gets their "not me" line, later clicks their other quips.
+  el.clicks = (el.clicks || 0) + 1;
+  react(el, el.clicks === 1 ? c.line : pick(c.quips), el.clicks === 1 ? 'shake' : c.move, 2200);
+});
+
+function found(el, c) {
+  state.found = true;
+  $('#hint-box').hidden = true;
+  $('#hint-text').hidden = true;
+  // Painted-in guests pop out of the scene as their clean lifted portrait.
+  if (state.portrait) el.querySelector('canvas').replaceWith(copyCanvas(state.portrait));
+  el.classList.add('found');
+  stage.classList.add('is-found');
+  react(el, c.line, 'hop', 0);
+  // Push the camera in and bring the guest to the upper middle, clear of the caption.
+  const { w, h } = stageSize();
+  const s = 1.7, tx = c.x * w, ty = (c.y - c.h / 2) * h;
+  stage.style.transformOrigin = '0 0';
+  stage.style.transform = `translate(${w / 2 - s * tx}px, ${h * 0.36 - s * ty}px) scale(${s})`;
+  $('#found-title').textContent = `You found ${c.name}!`;
+  $('#found-story').textContent = state.game.story;
+  setTimeout(() => { $('#found').hidden = false; }, 1100);
+}
+
+$('#hint-btn').onclick = () => {
+  if (state.found) return;
+  const { x, y, w, h, text } = state.game.hint;
+  Object.assign($('#hint-box').style, { left: `${x * 100}%`, top: `${y * 100}%`, width: `${w * 100}%`, height: `${h * 100}%` });
+  $('#hint-box').hidden = false;
+  $('#hint-text').textContent = text;
+  $('#hint-text').hidden = !text;
+};
+$('#replay-btn').onclick = () => startGame(state.game);
+$('#back-btn').onclick = backToWall;
+$('#found-back-btn').onclick = backToWall;
+
+// ---------- Create ----------
+
+const dialog = $('#create'), form = $('#create-form'), status = $('#job-status');
+let pending = null;
+
+function openCreate() {
+  status.textContent = pending ? status.textContent : '';
+  dialog.showModal();
+}
+$('#create-btn').onclick = openCreate;
+$('#found-create-btn').onclick = openCreate;
+$('#cancel-btn').onclick = () => dialog.close();
+$('#surprise-btn').onclick = () => {
+  const [moment, guest] = pick(SURPRISES);
+  form.moment.value = moment;
+  form.guest.value = guest;
+};
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (pending) return;
+  $('#make-btn').disabled = true;
+  status.className = 'working';
+  status.textContent = 'Writing the scene';
+  try {
+    const res = await fetch('/api/games', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ moment: form.moment.value, guest: form.guest.value }),
+    });
+    let job = await res.json();
+    if (!res.ok) throw new Error(job.error);
+    pending = job.id;
+    while (job.status === 'working') {
+      await wait(1500);
+      job = await fetch(`/api/jobs/${pending}`).then(r => r.json());
+      status.textContent = job.stage;
+    }
+    if (job.status === 'failed') throw new Error(job.error);
+    const games = await refresh();
+    const made = games.find(g => g.id === job.gameId);
+    form.reset();
+    status.className = '';
+    status.textContent = '';
+    if (dialog.open && made) {
+      dialog.close();
+      if (!wall.hidden) { await wait(1200); zoomInto(made); }
+      else await startGame(made);
+    }
+  } catch (err) {
+    status.className = '';
+    status.textContent = `Couldn't paint that: ${err.message}`;
+  } finally {
+    pending = null;
+    $('#make-btn').disabled = false;
+  }
+});
+
+// ---------- Boot ----------
+
+addEventListener('resize', layoutWall);
+setInterval(() => { if (!wall.hidden) refresh(); }, 8000);
+refresh();

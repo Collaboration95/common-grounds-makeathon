@@ -1,0 +1,15 @@
+{
+  "name": "wes-waldo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js",
+    "placeholder": "node scripts/placeholder.js",
+    "rehide": "node scripts/rehide.js",
+    "repaint": "node scripts/repaint.js"
+  },
+  "dependencies": {
+    "sharp": "^0.35.5"
+  }
+}
