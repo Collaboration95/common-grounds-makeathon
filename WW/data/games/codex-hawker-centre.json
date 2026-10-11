@@ -1,0 +1,58 @@
+{
+  "id": "codex-hawker-centre",
+  "createdAt": 1791698148949,
+  "source": "codex",
+  "baked": true,
+  "moment": "A Singapore hawker centre at lunch rush",
+  "title": "It's Not Easy Being Mee",
+  "story": "Kermit’s traded the spotlight for the lunch rush. It’s not easy being green, but at least the noodles match his apron.",
+  "world": "A Singapore hawker centre at lunchtime: sizzling stalls, crowded tables, clattering bowls, and one suspiciously green noodle cook.",
+  "bg": {
+    "src": "/data/assets/codex-hawker-centre-scene.webp",
+    "w": 1536,
+    "h": 1024
+  },
+  "targetId": "c0",
+  "characters": [
+    {
+      "id": "c0",
+      "name": "Kermit the Frog",
+      "role": "guest",
+      "sprite": "/data/assets/codex-hawker-centre-hit0.png",
+      "portrait": "/data/assets/codex-hawker-centre-portrait.png",
+      "quips": [
+        "This lunch rush needs a stage manager.",
+        "No flies in the soup. I checked.",
+        "Miss Piggy would demand table service."
+      ],
+      "line": "Hi-ho! One bowl of mee, with extra enthusiasm!",
+      "move": "hop",
+      "x": 0.6744791666666666,
+      "y": 0.3203125,
+      "h": 0.05859375
+    },
+    {
+      "id": "c1",
+      "name": "Phua Chu Kang",
+      "role": "resident",
+      "sprite": "/data/assets/codex-hawker-centre-hit1.png",
+      "quips": [
+        "Best lunch in Singapore, JB, some say Batam!",
+        "Don't play play with my order.",
+        "These boots can tahan any queue."
+      ],
+      "line": "Not me lah! See the yellow boots?",
+      "move": "shake",
+      "x": 0.1565,
+      "y": 0.621,
+      "h": 0.318
+    }
+  ],
+  "hint": {
+    "x": 0.4637312020412423,
+    "y": 0.1045771051103668,
+    "w": 0.4,
+    "h": 0.42,
+    "text": "Look behind the MEE counter, beside the stacks of white bowls."
+  }
+}

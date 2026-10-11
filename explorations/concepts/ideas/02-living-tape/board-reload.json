@@ -1,0 +1,82 @@
+{
+  "pages": [
+    {
+      "id": "page:lt02-hero",
+      "name": "01 HERO · The tape listens"
+    },
+    {
+      "id": "page:lt02-core",
+      "name": "02 CORE · Change the take"
+    },
+    {
+      "id": "page:lt02-recovery",
+      "name": "03 RECOVERY · Keep the lunch"
+    }
+  ],
+  "shapeCount": 626,
+  "frameCount": 12,
+  "replayCounts": [
+    {
+      "pages": [
+        {
+          "id": "page:lt02-hero",
+          "name": "01 HERO · The tape listens"
+        },
+        {
+          "id": "page:lt02-core",
+          "name": "02 CORE · Change the take"
+        },
+        {
+          "id": "page:lt02-recovery",
+          "name": "03 RECOVERY · Keep the lunch"
+        }
+      ],
+      "frameCount": 12,
+      "shapeCounts": [
+        {
+          "id": "page:lt02-hero",
+          "count": 203
+        },
+        {
+          "id": "page:lt02-core",
+          "count": 215
+        },
+        {
+          "id": "page:lt02-recovery",
+          "count": 208
+        }
+      ]
+    },
+    {
+      "pages": [
+        {
+          "id": "page:lt02-hero",
+          "name": "01 HERO · The tape listens"
+        },
+        {
+          "id": "page:lt02-core",
+          "name": "02 CORE · Change the take"
+        },
+        {
+          "id": "page:lt02-recovery",
+          "name": "03 RECOVERY · Keep the lunch"
+        }
+      ],
+      "frameCount": 12,
+      "shapeCounts": [
+        {
+          "id": "page:lt02-hero",
+          "count": 203
+        },
+        {
+          "id": "page:lt02-core",
+          "count": 215
+        },
+        {
+          "id": "page:lt02-recovery",
+          "count": 208
+        }
+      ]
+    }
+  ]
+}

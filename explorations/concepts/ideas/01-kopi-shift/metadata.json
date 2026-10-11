@@ -1,0 +1,14 @@
+{
+  "id": "01-kopi-shift",
+  "title": "Kopi Shift",
+  "track": "Culture × Tech",
+  "tagline": "Some words you pour. Some words you leave out.",
+  "hook": "Order typography travels into the cup; Kosong leaves a visible empty sugar space.",
+  "gesture": "Drag a labelled pot, sugar box or evaporated-milk tin into a cup; stir with the spoon. Click-then-cup and keyboard equivalents.",
+  "palette": ["#243f3c", "#fff3da", "#2d6960", "#cd573e", "#e8b656"],
+  "scope": "One cut-paper counter, two cups, three ingredient categories, Kopi-O Kosong and Kopi-C plus optional Kopi-O transfer; no timer.",
+  "risk": "Negative-space metaphor can blur O versus Kosong; fixed laptop diorama is small on phones; cross-device board sync unverified.",
+  "recommendation": "Build Word Cast Counter: protect the typography-to-ingredient pour and Kosong omission before adding voice, AI or later lessons.",
+  "boardUrl": "https://www.tldraw.com/f/VXMrudwLPzcNYmChpVg6z",
+  "frameCount": 12
+}

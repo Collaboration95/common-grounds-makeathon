@@ -1,0 +1,90 @@
+{
+  "id": "codex-shire-party",
+  "createdAt": 1791698150955,
+  "source": "codex",
+  "baked": true,
+  "moment": "Bilbo's eleventy-first birthday party in the Shire",
+  "title": "One Guest Too Precious",
+  "story": "Bilbo invited half the Shire, but one guest came strictly for the precious party favors. Apparently, a waistcoat and flower crown count as a convincing disguise.",
+  "world": "Bag End, the Shire: Bilbo’s eleventy-first birthday party. Lanterns glow, fireworks bloom, and an uninvited hobbit impersonator eyes the feast.",
+  "bg": {
+    "src": "/data/assets/codex-shire-party-scene.webp",
+    "w": 1536,
+    "h": 1024
+  },
+  "targetId": "c0",
+  "characters": [
+    {
+      "id": "c0",
+      "name": "Gollum",
+      "role": "guest",
+      "sprite": "/data/assets/codex-shire-party-hit0.png",
+      "portrait": "/data/assets/codex-shire-party-portrait.png",
+      "quips": [
+        "The waistcoat itches, precious.",
+        "We wants birthday presents too.",
+        "Nasty cake. Where’s the fish?"
+      ],
+      "line": "We’re respectable hobbits, precious. Pass the fish.",
+      "move": "hop",
+      "x": 0.6979166666666666,
+      "y": 0.38671875,
+      "h": 0.0546875
+    },
+    {
+      "id": "c1",
+      "name": "Bilbo Baggins",
+      "role": "resident",
+      "sprite": "/data/assets/codex-shire-party-hit1.png",
+      "quips": [
+        "Eleventy-one, and still hosting.",
+        "Do leave room for cake.",
+        "I’ve a speech to escape."
+      ],
+      "line": "Uninvited? I’m the birthday boy!",
+      "move": "wave",
+      "x": 0.0755,
+      "y": 0.821,
+      "h": 0.298
+    },
+    {
+      "id": "c2",
+      "name": "Frodo Baggins",
+      "role": "resident",
+      "sprite": "/data/assets/codex-shire-party-hit2.png",
+      "quips": [
+        "Bilbo’s looking unusually pleased.",
+        "Another toast? Very well.",
+        "Something feels odd tonight."
+      ],
+      "line": "I’m family, not a gatecrasher.",
+      "move": "tilt",
+      "x": 0.1595,
+      "y": 0.835,
+      "h": 0.307
+    },
+    {
+      "id": "c3",
+      "name": "Gandalf",
+      "role": "resident",
+      "sprite": "/data/assets/codex-shire-party-hit3.png",
+      "quips": [
+        "Keep clear of the fireworks.",
+        "Some guests require watching.",
+        "The entertainment is quite deliberate."
+      ],
+      "line": "A disguise? This is my usual hat.",
+      "move": "shake",
+      "x": 0.2245,
+      "y": 0.792,
+      "h": 0.382
+    }
+  ],
+  "hint": {
+    "x": 0.5470126724984191,
+    "y": 0.08979675810031523,
+    "w": 0.4,
+    "h": 0.42,
+    "text": "Look at the right-hand feast table, beneath a borrowed flower crown."
+  }
+}

@@ -1,0 +1,10 @@
+.env
+node_modules/
+# Generated content: keep only the demo worlds (codex-*) and the Codex task/prompt/report notes.
+data/*
+!data/games/
+!data/assets/
+data/assets/*
+!data/assets/codex-*
+!data/codex/
+data/codex/*.png

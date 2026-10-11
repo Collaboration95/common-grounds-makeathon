@@ -1,0 +1,45 @@
+{
+  "boardId": "50dZlZIK6sJ5Rh9G2C3Lz",
+  "url": "https://www.tldraw.com/f/50dZlZIK6sJ5Rh9G2C3Lz",
+  "name": "02 \u00b7 The Tape Can Hear You \u00b7 Living Tape",
+  "frameCount": 12,
+  "pageCount": 3,
+  "shapeCount": 626,
+  "editorRoute": "Dedicated T3 tab_b window.editor; local headless Chrome after T3 disconnected",
+  "mcpExecStatus": "board not open; browser editor worked",
+  "previewTabId": "tab_j",
+  "screenshotVerification": {
+    "status": "visually inspected",
+    "initial": "T3 hero board and opening preview",
+    "final": [
+      "board-hero.png",
+      "board-core.png",
+      "board-recovery.png",
+      "preview-desktop.png",
+      "preview-mobile.png",
+      "preview-lunch.png"
+    ]
+  },
+  "persistence": {
+    "freshContextOriginalShapeCount": 614,
+    "finalReloadShapeCount": 626,
+    "status": "verified after sync wait and reload; fresh context verified original remotely",
+    "evidence": [
+      "board-fresh-context.json",
+      "board-reload.json"
+    ]
+  },
+  "snapshot": "storyboard.snapshot.json",
+  "snapshotFormat": "tldraw editor.getSnapshot(): document + session",
+  "replaySource": "storyboard.js",
+  "visualExports": [
+    "storyboard-hero.svg",
+    "storyboard-core.svg",
+    "storyboard-recovery.svg"
+  ],
+  "limitations": [
+    "Tldraw MCP connection did not recognise the browser-open board.",
+    "Live speech is planned only; preview is clearly simulated."
+  ],
+  "childAgentId": null
+}

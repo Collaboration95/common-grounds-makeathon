@@ -1,0 +1,2 @@
+great-hall | 57 seconds | WW/data/codex/great-hall-codex.png | No refusal; built-in image_gen, exact prompt; 1402x1122; quality/size controls unavailable, below 1536x1024 width and not 3:2; cropped edge figures.
+hawker-centre | 47 seconds | WW/data/codex/hawker-centre-codex.png | No refusal; built-in image_gen, exact prompt; 1312x1199; quality/size controls unavailable, below 1536x1024 width and not 3:2; cropped edge figures.

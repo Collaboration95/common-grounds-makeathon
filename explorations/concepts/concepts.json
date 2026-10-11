@@ -1,0 +1,111 @@
+[
+  {
+    "id": "01-kopi-shift",
+    "title": "Kopi Shift",
+    "track": "Culture × Tech",
+    "tagline": "Some words you pour. Some words you leave out.",
+    "hook": "Order typography travels into the cup; Kosong leaves a visible empty sugar space.",
+    "gesture": "Drag a labelled pot, sugar box or evaporated-milk tin into a cup; stir with the spoon. Click-then-cup and keyboard equivalents.",
+    "scope": "One cut-paper counter, two cups, three ingredient categories, Kopi-O Kosong and Kopi-C plus optional Kopi-O transfer; no timer.",
+    "risk": "Negative-space metaphor can blur O versus Kosong; fixed laptop diorama is small on phones; cross-device board sync unverified.",
+    "recommendation": "Build Word Cast Counter: protect the typography-to-ingredient pour and Kosong omission before adding voice, AI or later lessons.",
+    "palette": [
+      "#243f3c",
+      "#fff3da",
+      "#2d6960",
+      "#cd573e",
+      "#e8b656"
+    ],
+    "badge": "Start here",
+    "artColor": "#b94924",
+    "boardUrl": "https://www.tldraw.com/f/VXMrudwLPzcNYmChpVg6z",
+    "frameCount": 12
+  },
+  {
+    "id": "02-living-tape",
+    "title": "The Tape Can Hear You",
+    "track": "Culture × Tech",
+    "tagline": "An impossible welcome tape. A very ordinary wish: lunch with a friend.",
+    "hook": "Name a dish and the tray wakes. Correct yourself and the serving props rewind.",
+    "gesture": "Simulated speech keys, R correction, reversible prop slider, S saves the seat.",
+    "scope": "One fictional TV scene, one stall, one friend, one shared plate; setup and ending overlays.",
+    "risk": "Live recognition and correction timing require venue testing; preview inputs are authored.",
+    "recommendation": "The Second Take: protect the rewind and the saved-seat emotional ending.",
+    "palette": [
+      "#263B36",
+      "#F5EAD0",
+      "#DE694E",
+      "#6D8B71",
+      "#E9B958"
+    ],
+    "badge": "Most theatrical",
+    "artColor": "#23574a",
+    "boardUrl": "https://www.tldraw.com/f/50dZlZIK6sJ5Rh9G2C3Lz",
+    "frameCount": 12
+  },
+  {
+    "id": "03-can-lah",
+    "title": "Can Lah!",
+    "track": "Culture × Tech",
+    "tagline": "Two words. A whole world.",
+    "hook": "Keep Can lah fixed; change the exchange and its typographic, musical, and social world changes.",
+    "gesture": "Drag the words sideways and release to play; keyboard delivery slider and Play are equivalent.",
+    "scope": "One screen, three authored situations, two takes per situation, optional abstract synth sound, no live sensing.",
+    "risk": "Authored readings need local speaker review; visual/music delivery is not a model of Singlish prosody.",
+    "recommendation": "Variant A: Context strings. Keep the phrase fixed and let the relationship determine the performance.",
+    "palette": [
+      "#202520",
+      "#f3f0e5",
+      "#d5ff5f",
+      "#b9cadb",
+      "#ffa585"
+    ],
+    "badge": "Fastest way into play",
+    "artColor": "#6234c6",
+    "boardUrl": "https://www.tldraw.com/f/FD0q0Kmp6GjGqaibzevm0?d=v-80.-80.1710.1600.canlah-hero",
+    "frameCount": 12
+  },
+  {
+    "id": "04-table-chorus",
+    "title": "Table Chorus",
+    "track": "Culture × Tech",
+    "tagline": "A tissue. Two cups. A little room for someone else.",
+    "hook": "Clear a shared table: cup rings become eyes and exchanged saucer taps become the smile of a keepsake portrait.",
+    "gesture": "Chope one place, ask, make room, slide a cup closer and take turns tapping a saucer.",
+    "scope": "One top-down table, one device, two people taking turns or one person playing both roles; deterministic SVG keepsake and optional synthetic sound.",
+    "risk": "Chope etiquette varies; the trace-to-face reveal needs clear staging. Human cultural review and listening rehearsal remain outstanding.",
+    "recommendation": "A place for you: explicit invitation makes object relationships social and the final portrait concrete.",
+    "palette": [
+      "#ac4936",
+      "#fff3d9",
+      "#1c6058",
+      "#f1a697",
+      "#e4bb54"
+    ],
+    "badge": "Best together",
+    "artColor": "#285dce",
+    "boardUrl": "https://www.tldraw.com/f/sjx1JBQS1PVBhKDsPclJc",
+    "frameCount": 12
+  },
+  {
+    "id": "05-pocket-stage",
+    "title": "Pocket Stage",
+    "track": "Design × Tech",
+    "tagline": "A little light. A paper hand. A shadow with a life of its own.",
+    "hook": "Open the paper hand and its shadow becomes a moth; guide it to a flower that opens in greeting.",
+    "gesture": "Move the light with pointer or arrows; Space opens the hand. Camera tracking is a future optional input.",
+    "scope": "One SVG paper theatre, one original hand/moth silhouette, one flower, reversible controls and an in-scene ending.",
+    "risk": "Inverse light movement may need guidance; shadow geometry is stylised, and camera tracking is not implemented.",
+    "recommendation": "Build The Moth & the Light variant with direct pointer/keyboard input; protect the authored transformation and greeting before optional sensing.",
+    "palette": [
+      "#211926",
+      "#eed6a6",
+      "#eeb35b",
+      "#b66d73"
+    ],
+    "badge": "Boldest gesture",
+    "artColor": "#e64c26",
+    "boardUrl": "https://www.tldraw.com/f/ooM8LDLiMKoje5OBgYpZb",
+    "frameCount": 12
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "id": "05-pocket-stage",
+  "title": "Pocket Stage",
+  "track": "Design × Tech",
+  "tagline": "A little light. A paper hand. A shadow with a life of its own.",
+  "hook": "Open the paper hand and its shadow becomes a moth; guide it to a flower that opens in greeting.",
+  "gesture": "Move the light with pointer or arrows; Space opens the hand. Camera tracking is a future optional input.",
+  "palette": ["#211926", "#eed6a6", "#eeb35b", "#b66d73"],
+  "scope": "One SVG paper theatre, one original hand/moth silhouette, one flower, reversible controls and an in-scene ending.",
+  "risk": "Inverse light movement may need guidance; shadow geometry is stylised, and camera tracking is not implemented.",
+  "recommendation": "Build The Moth & the Light variant with direct pointer/keyboard input; protect the authored transformation and greeting before optional sensing.",
+  "boardUrl": "https://www.tldraw.com/f/ooM8LDLiMKoje5OBgYpZb",
+  "frameCount": 12
+}

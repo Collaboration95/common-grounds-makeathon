@@ -1,0 +1,291 @@
+{
+  "id": "mv3eyoo6-the-case-of-missing-omnioculars",
+  "createdAt": 1791698500024,
+  "moment": "The quidditch world cup , right before the snitch was caught",
+  "title": "The Case of Missing Omnioculars",
+  "story": "Sherlock Holmes is investigating a rash of stolen omnioculars. With every witness watching the Snitch, the thief has picked an excellent moment.",
+  "world": "Quidditch World Cup final",
+  "bg": {
+    "src": "/data/assets/mv3eyoo6-the-case-of-missing-omnioculars-scene.webp",
+    "base": "/data/assets/mv3eyoo6-the-case-of-missing-omnioculars-bg.webp",
+    "w": 1536,
+    "h": 1024
+  },
+  "baked": true,
+  "characters": [
+    {
+      "id": "c0",
+      "name": "Sherlock Holmes",
+      "role": "guest",
+      "sprite": "/data/assets/mv3eyoo6-the-case-of-missing-omnioculars-cut0.png",
+      "quips": [
+        "Curious. Everyone is looking upward.",
+        "That pocket bulges rather suspiciously.",
+        "The fingerprints are positively theatrical."
+      ],
+      "line": "The Snitch is elusive. Our pickpocket is merely overconfident.",
+      "move": "tilt",
+      "x": 0.5485026041666666,
+      "y": 0.744140625,
+      "h": 0.1201171875,
+      "portrait": "/data/assets/mv3eyoo6-the-case-of-missing-omnioculars-portrait.png"
+    },
+    {
+      "id": "c1",
+      "name": "Harry Potter",
+      "role": "resident",
+      "sprite": "/data/assets/mv3eyoo6-the-case-of-missing-omnioculars-cut1.png",
+      "quips": [
+        "He's seen it. Look!",
+        "That's an incredible dive.",
+        "Wish I were up there."
+      ],
+      "line": "Not me! You're missing the match.",
+      "move": "tilt",
+      "x": 0.08333333333333333,
+      "y": 0.353515625,
+      "h": 0.1591796875
+    },
+    {
+      "id": "c2",
+      "name": "Ron Weasley",
+      "role": "resident",
+      "sprite": "/data/assets/mv3eyoo6-the-case-of-missing-omnioculars-cut2.png",
+      "quips": [
+        "Come on, catch it!",
+        "Did you see that turn?",
+        "Those binoculars cost a fortune."
+      ],
+      "line": "Wrong bloke! I'm trying to watch!",
+      "move": "hop",
+      "x": 0.08333333333333333,
+      "y": 0.515625,
+      "h": 0.13671875
+    },
+    {
+      "id": "c3",
+      "name": "Hermione Granger",
+      "role": "resident",
+      "sprite": "/data/assets/mv3eyoo6-the-case-of-missing-omnioculars-cut3.png",
+      "quips": [
+        "The score still matters, you know.",
+        "Honestly, read the instructions.",
+        "That's a very peculiar spectator."
+      ],
+      "line": "No. Perhaps try observing more carefully.",
+      "move": "shake",
+      "x": 0.3873697916666667,
+      "y": 0.6640625,
+      "h": 0.1171875
+    },
+    {
+      "id": "c4",
+      "name": "Viktor Krum",
+      "role": "resident",
+      "sprite": "/data/assets/mv3eyoo6-the-case-of-missing-omnioculars-cut4.png",
+      "quips": [
+        "I see it.",
+        "Just a little closer.",
+        "No time for distractions."
+      ],
+      "line": "Not now. I am catching something.",
+      "move": "nod",
+      "x": 0.9283854166666666,
+      "y": 0.8916015625,
+      "h": 0.220703125
+    }
+  ],
+  "targetId": "c0",
+  "hint": {
+    "x": 0.3517340694452237,
+    "y": 0.5570411310553337,
+    "w": 0.4,
+    "h": 0.42,
+    "text": "Look in the crowd behind the foreground woman wearing a decorated hat"
+  },
+  "spots": [
+    {
+      "x": 0.071,
+      "y": 0.092,
+      "h": 0.023,
+      "area": "in the upper-left grandstand beneath the floodlight",
+      "action": "standing between seated supporters, partly hidden by their hats"
+    },
+    {
+      "x": 0.083,
+      "y": 0.331,
+      "h": 0.105,
+      "area": "beside the upper striped refreshment stall on the left",
+      "action": "waiting at the counter, partly tucked behind its wooden corner post"
+    },
+    {
+      "x": 0.176,
+      "y": 0.256,
+      "h": 0.05,
+      "area": "in the left-hand crowd just beyond the upper refreshment stall",
+      "action": "turning sideways to pass behind a supporter carrying a red flag"
+    },
+    {
+      "x": 0.304,
+      "y": 0.222,
+      "h": 0.027,
+      "area": "in the middle tier beneath the left red banner",
+      "action": "peering between two spectators while holding a small pennant"
+    },
+    {
+      "x": 0.548,
+      "y": 0.195,
+      "h": 0.022,
+      "area": "in the middle-tier crowd beneath the central hanging banner",
+      "action": "standing in a narrow gap with their legs concealed by seated spectators"
+    },
+    {
+      "x": 0.795,
+      "y": 0.241,
+      "h": 0.026,
+      "area": "in the middle stands to the right of the scoreboard",
+      "action": "leaning around a taller fan for a better view"
+    },
+    {
+      "x": 0.932,
+      "y": 0.297,
+      "h": 0.03,
+      "area": "in the right-hand middle tier above the red hanging banner",
+      "action": "cheering with one hand raised among the surrounding crowd"
+    },
+    {
+      "x": 0.333,
+      "y": 0.343,
+      "h": 0.038,
+      "area": "in the lower-left stands outside the pitch boundary",
+      "action": "sitting between supporters with their head and shoulders visible"
+    },
+    {
+      "x": 0.475,
+      "y": 0.309,
+      "h": 0.025,
+      "area": "in the lowest spectator rows behind the far goal hoops",
+      "action": "leaning forward from a seat, partly hidden by fans in the next row"
+    },
+    {
+      "x": 0.957,
+      "y": 0.495,
+      "h": 0.049,
+      "area": "in the packed lower-right stands beside the curve of the pitch",
+      "action": "standing behind a seated group and looking toward the goal hoops"
+    },
+    {
+      "x": 0.083,
+      "y": 0.496,
+      "h": 0.09,
+      "area": "at the lower green-and-white striped stall",
+      "action": "buying a drink, with their body partly hidden by the counter and a nearby customer"
+    },
+    {
+      "x": 0.23,
+      "y": 0.568,
+      "h": 0.106,
+      "area": "in the left aisle behind the red-hatted foreground spectator",
+      "action": "shuffling through the crowd, partly obscured by coats and waving flags"
+    },
+    {
+      "x": 0.387,
+      "y": 0.647,
+      "h": 0.077,
+      "area": "among the spectators just left of the foreground red lion flag",
+      "action": "holding a cup while watching between two taller fans"
+    },
+    {
+      "x": 0.548,
+      "y": 0.727,
+      "h": 0.079,
+      "area": "in the crowd behind the foreground woman wearing a decorated hat",
+      "action": "leaning sideways to see past her, with their lower body hidden"
+    },
+    {
+      "x": 0.676,
+      "y": 0.794,
+      "h": 0.094,
+      "area": "behind the newspaper reader near the front railing",
+      "action": "reading over the fan's shoulder while tucked into the surrounding spectators"
+    },
+    {
+      "x": 0.798,
+      "y": 0.823,
+      "h": 0.124,
+      "area": "just behind the snack seller's tray on the right",
+      "action": "reaching toward a popcorn tub, mostly concealed by the tray and nearby fans"
+    },
+    {
+      "x": 0.928,
+      "y": 0.861,
+      "h": 0.146,
+      "area": "between the blue-capped spectator and the green-clad fan at the lower right",
+      "action": "peeking through the gap between their shoulders to watch the match"
+    }
+  ],
+  "plan": {
+    "title": "The Case of Missing Omnioculars",
+    "story": "Sherlock Holmes is investigating a rash of stolen omnioculars. With every witness watching the Snitch, the thief has picked an excellent moment.",
+    "world": "Quidditch World Cup final",
+    "background": "Dense, colourful pixel art viewed from a wide elevated angle inside an enormous floodlit stadium at night. A grassy oval pitch lies far below towering tiers of spectators, with three tall golden goal hoops at either end. The final seconds feel frantic: a tiny golden winged speck flashes over the pitch, while scattered anonymous broom-riding athletes in red or green streak elsewhere through the air. The stands overflow with generic spectators wearing green shamrock hats or red scarves, waving flags, peering through elaborate brass binoculars, spilling drinks, arguing over betting slips and scrambling after windblown programmes. Include a dropped binocular case, a suspiciously bulging souvenir bag, dancing green lights and a snack seller whose tray is tipping. Leave small pockets among the spectators and an open patch of air near the golden speck for separately placed sprites. Background contains only anonymous extras, with none of the featured characters.",
+    "guest": {
+      "name": "Sherlock Holmes",
+      "look": "A tall, lean man around forty with a pale angular face, a long sharp nose and dark hair beneath a brown checked deerstalker cap. He wears a matching tweed cape coat over a tan waistcoat and dark trousers, holding one magnifying glass while bending slightly forward with narrowed, intensely curious eyes.",
+      "quips": [
+        "Curious. Everyone is looking upward.",
+        "That pocket bulges rather suspiciously.",
+        "The fingerprints are positively theatrical."
+      ],
+      "line": "The Snitch is elusive. Our pickpocket is merely overconfident.",
+      "move": "tilt"
+    },
+    "residents": [
+      {
+        "name": "Harry Potter",
+        "look": "A slim teenage boy with messy black hair, green eyes behind round black glasses and a small lightning-shaped forehead scar. He wears a navy zip-up jacket over a grey shirt and blue jeans, craning upward with an excited, open-mouthed expression.",
+        "quips": [
+          "He's seen it. Look!",
+          "That's an incredible dive.",
+          "Wish I were up there."
+        ],
+        "line": "Not me! You're missing the match.",
+        "move": "tilt"
+      },
+      {
+        "name": "Ron Weasley",
+        "look": "A lanky teenage boy with shaggy ginger hair, a long nose and a heavily freckled face. He wears a maroon knitted jumper and tan trousers, leaning forward with wide eyes and both empty hands raised in excitement.",
+        "quips": [
+          "Come on, catch it!",
+          "Did you see that turn?",
+          "Those binoculars cost a fortune."
+        ],
+        "line": "Wrong bloke! I'm trying to watch!",
+        "move": "hop"
+      },
+      {
+        "name": "Hermione Granger",
+        "look": "A teenage girl with a thoughtful face and thick, bushy brown hair falling past her shoulders. She wears a dusty pink zip-up hoodie and blue jeans, standing with folded arms and one eyebrow raised.",
+        "quips": [
+          "The score still matters, you know.",
+          "Honestly, read the instructions.",
+          "That's a very peculiar spectator."
+        ],
+        "line": "No. Perhaps try observing more carefully.",
+        "move": "shake"
+      },
+      {
+        "name": "Viktor Krum",
+        "look": "A muscular late-teen boy with very short dark hair, thick eyebrows, a prominent hooked nose and a fiercely concentrated expression. He wears a red athletic tunic with black trim, red trousers, leather gloves and black boots, crouched low over one wooden broom with one empty hand reaching forward.",
+        "quips": [
+          "I see it.",
+          "Just a little closer.",
+          "No time for distractions."
+        ],
+        "line": "Not now. I am catching something.",
+        "move": "nod"
+      }
+    ]
+  },
+  "mode": "draft"
+}

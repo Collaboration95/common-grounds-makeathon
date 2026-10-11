@@ -1,0 +1,20 @@
+{
+  "id": "02-living-tape",
+  "title": "The Tape Can Hear You",
+  "track": "Culture \u00d7 Tech",
+  "tagline": "An impossible welcome tape. A very ordinary wish: lunch with a friend.",
+  "hook": "Name a dish and the tray wakes. Correct yourself and the serving props rewind.",
+  "gesture": "Simulated speech keys, R correction, reversible prop slider, S saves the seat.",
+  "palette": [
+    "#263B36",
+    "#F5EAD0",
+    "#DE694E",
+    "#6D8B71",
+    "#E9B958"
+  ],
+  "scope": "One fictional TV scene, one stall, one friend, one shared plate; setup and ending overlays.",
+  "risk": "Live recognition and correction timing require venue testing; preview inputs are authored.",
+  "recommendation": "The Second Take: protect the rewind and the saved-seat emotional ending.",
+  "boardUrl": "https://www.tldraw.com/f/50dZlZIK6sJ5Rh9G2C3Lz",
+  "frameCount": 12
+}

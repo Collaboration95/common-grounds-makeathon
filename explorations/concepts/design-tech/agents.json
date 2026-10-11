@@ -1,0 +1,52 @@
+[
+  {
+    "id": "01-dot",
+    "title": "Dot — a page companion with a body",
+    "agent_id": "01a12827-da83-7951-85b5-7621841a3ec9",
+    "nickname": "Dirac",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "status": "completed",
+    "serviceTier": "Tool exposes priority support but no per-call tier control; parallel bounded tasks used."
+  },
+  {
+    "id": "02-peel",
+    "title": "Peel — the useful side of a website",
+    "agent_id": "01a12827-daf8-7db2-816f-badf046e50f8",
+    "nickname": "Kuhn",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "status": "completed",
+    "serviceTier": "Tool exposes priority support but no per-call tier control; parallel bounded tasks used."
+  },
+  {
+    "id": "03-web-magnets",
+    "title": "Web Magnets — turn the web into movable thoughts",
+    "agent_id": "01a12827-db98-7aa0-8fcf-a286fed40ca8",
+    "nickname": "Kepler",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "status": "completed",
+    "serviceTier": "Tool exposes priority support but no per-call tier control; parallel bounded tasks used."
+  },
+  {
+    "id": "04-page-orchestra",
+    "title": "Page Orchestra — conduct a website",
+    "agent_id": "01a12827-db47-74e1-acfd-e13b10ef5ff7",
+    "nickname": "Volta",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "status": "completed",
+    "serviceTier": "Tool exposes priority support but no per-call tier control; parallel bounded tasks used."
+  },
+  {
+    "id": "05-cursor-choir",
+    "title": "Cursor Choir — play alongside your past gestures",
+    "agent_id": "01a12827-dbe6-7cd2-87c7-e5fdc98863d2",
+    "nickname": "Archimedes",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "status": "completed",
+    "serviceTier": "Tool exposes priority support but no per-call tier control; parallel bounded tasks used."
+  }
+]

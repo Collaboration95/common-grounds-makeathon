@@ -1,0 +1,138 @@
+{
+  "id": "codex-great-hall",
+  "createdAt": 1791698716964,
+  "source": "codex",
+  "baked": true,
+  "moment": "The start-of-term feast in the Great Hall at Hogwarts",
+  "title": "An Ogre Gets Sorted",
+  "story": "Hufflepuff values loyalty, patience, and apparently swamp maintenance. Shrek has joined the feast, but he’s still checking whether the pumpkin juice comes with onions.",
+  "world": "The start-of-term feast fills Hogwarts’ Great Hall with floating candles, overflowing platters, and extremely questionable table manners. Find the unexpected Hufflepuff before he asks to take the leftovers home.",
+  "bg": {
+    "src": "/data/assets/codex-great-hall-scene.webp",
+    "w": 1536,
+    "h": 1024
+  },
+  "targetId": "c0",
+  "characters": [
+    {
+      "id": "c0",
+      "name": "Shrek",
+      "role": "guest",
+      "sprite": "/data/assets/codex-great-hall-hit0.png",
+      "portrait": "/data/assets/codex-great-hall-hit0.png",
+      "quips": [
+        "This castle needs a swamp.",
+        "Finally, a house with decent snacks.",
+        "Keep the sorting hat out of my ears."
+      ],
+      "line": "Yellow and black? Fine. But I’m not sharing my onions.",
+      "move": "hop",
+      "x": 0.294,
+      "y": 0.637,
+      "h": 0.151
+    },
+    {
+      "id": "c1",
+      "name": "Harry Potter",
+      "role": "resident",
+      "sprite": "/data/assets/codex-great-hall-hit1.png",
+      "quips": [
+        "Could we have one normal feast?",
+        "I haven’t even touched the treacle tart.",
+        "Try the Hufflepuff table."
+      ],
+      "line": "Not me. My scar isn’t green.",
+      "move": "shake",
+      "x": 0.127,
+      "y": 0.834,
+      "h": 0.211
+    },
+    {
+      "id": "c2",
+      "name": "Hermione Granger",
+      "role": "resident",
+      "sprite": "/data/assets/codex-great-hall-hit2.png",
+      "quips": [
+        "He’s not in Hogwarts: A History.",
+        "There must be an admissions policy.",
+        "Look carefully, not randomly."
+      ],
+      "line": "Honestly, do I look like an ogre?",
+      "move": "tilt",
+      "x": 0.20400000000000001,
+      "y": 0.7529999999999999,
+      "h": 0.172
+    },
+    {
+      "id": "c3",
+      "name": "Albus Dumbledore",
+      "role": "resident",
+      "sprite": "/data/assets/codex-great-hall-hit3.png",
+      "quips": [
+        "All appetites are welcome here.",
+        "An intriguing addition to Hufflepuff.",
+        "Perhaps offer him a lemon drop."
+      ],
+      "line": "No, merely an unusually well-bearded headmaster.",
+      "move": "nod",
+      "x": 0.639,
+      "y": 0.29000000000000004,
+      "h": 0.135
+    },
+    {
+      "id": "c4",
+      "name": "Rubeus Hagrid",
+      "role": "resident",
+      "sprite": "/data/assets/codex-great-hall-hit4.png",
+      "quips": [
+        "Seems a lovely fellow.",
+        "Bet he’d get on with Fang.",
+        "Save him a bit o’ roast."
+      ],
+      "line": "Big doesn’t mean ogre, yeh know.",
+      "move": "wave",
+      "x": 0.7545,
+      "y": 0.29400000000000004,
+      "h": 0.154
+    },
+    {
+      "id": "c5",
+      "name": "Severus Snape",
+      "role": "resident",
+      "sprite": "/data/assets/codex-great-hall-hit5.png",
+      "quips": [
+        "Do stop pointing.",
+        "An ogre. How academically promising.",
+        "Keep him away from my ingredients."
+      ],
+      "line": "Your powers of observation remain pitiful.",
+      "move": "shake",
+      "x": 0.8654999999999999,
+      "y": 0.301,
+      "h": 0.113
+    },
+    {
+      "id": "c6",
+      "name": "Minerva McGonagall",
+      "role": "resident",
+      "sprite": "/data/assets/codex-great-hall-hit6.png",
+      "quips": [
+        "No swamp water on the flagstones.",
+        "The hat’s decision is final.",
+        "Kindly remain seated during dinner."
+      ],
+      "line": "I am conducting the Sorting. Focus.",
+      "move": "tilt",
+      "x": 0.729,
+      "y": 0.639,
+      "h": 0.326
+    }
+  ],
+  "hint": {
+    "x": 0.1354002240733148,
+    "y": 0.35288141305665305,
+    "w": 0.4,
+    "h": 0.42,
+    "text": "Look behind the blond student halfway along the left-hand yellow-and-black table."
+  }
+}
