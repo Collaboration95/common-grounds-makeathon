@@ -92,19 +92,31 @@ function buildLogo() {
   }));
 }
 
-// Paint each letter with a world: its typeface, and a slice of its painting as the fill.
+// Paint one letter with a world: its typeface, and a slice of its painting as the fill.
+function paintLetter(s, g, flip) {
+  const k = Number(s.dataset.i);
+  s.dataset.world = g.id;
+  Object.assign(s.style, {
+    fontFamily: themeOf(g).font,
+    backgroundImage: `url("${g.bg.src}")`,
+    backgroundPosition: `${Math.random() * 100}% ${20 + Math.random() * 60}%`,
+  });
+  if (flip) { s.classList.remove('flip', 'glitch', 'flicker'); s.offsetWidth; if (!logoLock) { const fx = ['', 'glitch', 'flicker'][Math.floor(Math.random() * 3)]; if (fx) s.classList.add(fx); } s.style.animationDelay = logoLock ? `${k * 40}ms` : '0ms'; s.classList.add('flip'); }
+}
+
+// Like the Loki titles: every letter swaps to a random other world on its own random clock.
 function paintLogo(flip) {
   const games = state.games;
   if (!games.length) return;
-  $('#logo').querySelectorAll('.ch').forEach((s, k) => {
-    const g = logoLock ?? games[(k + logoTick) % games.length];
-    Object.assign(s.style, {
-      fontFamily: themeOf(g).font,
-      backgroundImage: `url("${g.bg.src}")`,
-      backgroundPosition: `${(k * 37) % 100}% ${30 + ((k * 23) % 40)}%`,
-    });
-    if (flip) { s.classList.remove('flip'); s.offsetWidth; s.style.animationDelay = `${k * 45}ms`; s.classList.add('flip'); }
-  });
+  $('#logo').querySelectorAll('.ch').forEach((s, k) => paintLetter(s, logoLock ?? games[(k + logoTick) % games.length], flip));
+}
+
+function scheduleLetter(s) {
+  setTimeout(() => {
+    const others = state.games.filter(g => g.id !== s.dataset.world);
+    if (!wall.hidden && !logoLock && others.length) paintLetter(s, others[Math.floor(Math.random() * others.length)], true);
+    scheduleLetter(s);
+  }, 700 + Math.random() * 2600);
 }
 
 function buildSuspects() {
@@ -131,7 +143,7 @@ function focusWorld(g) {
 }
 
 buildLogo();
-setInterval(() => { if (!wall.hidden && !logoLock) { logoTick++; paintLogo(true); } }, 2800);
+$('#logo').querySelectorAll('.ch').forEach(scheduleLetter);
 
 // ---------- World of worlds ----------
 
