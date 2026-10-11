@@ -1,0 +1,57 @@
+[
+  {
+    "id": "01-kopi-shift",
+    "title": "Kopi Shift",
+    "agent_id": "01a126c9-4fab-79a2-8933-65bdcaef0365",
+    "nickname": "Darwin",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "high",
+    "status": "completed",
+    "childAgents": 0,
+    "childAgentNote": "No nested-spawning tool was exposed to concept leads."
+  },
+  {
+    "id": "02-living-tape",
+    "title": "The Tape Can Hear You",
+    "agent_id": "01a126c9-4eff-7ea2-ab09-f8369f293e7a",
+    "nickname": "Kuhn",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "high",
+    "status": "completed",
+    "childAgents": 0,
+    "childAgentNote": "No nested-spawning tool was exposed to concept leads."
+  },
+  {
+    "id": "03-can-lah",
+    "title": "Can Lah!",
+    "agent_id": "01a126c9-5045-7043-a575-56a9b4e8acaf",
+    "nickname": "Kierkegaard",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "high",
+    "status": "completed",
+    "childAgents": 0,
+    "childAgentNote": "No nested-spawning tool was exposed to concept leads."
+  },
+  {
+    "id": "04-table-chorus",
+    "title": "Table Chorus",
+    "agent_id": "01a126c9-50df-7100-98fb-ac2e1936681d",
+    "nickname": "Maxwell",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "high",
+    "status": "completed",
+    "childAgents": 0,
+    "childAgentNote": "No nested-spawning tool was exposed to concept leads."
+  },
+  {
+    "id": "05-pocket-stage",
+    "title": "Pocket Stage",
+    "agent_id": "01a126c9-517b-7d50-96fb-8bd813f30ce4",
+    "nickname": "Leibniz",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "high",
+    "status": "completed",
+    "childAgents": 0,
+    "childAgentNote": "No nested-spawning tool was exposed to concept leads."
+  }
+]

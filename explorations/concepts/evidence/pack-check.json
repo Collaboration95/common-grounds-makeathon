@@ -1,0 +1,77 @@
+{
+  "html": [
+    {
+      "file": "index.html",
+      "missingLocalLinks": [],
+      "scriptErrors": []
+    },
+    {
+      "file": "ideas/01-kopi-shift/preview.html",
+      "missingLocalLinks": [],
+      "scriptErrors": []
+    },
+    {
+      "file": "ideas/02-living-tape/preview.html",
+      "missingLocalLinks": [],
+      "scriptErrors": []
+    },
+    {
+      "file": "ideas/03-can-lah/preview.html",
+      "missingLocalLinks": [],
+      "scriptErrors": []
+    },
+    {
+      "file": "ideas/04-table-chorus/preview.html",
+      "missingLocalLinks": [],
+      "scriptErrors": []
+    },
+    {
+      "file": "ideas/05-pocket-stage/preview.html",
+      "missingLocalLinks": [],
+      "scriptErrors": []
+    }
+  ],
+  "concepts": [
+    {
+      "id": "01-kopi-shift",
+      "missing": [],
+      "frames": 12,
+      "snapshotFrames": 12,
+      "frameCountMatches": true,
+      "boardUrl": "https://www.tldraw.com/f/VXMrudwLPzcNYmChpVg6z"
+    },
+    {
+      "id": "02-living-tape",
+      "missing": [],
+      "frames": 12,
+      "snapshotFrames": 12,
+      "frameCountMatches": true,
+      "boardUrl": "https://www.tldraw.com/f/50dZlZIK6sJ5Rh9G2C3Lz"
+    },
+    {
+      "id": "03-can-lah",
+      "missing": [],
+      "frames": 12,
+      "snapshotFrames": 12,
+      "frameCountMatches": true,
+      "boardUrl": "https://www.tldraw.com/f/FD0q0Kmp6GjGqaibzevm0?d=v-80.-80.1710.1600.canlah-hero"
+    },
+    {
+      "id": "04-table-chorus",
+      "missing": [],
+      "frames": 12,
+      "snapshotFrames": 12,
+      "frameCountMatches": true,
+      "boardUrl": "https://www.tldraw.com/f/sjx1JBQS1PVBhKDsPclJc"
+    },
+    {
+      "id": "05-pocket-stage",
+      "missing": [],
+      "frames": 12,
+      "snapshotFrames": 12,
+      "frameCountMatches": true,
+      "boardUrl": "https://www.tldraw.com/f/ooM8LDLiMKoje5OBgYpZb"
+    }
+  ],
+  "pass": true
+}

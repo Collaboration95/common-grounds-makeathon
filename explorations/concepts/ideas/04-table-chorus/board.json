@@ -1,0 +1,35 @@
+{
+  "boardId": "sjx1JBQS1PVBhKDsPclJc",
+  "url": "https://www.tldraw.com/f/sjx1JBQS1PVBhKDsPclJc",
+  "title": "04 · Table Chorus — A place for you",
+  "editable": true,
+  "frameCount": 12,
+  "pageCount": 3,
+  "shapeCount": 300,
+  "pages": [
+    {"id": "page:page", "name": "01 Hero · an invitation", "frames": [1, 2, 3, 4]},
+    {"id": "page:tc04-core", "name": "02 Core · a table portrait", "frames": [5, 6, 7, 8]},
+    {"id": "page:tc04-recovery", "name": "03 Recovery · everyone can play", "frames": [9, 10, 11, 12]}
+  ],
+  "source": "storyboard.js",
+  "snapshot": "storyboard.snapshot.json",
+  "portablePageExports": ["storyboard-01.svg", "storyboard-02.svg", "storyboard-03.svg"],
+  "screenshotVerification": {
+    "status": "verified and visually inspected",
+    "files": ["board-01.png", "board-02.png", "board-03.png"],
+    "method": "T3 initial board creation using window.editor; isolated Playwright browser screenshots after T3 host disconnect; local images inspected with view_image.",
+    "mcpScreenshotAvailable": false
+  },
+  "remotePersistence": {
+    "status": "verified",
+    "shapesBeforeReload": 300,
+    "shapesAfterReload": 300,
+    "framesAfterReload": 12,
+    "freshBrowserSessionCount": 300,
+    "evidence": "qa-results.json",
+    "note": "A fresh anonymous browser context read the previously saved remote shapes before source replay, then reload retained all shapes. No authentication or local snapshot loading was needed."
+  },
+  "connectorLimitation": "tldraw MCP open_board returned opening, exec reported board not open. Browser editor worked; T3 host subsequently disconnected. No repeated T3 retries.",
+  "verifiedDate": "2026-10-11",
+  "childAgentId": null
+}

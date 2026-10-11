@@ -1,0 +1,14 @@
+{
+  "id": "04-table-chorus",
+  "title": "Table Chorus",
+  "track": "Culture × Tech",
+  "tagline": "A tissue. Two cups. A little room for someone else.",
+  "hook": "Clear a shared table: cup rings become eyes and exchanged saucer taps become the smile of a keepsake portrait.",
+  "gesture": "Chope one place, ask, make room, slide a cup closer and take turns tapping a saucer.",
+  "palette": ["#ac4936", "#fff3d9", "#1c6058", "#f1a697", "#e4bb54"],
+  "scope": "One top-down table, one device, two people taking turns or one person playing both roles; deterministic SVG keepsake and optional synthetic sound.",
+  "risk": "Chope etiquette varies; the trace-to-face reveal needs clear staging. Human cultural review and listening rehearsal remain outstanding.",
+  "recommendation": "A place for you: explicit invitation makes object relationships social and the final portrait concrete.",
+  "boardUrl": "https://www.tldraw.com/f/sjx1JBQS1PVBhKDsPclJc",
+  "frameCount": 12
+}

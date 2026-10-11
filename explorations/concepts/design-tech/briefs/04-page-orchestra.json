@@ -1,0 +1,55 @@
+{
+  "id": "04-page-orchestra",
+  "title": "Page Orchestra — Margin Sweep",
+  "oneLiner": "Sweep down a webpage’s margin to hear its headings and text as a brief composition, with spacing, columns and images shaping the performance.",
+  "targetFeeling": "This familiar page was quietly a score.",
+  "gesture": "After explicitly enabling sound, drag downward in the left margin; hand speed controls tempo. A focused Conduct button activated with Enter runs an eight-second sweep. Upward movement does not retrigger events.",
+  "magicMoment": "A heading answers the hand with bass; changing to a two-column page creates simultaneous events and different rests under exactly the same rules.",
+  "example": [
+    "A fictional library guide loads muted: one title, two section headings, three paragraphs and a large photograph.",
+    "Enable sound and sweep: headings give bass, paragraph punctuation gives soft taps, and the photograph holds a silent visual pad.",
+    "Release to restore the page; switch to a two-column museum visit fixture and hear paired events, fewer taps and wider pauses."
+  ],
+  "must": [
+    "Use the same mapper on both structurally different fixtures: at most 16 visible h1/h2/p/img nodes inside main, with boxes clipped to the viewport. Heading centres trigger 350 ms triangle C2/G2 notes; up to four sentence-ending punctuation fractions per paragraph trigger 45 ms filtered-noise taps along its height, or one final tap without punctuation. Images are silent visual pads; gaps are rests; horizontal centres set modest stereo position.",
+    "Support pointer and keyboard sweeps with corresponding local outlines/underlines, once-only events per pass, and at most four simultaneous audio voices.",
+    "Start muted; explicit Enable sound resumes Web Audio. Provide volume, mute and Escape stop; synthesize locally with oscillator/noise and gain envelopes.",
+    "Use one removable SVG overlay, preserve source text/styles/links/scroll position, and clear the performance within 400 ms on release, completion or a ten-second timeout while silencing all tails.",
+    "Cancel on scroll/resize and remeasure on the next pass. Exclude navigation, forms and unsupported nodes.",
+    "Use gentle fades without flashes or strobe; provide static reduced-motion highlighting and a complete muted interaction."
+  ],
+  "nonGoals": [
+    "AI music, speech or semantic content analysis.",
+    "Universal webpage support, embedded frames or complex app DOMs.",
+    "Recording, looping, sharing, camera gestures or instrument editing."
+  ],
+  "demo": [
+    { "seconds": "0–15", "action": "Show the ordinary library guide and silent first sweep; identify the margin gesture." },
+    { "seconds": "15–35", "action": "Enable sound; conduct a slow pass and name bass, punctuation taps and the photograph’s rest." },
+    { "seconds": "35–45", "action": "Release and show the restored reading view." },
+    { "seconds": "45–65", "action": "Switch to the museum fixture; repeat at similar speed and show simultaneous columns and shorter rhythms." },
+    { "seconds": "65–80", "action": "Run the keyboard sweep, then Escape to demonstrate recovery." },
+    { "seconds": "80–90", "action": "Explain that page composition is the score; end on the ordinary page." }
+  ],
+  "buildHours": 5,
+  "risk": "Geometry-driven timing may sound cluttered, and C2/G2 bass may disappear on laptop speakers. Audition first and reduce the node cap to eight if needed. Arbitrary-page extraction and cleanup remain unproven.",
+  "fallback": "Use the eight-second keyboard sweep over measured geometry if dragging fails. If venue audio fails, demonstrate muted mapping without treating it as proof of sound quality.",
+  "verdict": "Recommend a controlled local stage with two fixtures, direct geometry mapping and reliable restoration. Extension integration earns its place later only if an unprepared public page is essential and the same mapper works on two agreed pages with clean removal and no site-specific selectors; use user-invoked activeTab/scripting injection. Sharpen the seed by making whitespace and column alignment audible.",
+  "sources": [
+    {
+      "title": "MDN — Web Audio API best practices",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices",
+      "takeaway": "Observed: oscillator/buffer synthesis, user-gesture context startup, audio controls and gain scheduling. Design inference: a gentle, bounded local sound palette."
+    },
+    {
+      "title": "MDN — Element.getBoundingClientRect()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect",
+      "takeaway": "Observed: viewport-relative element geometry changes with scrolling. Design inference: vertical spacing becomes rests, alignment becomes simultaneous events, and scroll cancels the snapshot."
+    },
+    {
+      "title": "Chrome for Developers — scripting API",
+      "url": "https://developer.chrome.com/docs/extensions/reference/api/scripting",
+      "takeaway": "Observed: scripting plus activeTab permits temporary host access and script injection defaults to an isolated world. Design inference: user-invoked overlay integration is a later step; cleanup reliability still needs validation."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id":"03-can-lah",
+  "title":"Can Lah!",
+  "track":"Culture × Tech",
+  "tagline":"Two words. A whole world.",
+  "hook":"Keep Can lah fixed; change the exchange and its typographic, musical, and social world changes.",
+  "gesture":"Drag the words sideways and release to play; keyboard delivery slider and Play are equivalent.",
+  "palette":["#202520","#f3f0e5","#d5ff5f","#b9cadb","#ffa585"],
+  "scope":"One screen, three authored situations, two takes per situation, optional abstract synth sound, no live sensing.",
+  "risk":"Authored readings need local speaker review; visual/music delivery is not a model of Singlish prosody.",
+  "recommendation":"Variant A: Context strings. Keep the phrase fixed and let the relationship determine the performance.",
+  "boardUrl":"https://www.tldraw.com/f/FD0q0Kmp6GjGqaibzevm0?d=v-80.-80.1710.1600.canlah-hero",
+  "frameCount":12
+}

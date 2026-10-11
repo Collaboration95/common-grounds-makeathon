@@ -1,0 +1,14 @@
+{
+  "boardId": "Ulim0f0KWaETvnqEu-O5a",
+  "url": "https://www.tldraw.com/f/Ulim0f0KWaETvnqEu-O5a",
+  "shapeCount": 77,
+  "conceptFrames": 5,
+  "sameContextReloadVerified": true,
+  "remotePersistenceIndependentContextVerified": true,
+  "localSnapshot": "overview.snapshot.json",
+  "localSVG": "overview.svg",
+  "source": "overview.js",
+  "note": "Created with authenticated tldraw connector; edited with the T3 browser editor after the MCP panel did not connect. Empty default page removed; overview is the sole page. Local SVG and snapshot retained.",
+  "pageCount": 1,
+  "independentContextEvidence": "../ideas/04-table-chorus/shared-board-persistence.json"
+}

@@ -1,0 +1,409 @@
+[
+  {
+    "id": "01-dot",
+    "title": "Dot — the living footnote",
+    "oneLiner": "A small expressive dot carries a question to the exact on-page words or link that answer it, then anchors your local note there.",
+    "targetFeeling": "A little reader shares your attention; you see exactly where its answer comes from.",
+    "gesture": "Drag Dot onto a paragraph, menu section, or captioned photo; ask one short question; follow its landing; select text to pin a note.",
+    "magicMoment": "Dot leaves the terrace photo, rolls to the policy sentence, and replies beside the highlighted words; missing evidence brings it home.",
+    "example": [
+      "Drop Dot onto the restaurant terrace photo and ask: Smoking allowed? The caption sets context.",
+      "Dot lands beside Smoking permitted only in the designated terrace area and preserves the qualification.",
+      "On the unstated-policy variant, Dot returns to the photo: Page does not say. An outdoor photo is not permission."
+    ],
+    "must": [
+      "Toolbar-invoked unpacked MV3 extension with activeTab, scripting and storage; three localhost reference pages: /permitted.html, /prohibited.html, /unstated.html; reject unsupported pages.",
+      "Expressive 28-pixel draggable body; highlighted paragraph/menu/photo target; caption or alt text for photos; one question up to 160 characters; smoking and Book intents.",
+      "Scroll and travel to exact highlighted source text; adjacent reply up to 30 words preserving qualifications; distinguish absent evidence, unsupported question, and extraction failure.",
+      "One real constrained model call if credentials are ready: Ask previews explicitly selected context and local evidence, at most 1,200 characters; validate returned evidence ID and verbatim quote, then render a reviewed reply preserving qualifications; fixed code controls actions.",
+      "One editable local text-anchored note; URL, exact quote, and surrounding text stored locally; reload restore and scroll/resize positioning; missing anchor shows Original text changed.",
+      "Point to original Book anchor and destination; only the user's click opens /booking-info.html, the fictional booking-information landing page; no booking form interaction."
+    ],
+    "nonGoals": [
+      "Universal sites, Gmail, PDFs, iframes, hidden content, image understanding, and dynamic-page anchor repair.",
+      "Chat history, multiple pets, proactive advice, general browsing, and cross-page research.",
+      "Completed bookings, form filling, messages, accounts, note sync, and publishing."
+    ],
+    "demo": [
+      {
+        "seconds": "0–12",
+        "action": "Invoke Dot on the fictional restaurant; drag it for a squishy landing."
+      },
+      {
+        "seconds": "12–30",
+        "action": "Drop on the terrace photo; ask Smoking allowed?; submit bounded evidence preview."
+      },
+      {
+        "seconds": "30–45",
+        "action": "Follow Dot to the exact permission sentence and designated-area condition."
+      },
+      {
+        "seconds": "45–60",
+        "action": "Repeat on the unstated variant; Dot returns with Page does not say."
+      },
+      {
+        "seconds": "60–72",
+        "action": "Select text, pin Ask about terrace seating, and scroll to show attachment."
+      },
+      {
+        "seconds": "72–90",
+        "action": "Ask Where can I book?; follow Dot to the original Book link; click and stop at booking information."
+      }
+    ],
+    "buildHours": 5,
+    "risk": "Stable source extraction, precise text anchoring, and legible travel across page layouts are harder than giving Dot personality; static fixtures do not establish arbitrary-site competence.",
+    "fallback": "Reviewed smoking/Book intents resolve deterministically to checked DOM quotes or reviewed page absence. Label Local evidence. Unsupported questions abstain; failed extraction or quote mismatch never means page does not say. Cut model integration after 45 minutes without a reliable round trip.",
+    "verdict": "Recommend the living-footnote version: every answer has a landing place; missing evidence brings Dot home. Spend the five hours on pointing, evidence travel, one local pin, and the original Book link.",
+    "sources": [
+      {
+        "title": "Chrome Extensions — activeTab",
+        "url": "https://developer.chrome.com/docs/extensions/develop/concepts/activeTab",
+        "takeaway": "Observed documentation: explicit invocation grants temporary current-tab access; scripting allows injection; same-origin navigation can retain access. Design inference: enforce a separate three-page support boundary."
+      },
+      {
+        "title": "Chrome Extensions — Content scripts",
+        "url": "https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts",
+        "takeaway": "Observed documentation: content scripts access page DOM from isolated JavaScript execution. Design inference: a resident overlay is plausible, but layout compatibility remains unproven."
+      },
+      {
+        "title": "W3C CSSOM View — Range.getClientRects",
+        "url": "https://www.w3.org/TR/cssom-view-1/#dom-range-getclientrects",
+        "takeaway": "Observed specification: selected text has rectangles; returned geometry is not live. Design inference: exact landings and pins need recomputation after scroll or resize."
+      }
+    ]
+  },
+  {
+    "id": "02-peel",
+    "title": "Peel — the useful side of a website",
+    "oneLiner": "Pull a website’s corner back to reveal its existing reservation doorway, field entrances and policy text, tethered to their origins.",
+    "targetFeeling": "Curiosity followed by relief: the useful bits were inside this object.",
+    "gesture": "Drag one raised corner inward for a continuous reveal; release to latch open, reverse to close. Escape and keyboard equivalents remain available.",
+    "magicMoment": "The original reservation label lifts from its outlined navigation source into the folded underside while a visible tether stays attached; closing retracts it.",
+    "example": [
+      "Pull the corner on Linen, a prepared fictional restaurant page; a shaded flap follows your hand while the original website stays visible.",
+      "Choose Table for two; the reservation doorway, guest-field entrance and original booking condition gather underneath. Tap the entrance and manually choose two in the original selector.",
+      "Reopen for literal smoking text and its source; refold to restore the page. Roof, a second prepared fixture, explicitly has no smoking policy to reveal."
+    ],
+    "must": [
+      "Exactly two local restaurant fixtures, Linen and Roof, with declared DOM selectors and disclosed prepared mapping; derive content from the page rather than hardcoded answers.",
+      "One continuously draggable corner, latched open state, reverse/Escape closure, keyboard equivalent and reduced-motion behavior.",
+      "Exactly two intent chips, Table for two and Smoking policy, with at most three revealed items; include literal booking conditions and a page-scoped missing-policy state.",
+      "Origin labels, tethers to visible source outlines or labelled offscreen edge markers, and Show original that closes, scrolls to and highlights the actual source node.",
+      "Preserve source link destinations; project fields only as entrances that focus native controls for manual edits. Never duplicate widgets or submit reservations.",
+      "Add only an overlay; retain source nodes and restore pre-open scroll/focus on closure except explicit origin handoff. Preserve native field edits."
+    ],
+    "nonGoals": [
+      "Arbitrary websites, third-party booking-widget reconstruction, availability checks or booking automation.",
+      "Summaries, chatbots, open-ended page questions or AI-generated policies.",
+      "Persistent redesign, blanket content stripping, accounts or saved workspaces."
+    ],
+    "demo": [
+      {
+        "seconds": "0–10",
+        "action": "Pull Linen’s corner and show the reservation label rise from its outlined origin."
+      },
+      {
+        "seconds": "10–30",
+        "action": "Choose Table for two; show the tether and unchanged booking condition."
+      },
+      {
+        "seconds": "30–45",
+        "action": "Tap the guest-field entrance; manually set the original selector to two. Stop before submission."
+      },
+      {
+        "seconds": "45–65",
+        "action": "Reopen for smoking text; Show original reveals the matching passage."
+      },
+      {
+        "seconds": "65–80",
+        "action": "Switch to Roof and demonstrate No smoking policy found on this page."
+      },
+      {
+        "seconds": "80–90",
+        "action": "Reverse the fold and reveal the intact website: Same website, useful side."
+      }
+    ],
+    "buildHours": 5,
+    "buildPlan": [
+      {
+        "hours": "0–1",
+        "action": "Prove corner motion and one tethered link; refine the gesture before adding features."
+      },
+      {
+        "hours": "1–2",
+        "action": "Prepare the second fixture and declared DOM maps; read literal content and destinations."
+      },
+      {
+        "hours": "2–3",
+        "action": "Finish both intents, native-field handoff and source highlighting."
+      },
+      {
+        "hours": "3–4",
+        "action": "Finish absence state, restoration, keyboard control and reduced motion."
+      },
+      {
+        "hours": "4–5",
+        "action": "Verify both fixtures and rehearse; cut sound, complex curl geometry and extra fields first."
+      }
+    ],
+    "minimumStack": "Local HTML/CSS/JavaScript, pointer events and CSS/SVG flap/tethers; two labelled fictional restaurant fixtures, one native guest field and short source passages. No model, backend or installation required for the demo.",
+    "acceptance": [
+      "Two of three unfamiliar viewers identify the revealed control’s origin within ten seconds without narration.",
+      "Projected destinations and policy text match their source; handoff focuses the correct native guest selector and preserves its edit.",
+      "Ten open/close cycles restore scroll/focus and retain source nodes; Roof reports absence without inventing a rule."
+    ],
+    "risk": "Tactile motion needs early proof. Copying arbitrary interactive widgets may lose behavior; this MVP keeps native fields at their source and makes no broad compatibility claim.",
+    "fallback": "Replace realistic curl geometry with a triangular hinged flap; preserve continuous drag, source tethers, both fixtures and reversal.",
+    "verdict": "Credible five-hour interaction demo with prepared mappings. Make the tether the central invention: each useful piece visibly remains attached to its website. Broad site compatibility remains unproven.",
+    "sources": [
+      {
+        "title": "Chrome for Developers — Content scripts",
+        "url": "https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts",
+        "takeaway": "Observed: content scripts inspect shared DOM while JavaScript environments are isolated. Inference: future extension projections are plausible, but copied widget behavior is not established."
+      },
+      {
+        "title": "Apple Support — Hide distractions when reading articles in Safari on Mac",
+        "url": "https://support.apple.com/guide/safari/hide-distractions-when-reading-sfri32632/mac",
+        "takeaway": "Observed: Reader reformats supported articles without navigation distractions. Inference: Peel needs an action surface, source attachment and reversible movement to distinguish itself."
+      },
+      {
+        "title": "Dishoom — Bookings and Reservations",
+        "url": "https://www.dishoom.com/reservations/",
+        "takeaway": "Observed: time/group booking restrictions and an external SevenRooms link appear on the page. Inference: reveal original conditions with the doorway; link extraction does not establish booking feasibility."
+      }
+    ]
+  },
+  {
+    "id": "03-web-magnets",
+    "title": "Web Magnets — Caption Split",
+    "oneLiner": "Tear a phrase and photo from two pages into a floating margin; slide words through the photo to open a tiny poster with source threads.",
+    "targetFeeling": "I made those two things say something together: playful editorial surprise through spatial juxtaposition.",
+    "gesture": "Drag a verbatim phrase across a photo's horizontal seam; attraction within 24 pixels previews the snap. Release to compose; pull the phrase away to unpair.",
+    "magicMoment": "KEEP MOVING splits a snail photo into two intact halves around a white text band: an absurd motivational poster. TAKE YOUR TIME changes its meaning using the same rule.",
+    "example": [
+      "Select KEEP MOVING on the authored Instructions for a busy day fixture; pin the words into the margin.",
+      "Pin the team's own snail photo from Things outside my window; one board holds three phrases and two photos.",
+      "Snap words into the snail's seam, then unpair and swap to TAKE YOUR TIME; both sources remain attached."
+    ],
+    "must": [
+      "Two labelled localhost fixtures with three authored phrases and two team-owned photos: KEEP MOVING, TAKE YOUR TIME, DO NOT DISTURB, snail, spinning fan.",
+      "Explicit selection or image context-menu capture pins only the chosen item, with a lift animation; originals stay on the page.",
+      "One floating board shared across page invocations, local coordinates and provenance, maximum six inputs; five in the demo.",
+      "One physical snap grammar: separate intact image halves around a fitted verbatim text band, retain source tags, drag to unpair, one pair at a time.",
+      "Preserve exact text, owned asset ID, URL/title and anchor; a thin thread highlights a visible origin, while an off-page source uses a labelled return chip.",
+      "Live source return, phrase replacement after unpairing, and reset; both source tags remain visible on the composition."
+    ],
+    "nonGoals": [
+      "Searchable archive, folders, accounts, or summariser.",
+      "AI rewriting or inferred relationships, multiple snap grammars, multi-image layouts, or typography editing.",
+      "Universal site support, arbitrary third-party artwork capture, or image/PDF export."
+    ],
+    "demo": [
+      {
+        "seconds": "0–15",
+        "action": "Select KEEP MOVING on fixture A and pin it; show the lift into the margin."
+      },
+      {
+        "seconds": "15–30",
+        "action": "Switch to B, invoke the margin, and pin the snail; three preloaded fixture selections complete the five-item board."
+      },
+      {
+        "seconds": "30–50",
+        "action": "Snap the phrase into the photo seam; pause on the absurd split-photo poster."
+      },
+      {
+        "seconds": "50–65",
+        "action": "Unpair and snap TAKE YOUR TIME into the same photo; explain that the person supplies the interpretation."
+      },
+      {
+        "seconds": "65–80",
+        "action": "Hover both source tags, follow A's return chip, and show the exact original phrase highlighted."
+      },
+      {
+        "seconds": "80–90",
+        "action": "Return to the poster: a thought made by putting two sources together."
+      }
+    ],
+    "buildHours": 5,
+    "buildPlan": [
+      "Hour 1: prove seam transformation, reversal, and readable poster; cut decorative motion if needed.",
+      "Hour 2: connect live selection and owned-image capture on both fixtures; choose fallback if capture is unreliable.",
+      "Hour 3: shared local board state, provenance anchors, source return, and reset.",
+      "Hour 4: phrase swapping, pointer feedback, text fitting, and five-item layout.",
+      "Hour 5: acceptance checks, rehearsal, and scope freeze."
+    ],
+    "minimumStack": "Plain JavaScript/CSS/SVG overlay, Manifest V3 extension, local state, two local HTML fixtures and team-owned photos; no framework, backend, or model.",
+    "realVsAuthored": "Live: selection, drag, snap, unpair, source return. Authored: labelled fixture pages, phrases, owned photos, asset mappings, seam geometry and motion. Text and photos remain unchanged; juxtaposition and layout create the new composition. No semantic detection.",
+    "acceptanceChecks": [
+      "Both source pages contribute to one five-item board without losing positions.",
+      "An unfamiliar tester snaps then unpairs a phrase/photo within ten seconds of seeing the seam cue.",
+      "Both source tags return to exact fixture origins; verbatim text survives phrase swapping."
+    ],
+    "risk": "Reliable cross-page capture and source return within five hours; controlled anchors and owned assets bound the risk, while arbitrary web image retrieval is unproven.",
+    "fallback": "The same two fixture documents inside one local demo shell with a persistent margin and live capture/snapping; disclose simulated navigation and absent extension integration.",
+    "verdict": "Recommend the bounded fixture version. Improve magnetic clippings by making words physically open an image to become its voice; the transformation earns the concept beyond a moodboard.",
+    "sources": [
+      {
+        "title": "Chrome activeTab",
+        "url": "https://developer.chrome.com/docs/extensions/develop/concepts/activeTab",
+        "takeaway": "Observed: user invocation grants temporary page access, revoked across origins. Inference: invoke on each source page and maintain board continuity separately in local state."
+      },
+      {
+        "title": "Chrome contextMenus",
+        "url": "https://developer.chrome.com/docs/extensions/reference/api/contextMenus",
+        "takeaway": "Observed: selectionText, pageUrl and srcUrl are supplied. Inference: text capture is straightforward; an image URL does not establish retrievable bytes or reuse permission, so map owned fixture assets."
+      },
+      {
+        "title": "Whitney Museum: John Baldessari",
+        "url": "https://whitney.org/artists/55",
+        "takeaway": "Observed: Whitney describes snapshots paired with didactic text and meaning changing with context. Inference: one verbatim imperative plus an incongruous owned photo can carry the demo; no artwork is copied."
+      }
+    ]
+  },
+  {
+    "id": "04-page-orchestra",
+    "title": "Page Orchestra — Margin Sweep",
+    "oneLiner": "Sweep down a webpage’s margin to hear its headings and text as a brief composition, with spacing, columns and images shaping the performance.",
+    "targetFeeling": "This familiar page was quietly a score.",
+    "gesture": "After explicitly enabling sound, drag downward in the left margin; hand speed controls tempo. A focused Conduct button activated with Enter runs an eight-second sweep. Upward movement does not retrigger events.",
+    "magicMoment": "A heading answers the hand with bass; changing to a two-column page creates simultaneous events and different rests under exactly the same rules.",
+    "example": [
+      "A fictional library guide loads muted: one title, two section headings, three paragraphs and a large photograph.",
+      "Enable sound and sweep: headings give bass, paragraph punctuation gives soft taps, and the photograph holds a silent visual pad.",
+      "Release to restore the page; switch to a two-column museum visit fixture and hear paired events, fewer taps and wider pauses."
+    ],
+    "must": [
+      "Use the same mapper on both structurally different fixtures: at most 16 visible h1/h2/p/img nodes inside main, with boxes clipped to the viewport. Heading centres trigger 350 ms triangle C2/G2 notes; up to four sentence-ending punctuation fractions per paragraph trigger 45 ms filtered-noise taps along its height, or one final tap without punctuation. Images are silent visual pads; gaps are rests; horizontal centres set modest stereo position.",
+      "Support pointer and keyboard sweeps with corresponding local outlines/underlines, once-only events per pass, and at most four simultaneous audio voices.",
+      "Start muted; explicit Enable sound resumes Web Audio. Provide volume, mute and Escape stop; synthesize locally with oscillator/noise and gain envelopes.",
+      "Use one removable SVG overlay, preserve source text/styles/links/scroll position, and clear the performance within 400 ms on release, completion or a ten-second timeout while silencing all tails.",
+      "Cancel on scroll/resize and remeasure on the next pass. Exclude navigation, forms and unsupported nodes.",
+      "Use gentle fades without flashes or strobe; provide static reduced-motion highlighting and a complete muted interaction."
+    ],
+    "nonGoals": [
+      "AI music, speech or semantic content analysis.",
+      "Universal webpage support, embedded frames or complex app DOMs.",
+      "Recording, looping, sharing, camera gestures or instrument editing."
+    ],
+    "demo": [
+      {
+        "seconds": "0–15",
+        "action": "Show the ordinary library guide and silent first sweep; identify the margin gesture."
+      },
+      {
+        "seconds": "15–35",
+        "action": "Enable sound; conduct a slow pass and name bass, punctuation taps and the photograph’s rest."
+      },
+      {
+        "seconds": "35–45",
+        "action": "Release and show the restored reading view."
+      },
+      {
+        "seconds": "45–65",
+        "action": "Switch to the museum fixture; repeat at similar speed and show simultaneous columns and shorter rhythms."
+      },
+      {
+        "seconds": "65–80",
+        "action": "Run the keyboard sweep, then Escape to demonstrate recovery."
+      },
+      {
+        "seconds": "80–90",
+        "action": "Explain that page composition is the score; end on the ordinary page."
+      }
+    ],
+    "buildHours": 5,
+    "risk": "Geometry-driven timing may sound cluttered, and C2/G2 bass may disappear on laptop speakers. Audition first and reduce the node cap to eight if needed. Arbitrary-page extraction and cleanup remain unproven.",
+    "fallback": "Use the eight-second keyboard sweep over measured geometry if dragging fails. If venue audio fails, demonstrate muted mapping without treating it as proof of sound quality.",
+    "verdict": "Recommend a controlled local stage with two fixtures, direct geometry mapping and reliable restoration. Extension integration earns its place later only if an unprepared public page is essential and the same mapper works on two agreed pages with clean removal and no site-specific selectors; use user-invoked activeTab/scripting injection. Sharpen the seed by making whitespace and column alignment audible.",
+    "sources": [
+      {
+        "title": "MDN — Web Audio API best practices",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices",
+        "takeaway": "Observed: oscillator/buffer synthesis, user-gesture context startup, audio controls and gain scheduling. Design inference: a gentle, bounded local sound palette."
+      },
+      {
+        "title": "MDN — Element.getBoundingClientRect()",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect",
+        "takeaway": "Observed: viewport-relative element geometry changes with scrolling. Design inference: vertical spacing becomes rests, alignment becomes simultaneous events, and scroll cancels the snapshot."
+      },
+      {
+        "title": "Chrome for Developers — scripting API",
+        "url": "https://developer.chrome.com/docs/extensions/reference/api/scripting",
+        "takeaway": "Observed: scripting plus activeTab permits temporary host access and script injection defaults to an isolated world. Design inference: user-invoked overlay integration is a later step; cleanup reliability still needs validation."
+      }
+    ]
+  },
+  {
+    "id": "05-cursor-choir",
+    "title": "Cursor Choir — catch your past hand",
+    "oneLiner": "Record a gesture, cross its ghost's bright moving tail to pluck it, then tug time until three past hands answer each other.",
+    "targetFeeling": "My earlier hand is still here, and I can play with it; an instant self-duet.",
+    "gesture": "Hold to record up to four seconds; release to replay. Cross another ghost's bright tail; tug its origin time knot horizontally to shift phase.",
+    "magicMoment": "The same two paths first miss, then pluck each other after one time tug; the receiving ribbon and ghost rebound.",
+    "example": [
+      "Draw and release a two-second sideways arc; a numbered ghost repeats immediately.",
+      "Draw through its bright tail; the earlier ribbon and ghost rebound. Release take two.",
+      "Tug phase to restore an encounter; add take three yourself or let an audience member contribute, then frame the motion postcard."
+    ],
+    "must": [
+      "Capture held pointer positions and timestamps for up to four seconds; release starts replay while another take can be recorded.",
+      "Three numbered ghosts with faint full paths and bright 0.8-second tails; four-second laps preserve recorded speed and pauses, wait at endpoint, and fade at wrap.",
+      "Live or replayed moving segments pluck another take only at its bright tail; no self-crossings, wrap collisions or repeated contact chatter.",
+      "Receiving ribbon and ghost visibly rebound for about 250 ms; origin time knots scrub and retain phase without changing paths.",
+      "Undo-last, restart and pointer-cancellation recovery.",
+      "Frame a repeating four-second motion postcard with Replay/Restart on the same canvas."
+    ],
+    "nonGoals": [
+      "No extension, external click replay, accounts, camera or model; dedicated canvas only.",
+      "No timeline editor, extra layers, physical string simulation, variable loop lengths or speed stretching.",
+      "No sound, media export, cloud sharing or simultaneous multiplayer; audience contributes through the same pointer."
+    ],
+    "demo": [
+      {
+        "seconds": "0–10",
+        "action": "Introduce collaboration with your past hand; draw and release an arc."
+      },
+      {
+        "seconds": "10–25",
+        "action": "Cross its bright tail, show rebound, and release take two."
+      },
+      {
+        "seconds": "25–45",
+        "action": "Show a miss; tug phase until the same paths pluck each other."
+      },
+      {
+        "seconds": "45–65",
+        "action": "Invite one audience gesture through the meeting area; presenter fills take three if needed."
+      },
+      {
+        "seconds": "65–80",
+        "action": "Watch three takes answer over several laps; frame the postcard."
+      },
+      {
+        "seconds": "80–90",
+        "action": "Replay the postcard and state the temporal interaction."
+      }
+    ],
+    "buildHours": 5,
+    "risk": "Main uncertainty is whether bright-tail encounters and phase-induced changes read clearly among overlapping paths; prove one live pluck in hour one.",
+    "fallback": "Widen bright tails from 0.8 to 1.4 seconds and use a rehearsed central arc/cross. Preserve conditional plucking; trails alone fail the concept.",
+    "verdict": "Recommend if the first-hour pluck reads clearly. Core improvement: faded-path crossings do nothing, so time determines whether your past hand answers.",
+    "sources": [
+      {
+        "title": "W3C Pointer Events",
+        "url": "https://www.w3.org/TR/pointerevents3/",
+        "takeaway": "Observed: capture redirects subsequent pointer events; cancellation ends streams. Inference: handle cancellation explicitly for reliable held gestures."
+      },
+      {
+        "title": "MDN requestAnimationFrame",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame",
+        "takeaway": "Observed: callbacks provide timestamps, follow display refresh and commonly pause in background tabs. Inference: elapsed-time playback with pause/rebase on hide."
+      },
+      {
+        "title": "Richard C. Davis: K-Sketch, UC Berkeley",
+        "url": "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-171.html",
+        "takeaway": "Observed: pen input demonstrates animation motion. Inference: record/replay alone is insufficient; conditional encounters make time the material. No novelty claim."
+      }
+    ]
+  }
+]

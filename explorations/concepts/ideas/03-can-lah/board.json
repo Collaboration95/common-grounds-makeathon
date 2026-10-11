@@ -1,0 +1,68 @@
+{
+  "boardId": "FD0q0Kmp6GjGqaibzevm0",
+  "url": "https://www.tldraw.com/f/FD0q0Kmp6GjGqaibzevm0?d=v-80.-80.1710.1600.canlah-hero",
+  "before": [
+    {
+      "id": "page:canlah-hero",
+      "count": 137
+    },
+    {
+      "id": "page:canlah-core",
+      "count": 147
+    },
+    {
+      "id": "page:canlah-recovery",
+      "count": 141
+    }
+  ],
+  "after": [
+    {
+      "id": "page:canlah-hero",
+      "count": 137
+    },
+    {
+      "id": "page:canlah-core",
+      "count": 147
+    },
+    {
+      "id": "page:canlah-recovery",
+      "count": 141
+    }
+  ],
+  "sameContextReload": true,
+  "independentContext": {
+    "pages": [
+      {
+        "id": "page:page",
+        "count": 0
+      },
+      {
+        "id": "page:canlah-hero",
+        "count": 137
+      },
+      {
+        "id": "page:canlah-core",
+        "count": 147
+      },
+      {
+        "id": "page:canlah-recovery",
+        "count": 141
+      }
+    ]
+  },
+  "remotePersistenceVerified": true,
+  "localSnapshot": "storyboard.snapshot.json",
+  "editableFrameCount": 12,
+  "authNotice": "The fresh browser displays Sign in to share, yet independently loads all 425 remote shapes. Persistence was verified by exact counts, not by this notice.",
+  "screenshotVerification": {
+    "pass1": "Initial board screenshot inspected in tool history; original file was overwritten by a harness rerun",
+    "pass2": [
+      "evidence/board-pass2-hero.png",
+      "evidence/board-pass2-core.png",
+      "evidence/board-pass2-recovery.png"
+    ]
+  },
+  "screenshotVerificationStatus": "Three final storyboard pages visually inspected; initial board inspected in tool history.",
+  "childAgentId": null,
+  "shapeCount": 425
+}

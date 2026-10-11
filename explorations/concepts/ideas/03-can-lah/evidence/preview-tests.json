@@ -1,0 +1,73 @@
+{
+  "tests": [
+    {
+      "label": "file protocol opens with no script error",
+      "pass": true
+    },
+    {
+      "label": "keyboard plays seat reaction",
+      "pass": true
+    },
+    {
+      "label": "firm rain authored take",
+      "pass": true
+    },
+    {
+      "label": "soft rain authored take",
+      "pass": true
+    },
+    {
+      "label": "firm teammate authored take",
+      "pass": true
+    },
+    {
+      "label": "gentle teammate authored take",
+      "pass": true
+    },
+    {
+      "label": "all played ending",
+      "pass": true
+    },
+    {
+      "label": "still mode active",
+      "pass": true
+    },
+    {
+      "label": "still mode preserves reaction",
+      "pass": true
+    },
+    {
+      "label": "reset clears takes and progress",
+      "pass": true
+    },
+    {
+      "label": "real pointer drag bends and plays",
+      "pass": true
+    },
+    {
+      "label": "context change cancels active drag",
+      "pass": true
+    },
+    {
+      "label": "cancel does not play",
+      "pass": true
+    },
+    {
+      "label": "audio context creates without page error",
+      "pass": true
+    },
+    {
+      "label": "no horizontal overflow 1280",
+      "pass": true
+    },
+    {
+      "label": "no horizontal overflow 390",
+      "pass": true
+    },
+    {
+      "label": "no horizontal overflow 320",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

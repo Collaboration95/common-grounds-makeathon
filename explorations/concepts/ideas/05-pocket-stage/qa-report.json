@@ -1,0 +1,123 @@
+{
+  "date": "2026-10-11",
+  "preview": [
+    {
+      "name": "file:// loads closed and uncompleted",
+      "pass": true
+    },
+    {
+      "name": "Space transforms hand without premature ending",
+      "pass": true
+    },
+    {
+      "name": "ArrowLeft moves shadow to the right",
+      "pass": true
+    },
+    {
+      "name": "Guide plus open hand unfolds flower",
+      "pass": true
+    },
+    {
+      "name": "Closing hand preserves flower payoff",
+      "pass": true
+    },
+    {
+      "name": "Reset clears gesture flower and restores light",
+      "pass": true
+    },
+    {
+      "name": "Guide alone cannot animate a moth",
+      "pass": true
+    },
+    {
+      "name": "Focused native range supports keyboard control",
+      "pass": true
+    },
+    {
+      "name": "Focused button Space toggles once",
+      "pass": true
+    },
+    {
+      "name": "Still mode disables decorative wing loop",
+      "pass": true
+    },
+    {
+      "name": "Pointer changes light",
+      "pass": true
+    },
+    {
+      "name": "390px layout has no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "OS reduced motion starts still",
+      "pass": true
+    },
+    {
+      "name": "Reduced motion reaches same ending",
+      "pass": true
+    },
+    {
+      "name": "No SVG or runtime console errors",
+      "pass": true
+    },
+    {
+      "name": "Arrow control works while hand button is focused",
+      "pass": true
+    },
+    {
+      "name": "R resets while hand button is focused",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "board": {
+    "replayIdempotent": true,
+    "remoteBefore": {
+      "shapes": 493,
+      "pages": [
+        {
+          "id": "page:05-pocket-hero",
+          "name": "01 Hero · invitation & transformation"
+        },
+        {
+          "id": "page:05-pocket-core",
+          "name": "02 Core · light choreography & payoff"
+        },
+        {
+          "id": "page:05-pocket-recovery",
+          "name": "03 Recovery · ambiguity, stillness & replay"
+        }
+      ],
+      "title": "Untitled file • tldraw"
+    },
+    "reload": {
+      "shapes": 493,
+      "pages": [
+        {
+          "id": "page:05-pocket-hero",
+          "name": "01 Hero · invitation & transformation"
+        },
+        {
+          "id": "page:05-pocket-core",
+          "name": "02 Core · light choreography & payoff"
+        },
+        {
+          "id": "page:05-pocket-recovery",
+          "name": "03 Recovery · ambiguity, stillness & replay"
+        }
+      ]
+    },
+    "independentContext": {
+      "shapes": 493,
+      "pages": [
+        "01 Hero · invitation & transformation",
+        "02 Core · light choreography & payoff",
+        "03 Recovery · ambiguity, stillness & replay"
+      ]
+    },
+    "remotePersistenceVerified": true,
+    "snapshot": "storyboard.snapshot.json",
+    "note": "If fresh context is empty, browser-local reload persistence does not verify remote saving."
+  }
+}

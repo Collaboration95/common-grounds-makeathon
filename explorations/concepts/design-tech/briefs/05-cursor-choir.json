@@ -1,0 +1,73 @@
+{
+  "id": "05-cursor-choir",
+  "title": "Cursor Choir — catch your past hand",
+  "oneLiner": "Record a gesture, cross its ghost's bright moving tail to pluck it, then tug time until three past hands answer each other.",
+  "targetFeeling": "My earlier hand is still here, and I can play with it; an instant self-duet.",
+  "gesture": "Hold to record up to four seconds; release to replay. Cross another ghost's bright tail; tug its origin time knot horizontally to shift phase.",
+  "magicMoment": "The same two paths first miss, then pluck each other after one time tug; the receiving ribbon and ghost rebound.",
+  "example": [
+    "Draw and release a two-second sideways arc; a numbered ghost repeats immediately.",
+    "Draw through its bright tail; the earlier ribbon and ghost rebound. Release take two.",
+    "Tug phase to restore an encounter; add take three yourself or let an audience member contribute, then frame the motion postcard."
+  ],
+  "must": [
+    "Capture held pointer positions and timestamps for up to four seconds; release starts replay while another take can be recorded.",
+    "Three numbered ghosts with faint full paths and bright 0.8-second tails; four-second laps preserve recorded speed and pauses, wait at endpoint, and fade at wrap.",
+    "Live or replayed moving segments pluck another take only at its bright tail; no self-crossings, wrap collisions or repeated contact chatter.",
+    "Receiving ribbon and ghost visibly rebound for about 250 ms; origin time knots scrub and retain phase without changing paths.",
+    "Undo-last, restart and pointer-cancellation recovery.",
+    "Frame a repeating four-second motion postcard with Replay/Restart on the same canvas."
+  ],
+  "nonGoals": [
+    "No extension, external click replay, accounts, camera or model; dedicated canvas only.",
+    "No timeline editor, extra layers, physical string simulation, variable loop lengths or speed stretching.",
+    "No sound, media export, cloud sharing or simultaneous multiplayer; audience contributes through the same pointer."
+  ],
+  "demo": [
+    {
+      "seconds": "0–10",
+      "action": "Introduce collaboration with your past hand; draw and release an arc."
+    },
+    {
+      "seconds": "10–25",
+      "action": "Cross its bright tail, show rebound, and release take two."
+    },
+    {
+      "seconds": "25–45",
+      "action": "Show a miss; tug phase until the same paths pluck each other."
+    },
+    {
+      "seconds": "45–65",
+      "action": "Invite one audience gesture through the meeting area; presenter fills take three if needed."
+    },
+    {
+      "seconds": "65–80",
+      "action": "Watch three takes answer over several laps; frame the postcard."
+    },
+    {
+      "seconds": "80–90",
+      "action": "Replay the postcard and state the temporal interaction."
+    }
+  ],
+  "buildHours": 5,
+  "risk": "Main uncertainty is whether bright-tail encounters and phase-induced changes read clearly among overlapping paths; prove one live pluck in hour one.",
+  "fallback": "Widen bright tails from 0.8 to 1.4 seconds and use a rehearsed central arc/cross. Preserve conditional plucking; trails alone fail the concept.",
+  "verdict": "Recommend if the first-hour pluck reads clearly. Core improvement: faded-path crossings do nothing, so time determines whether your past hand answers.",
+  "sources": [
+    {
+      "title": "W3C Pointer Events",
+      "url": "https://www.w3.org/TR/pointerevents3/",
+      "takeaway": "Observed: capture redirects subsequent pointer events; cancellation ends streams. Inference: handle cancellation explicitly for reliable held gestures."
+    },
+    {
+      "title": "MDN requestAnimationFrame",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame",
+      "takeaway": "Observed: callbacks provide timestamps, follow display refresh and commonly pause in background tabs. Inference: elapsed-time playback with pause/rebase on hide."
+    },
+    {
+      "title": "Richard C. Davis: K-Sketch, UC Berkeley",
+      "url": "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-171.html",
+      "takeaway": "Observed: pen input demonstrates animation motion. Inference: record/replay alone is insufficient; conditional encounters make time the material. No novelty claim."
+    }
+  ]
+}

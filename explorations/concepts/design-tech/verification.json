@@ -1,0 +1,67 @@
+{
+  "html": [
+    {
+      "file": "index.html",
+      "missingLocalLinks": []
+    },
+    {
+      "file": "design-tech/index.html",
+      "missingLocalLinks": []
+    }
+  ],
+  "briefs": [
+    {
+      "id": "01-dot",
+      "words": 890,
+      "requirements": 6,
+      "sources": 3,
+      "demoBeats": 6,
+      "buildHours": 5
+    },
+    {
+      "id": "02-peel",
+      "words": 896,
+      "requirements": 6,
+      "sources": 3,
+      "demoBeats": 6,
+      "buildHours": 5
+    },
+    {
+      "id": "03-web-magnets",
+      "words": 894,
+      "requirements": 6,
+      "sources": 3,
+      "demoBeats": 6,
+      "buildHours": 5
+    },
+    {
+      "id": "04-page-orchestra",
+      "words": 900,
+      "requirements": 6,
+      "sources": 3,
+      "demoBeats": 6,
+      "buildHours": 5
+    },
+    {
+      "id": "05-cursor-choir",
+      "words": 883,
+      "requirements": 6,
+      "sources": 3,
+      "demoBeats": 6,
+      "buildHours": 5
+    }
+  ],
+  "httpStatus": 200,
+  "pass": true,
+  "browserReview": {
+    "surface": "T3 collaborative browser",
+    "viewport": [
+      1536,
+      960
+    ],
+    "concepts": 5,
+    "expandableDemoSections": 5,
+    "horizontalOverflow": false,
+    "status": "Desktop composition inspected; no prototype behavior claimed"
+  }
+}

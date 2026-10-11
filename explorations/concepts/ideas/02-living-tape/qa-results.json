@@ -1,0 +1,122 @@
+{
+  "fileProtocol": true,
+  "original": {
+    "phase": "ready",
+    "dish": "roast",
+    "progress": 1,
+    "reduce": false,
+    "revision": 2
+  },
+  "rewindHalfway": {
+    "state": {
+      "phase": "animating",
+      "dish": "roast",
+      "progress": 0.5053180926999514,
+      "reduce": false,
+      "revision": 3
+    },
+    "transport": "◀◀ REWIND"
+  },
+  "corrected": {
+    "phase": "ready",
+    "dish": "char",
+    "progress": 1,
+    "reduce": false,
+    "revision": 3
+  },
+  "unclear": {
+    "text": "Uncle: “Char siew or roast pork? I can hear words, not pointing.”",
+    "dish": "char"
+  },
+  "scrubbed": {
+    "state": {
+      "phase": "scrubbing",
+      "dish": "char",
+      "progress": 0.4,
+      "reduce": false,
+      "revision": 4
+    },
+    "joinDisabled": true
+  },
+  "ended": {
+    "phase": "ending",
+    "overlay": true
+  },
+  "reduced": {
+    "phase": "ready",
+    "dish": "char",
+    "progress": 1,
+    "reduce": true,
+    "revision": 9
+  },
+  "reducedCorrection": {
+    "phase": "ready",
+    "dish": "roast",
+    "progress": 1,
+    "reduce": true,
+    "revision": 10
+  },
+  "resetDuringAnimation": {
+    "phase": "setup",
+    "dish": null,
+    "progress": 0,
+    "reduce": false,
+    "revision": 14
+  },
+  "mobile": {
+    "width": 390,
+    "scrollWidth": 390,
+    "buttons": [
+      {
+        "text": "1“Char siew”",
+        "rect": {
+          "width": 161,
+          "height": 40
+        }
+      },
+      {
+        "text": "2“Roast pork”",
+        "rect": {
+          "width": 161,
+          "height": 40
+        }
+      },
+      {
+        "text": "R“Actually, char siew” ↶",
+        "rect": {
+          "width": 161,
+          "height": 41
+        }
+      },
+      {
+        "text": "↵Save the seat",
+        "rect": {
+          "width": 161,
+          "height": 41
+        }
+      },
+      {
+        "text": "?“That one”",
+        "rect": {
+          "width": 330,
+          "height": 40
+        }
+      }
+    ]
+  },
+  "errors": [],
+  "finalChecks": {
+    "keyboardOrderCorrectionAndSave": true,
+    "systemReducedMotion": true,
+    "uniqueIds": true,
+    "desktopHeight": 800,
+    "width": 1280,
+    "scrollWidth": 1280,
+    "micAPICalled": false,
+    "mobile": {
+      "width": 390,
+      "scrollWidth": 390,
+      "minButtonHeight": 44
+    }
+  }
+}

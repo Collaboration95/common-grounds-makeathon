@@ -1,0 +1,21 @@
+{
+  "pages": [
+    {
+      "id": "page:page",
+      "name": "Page 1"
+    },
+    {
+      "id": "page:lt02-hero",
+      "name": "01 HERO · The tape listens"
+    },
+    {
+      "id": "page:lt02-core",
+      "name": "02 CORE · Change the take"
+    },
+    {
+      "id": "page:lt02-recovery",
+      "name": "03 RECOVERY · Keep the lunch"
+    }
+  ],
+  "shapes": 614
+}
