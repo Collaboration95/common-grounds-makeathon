@@ -1,0 +1,12 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>phone + world frames (dev)</title>
+<body style="margin:0;background:#222;display:flex;gap:16px;justify-content:center;align-items:flex-start;padding:8px">
+<iframe id="f" src="/wish.html?dev=1" style="width:390px;height:700px;border:0;border-radius:24px;background:#000;flex:none"></iframe>
+<iframe id="w" hidden style="width:760px;height:430px;border:0;background:#000;flex:none"></iframe>
+<script>
+  // /dev/phone.html?p=/wish&w=/world  -> any phone page in a 390px frame, optionally the projector beside it
+  const q = new URLSearchParams(location.search);
+  if (q.get('p')) document.getElementById('f').src = q.get('p');
+  if (q.get('w')) { const w = document.getElementById('w'); w.hidden = false; w.src = q.get('w'); }
+</script>

@@ -1,0 +1,26 @@
+{
+  "id": "voiddeck",
+  "name": "HDB void deck at dusk",
+  "background": "/assets/background.png",
+  "width": 1600,
+  "height": 900,
+  "ceilingY": 250,
+  "air": { "top": 260, "bottom": 560 },
+  "floor": { "backY": 600, "frontY": 885, "backX": [20, 1580], "frontX": [10, 1590] },
+  "depthScale": [0.6, 1.2],
+  "spots": [
+    { "id": "table-left", "name": "stone table", "kind": "table", "x": 145, "y": 594, "tags": [] },
+    { "id": "stool-l1", "name": "stool", "kind": "seat", "x": 250, "y": 622, "tags": [] },
+    { "id": "stool-l2", "name": "stool", "kind": "seat", "x": 293, "y": 645, "tags": [] },
+    { "id": "stool-l3", "name": "stool", "kind": "seat", "x": 60, "y": 655, "tags": [] },
+    { "id": "table-right", "name": "stone table", "kind": "table", "x": 1195, "y": 568, "tags": [] },
+    { "id": "stool-r1", "name": "stool", "kind": "seat", "x": 1100, "y": 600, "tags": [] },
+    { "id": "stool-r2", "name": "stool", "kind": "seat", "x": 1298, "y": 612, "tags": [] },
+    { "id": "table-far", "name": "stone table", "kind": "table", "x": 1555, "y": 566, "tags": [] },
+    { "id": "lamp-left", "name": "wall lamp", "kind": "perch", "x": 115, "y": 255, "tags": ["warm", "light"] },
+    { "id": "lamp-mid", "name": "wall lamp", "kind": "perch", "x": 392, "y": 362, "tags": ["warm", "light"] },
+    { "id": "lamp-right", "name": "wall lamp", "kind": "perch", "x": 1372, "y": 290, "tags": ["warm", "light"] },
+    { "id": "tube-light", "name": "ceiling light", "kind": "perch", "x": 815, "y": 108, "tags": ["warm", "light"] },
+    { "id": "lamp-post", "name": "lamp post", "kind": "perch", "x": 1283, "y": 378, "tags": ["light"] }
+  ]
+}

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2a1c33">
+  <title>The Commons - a room that builds itself</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .sprites { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin: 4px 0 18px; }
+    .sprites img { height: 64px; filter: drop-shadow(0 3px 0 rgba(0,0,0,.35)); }
+    .big { font: 700 56px/1 var(--mono); letter-spacing: .12em; text-align: center; margin: 8px 0; color: var(--terracotta); }
+    .qrbox { background: #fff; padding: 8px; border-radius: 12px; width: 200px; margin: 8px auto; border: 3px solid var(--ink); }
+    .qrbox img { width: 100%; display: block; }
+    .card, .card p { color: var(--ink); }
+    .card + .card { margin-top: 14px; }
+    .row2 { display: flex; gap: 8px; } .row2 input { flex: 1; min-width: 0; text-transform: none; }
+    a.btn { display: block; text-align: center; text-decoration: none; margin-top: 10px; }
+  </style>
+</head>
+<body class="phone">
+  <main class="wrap">
+    <div class="kicker">The Commons</div>
+    <h1>The Commons: a room that builds itself</h1>
+    <p class="sub">Everyone in the room scans a code, then wishes for something or picks a character. Codex writes it live as a tiny program with its own behaviour, and it walks into the big shared room. Start with a photo of your own room.</p>
+    <div class="sprites" id="sprites"></div>
+
+    <section class="card" id="mk">
+      <h2>Create a room</h2>
+      <div class="row2"><input id="rn" maxlength="40" placeholder="Room name, e.g. Level 3 Lounge"><button class="btn" id="mkgo" style="width:auto">Create</button></div>
+    </section>
+    <section class="card" id="have">
+      <h2>I have a room code</h2>
+      <div class="row2"><input id="rc" maxlength="8" placeholder="ABCD" autocapitalize="characters"><button class="btn alt" id="rcgo" style="width:auto">Enter</button></div>
+    </section>
+    <p class="err" id="err" hidden></p>
+
+    <section class="card" id="panel" hidden>
+      <h2 id="pn"></h2>
+      <p class="small">Save this code. It is your host key.</p>
+      <div class="big" id="pc"></div>
+      <div class="qrbox"><img id="pq" alt="QR to host page"></div>
+      <p>Open <a id="pl" target="_blank" style="color:var(--terracotta);word-break:break-all"></a> on your phone and take a photo of your room. It becomes the scene.</p>
+      <a class="btn" href="/world" target="_blank">Open the live room</a>
+      <a class="btn alt" href="/gallery">Meet the characters</a>
+    </section>
+  </main>
+<script>
+const $ = (i) => document.getElementById(i);
+fetch("/api/presets").then((r) => r.json()).then((d) => { $("sprites").innerHTML = d.characters.map((c) => `<img src="${c.sprite}" alt="${c.name}">`).join(""); });
+async function go(url, body) {
+  $("err").hidden = true;
+  const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  const d = await r.json();
+  if (!r.ok) { $("err").textContent = d.error; $("err").hidden = false; return; }
+  $("pn").textContent = d.name; $("pc").textContent = d.code; $("pq").src = d.qr;
+  $("pl").textContent = $("pl").href = d.hostUrl; $("panel").hidden = false; $("panel").scrollIntoView({ behavior: "smooth" });
+}
+$("mkgo").onclick = () => go("/api/room", { name: $("rn").value });
+$("rcgo").onclick = () => go("/api/room/check", { code: $("rc").value });
+</script>
+<script src="/pill.js"></script>
+</body>
+</html>

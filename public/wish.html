@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2a1c33">
+  <title>Add one thing to the Commons</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="phone">
+  <main class="wrap">
+    <div class="kicker">The Commons</div>
+    <h1>Add one thing to the Commons.</h1>
+    <p class="sub">Wish for something and Codex will write it as a tiny living program, or pick a ready-made character. Either one walks onto the big screen with your name on it.</p>
+
+    <section id="boot" class="card" hidden><p>Finding your wish…</p></section>
+
+    <form id="form" class="card" autocomplete="off" hidden>
+      <div class="tabs" role="tablist" aria-label="How do you want to add one?">
+        <button type="button" role="tab" class="tab on" id="tabWish" data-mode="wish" aria-selected="true" aria-controls="panelWish">Wish for one</button>
+        <button type="button" role="tab" class="tab" id="tabPick" data-mode="pick" aria-selected="false" aria-controls="panelPick">Pick one</button>
+        <button type="button" role="tab" class="tab" id="tabSketch" data-mode="sketch" aria-selected="false" aria-controls="panelSketch">Sketch one</button>
+      </div>
+
+      <div id="panelWish" role="tabpanel" aria-labelledby="tabWish">
+        <label class="f" for="text">What would you like to see?</label>
+        <textarea id="text" maxlength="120" rows="3" placeholder="a durian that rolls away from your cursor" enterkeyhint="done"></textarea>
+        <div class="count"><span id="cnt">0</span>/120</div>
+        <div class="chips" id="chips"></div>
+      </div>
+
+      <div id="panelSketch" role="tabpanel" aria-labelledby="tabSketch" hidden>
+        <label class="f" for="sk">Describe it in a few words</label>
+        <input id="sk" maxlength="60" placeholder="a durian wearing sunglasses" enterkeyhint="done">
+        <p class="small">A tiny artist draws it in about a minute and it comes alive with a full set of moves.</p>
+      </div>
+
+      <div id="panelPick" role="tabpanel" aria-labelledby="tabPick" hidden>
+        <label class="f" id="pickLbl">Tap a character</label>
+        <button type="button" class="btn alt" id="surprise">🎲 Surprise me</button>
+        <div class="picks" id="picks" role="radiogroup" aria-labelledby="pickLbl"><p class="small">Loading characters…</p></div>
+      </div>
+
+      <div id="hatBox" hidden>
+        <label class="f" id="hatLbl">A hat? (optional)</label>
+        <div class="hats" id="hats" role="radiogroup" aria-labelledby="hatLbl"></div>
+      </div>
+
+      <label class="f" for="name">Your first name (optional)</label>
+      <input id="name" maxlength="20" placeholder="someone" autocapitalize="words" autocomplete="given-name">
+      <p class="err" id="err" hidden></p>
+      <button class="btn" id="go" type="submit">Make my wish</button>
+      <p class="small"><a href="#" id="ctlLink">Control my pet</a></p>
+    </form>
+
+    <section id="track" hidden>
+      <canvas id="mini" width="640" height="460"></canvas>
+      <div class="card" id="statusCard">
+        <h2 id="stTitle"></h2>
+        <div class="quote" id="stQuote"></div>
+        <ol class="steps" id="steps"></ol>
+        <p id="stMsg" class="small"></p>
+      </div>
+      <div class="card" id="liveCard" hidden>
+        <h2 id="lvTitle"></h2>
+        <p id="lvLine"></p>
+        <button class="btn poke" id="poke" type="button">Poke it</button>
+        <p class="small" id="pokeNote">Tap to poke it. Everyone watching sees it react.</p>
+      </div>
+      <div class="card" id="petCard" hidden>
+        <h2>Your pet <span id="petNo"></span></h2>
+        <p id="petPin" style="font-size:20px;font-weight:700"></p>
+        <div id="petLogin" hidden>
+          <input id="petN" inputmode="numeric" placeholder="Pet #" maxlength="4">
+          <input id="petP" inputmode="numeric" placeholder="PIN" maxlength="3">
+        </div>
+        <input id="petStatus" maxlength="60" placeholder="What is it up to? (shows above it)">
+        <button class="btn" id="petSet" type="button">Set</button>
+        <button class="btn alt" id="petClear" type="button">Clear</button>
+        <div class="moods">
+          <button class="btn alt mood" type="button" data-mood="normal">Normal</button>
+          <button class="btn alt mood" type="button" data-mood="sleep">Sleep</button>
+          <button class="btn alt mood" type="button" data-mood="moody">Moody</button>
+        </div>
+        <p class="small" id="petMsg"></p>
+      </div>
+      <div class="card" id="retryCard" hidden>
+        <h2 id="rtTitle"></h2>
+        <p id="rtMsg"></p>
+        <button class="btn" id="retry" type="button">Try a different wish</button>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/wish.js"></script>
+<script src="/pill.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+ "name": "Auntie's Trolley",
+ "tags": [
+  "trolley",
+  "market",
+  "collector"
+ ],
+ "zone": "ground",
+ "size": 1,
+ "oneLine": "A tartan shopping trolley that rolls itself to the market.",
+ "text": "an auntie's tartan two-wheeled shopping trolley with a face. It trundles around on its own as if heading to the wet market, collects the nearest food or hat on its way (it stops and says it is for later), and rattles and spins its wheels when poked"
+}

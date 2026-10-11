@@ -1,0 +1,4 @@
+.env
+node_modules/
+commons-world/
+.DS_Store

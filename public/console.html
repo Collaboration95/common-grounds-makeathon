@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Commons - presenter console</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="console">
+  <main class="wrap">
+    <h1>Presenter console</h1>
+    <p class="sub">Wishes typed here skip the one-per-device limit but are still screened. Localhost only.</p>
+    <p class="sub" id="hostRow" hidden>Host (a room from a photo, open on a phone): <a id="hostLink" style="color:#e6b58e" target="_blank" rel="noopener"></a></p>
+    <form id="f">
+      <input class="text" id="text" maxlength="120" placeholder="a wish, e.g. a mynah that steals hats" autofocus>
+      <input class="nm" id="name" maxlength="20" placeholder="name (optional)">
+      <button id="go" type="submit">Make it</button>
+    </form>
+    <div id="msg"></div>
+    <table>
+      <thead><tr><th>#</th><th>wish</th><th>by</th><th>status</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div id="lines"></div>
+  </main>
+  <script>
+    fetch('/api/host-link').then((r) => r.json()).then((d) => {
+      if (!d.url) return;
+      document.getElementById('hostLink').href = d.url; document.getElementById('hostLink').textContent = d.url;
+      document.getElementById('hostRow').hidden = false;
+    }).catch(() => {});
+  </script>
+  <script type="module">
+    import { createFeed, counts } from '/feed.js';
+    const $ = (s) => document.querySelector(s);
+    const feed = createFeed({ auto: false });
+    const rows = $('#rows'), lines = $('#lines');
+    function cell(tr, content) {
+      const td = document.createElement('td');
+      if (content instanceof Node) td.append(content); else td.textContent = content ?? '';
+      tr.append(td);
+      return td;
+    }
+    function render() {
+      const list = [...feed.wishes.values()].sort((a, b) => (b.n || 0) - (a.n || 0)).slice(0, 40);
+      rows.textContent = '';
+      for (const w of list) {
+        const tr = document.createElement('tr');
+        cell(tr, w.n);
+        cell(tr, w.text + (w.thing ? `  → ${w.thing.name}` : '') + (w.reason ? `  (${w.reason})` : ''));
+        cell(tr, w.name);
+        const st = document.createElement('span');
+        st.className = 'st ' + w.status;
+        st.textContent = w.status + (w.status === 'queued' && w.queuePos ? ` #${w.queuePos}` : '');
+        cell(tr, st);
+        const b = document.createElement('button');
+        b.className = 'ghost';
+        b.textContent = 'veto';
+        b.hidden = w.status !== 'live';
+        b.onclick = async () => { b.disabled = true; const r = await feed.veto(w.id); if (r && r.ok) feed.localRemove(w.id); else b.disabled = false; };
+        cell(tr, b);
+        rows.append(tr);
+      }
+      const c = counts(feed.wishes);
+      document.title = `Commons · ${c.total} wishes · ${c.living} living`;
+    }
+    ['hello', 'wish', 'remove'].forEach((t) => feed.on(t, render));
+    feed.on('log', (d) => {
+      lines.append(Object.assign(document.createElement('div'), { textContent: `#${d.n ?? '·'}  ${d.line}` }));
+      while (lines.childElementCount > 60) lines.firstElementChild.remove();
+      lines.scrollTop = lines.scrollHeight;
+    });
+    $('#f').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = $('#text').value.trim();
+      if (text.length < 3) { $('#msg').textContent = 'A wish needs at least 3 characters.'; return; }
+      $('#go').disabled = true;
+      const r = await feed.adminWish(text, $('#name').value.trim());
+      $('#go').disabled = false;
+      $('#msg').textContent = r.ok ? `Queued (id ${r.data && r.data.id}).` : r.error;
+      if (r.ok) { $('#text').value = ''; $('#text').focus(); }
+    });
+  </script>
+<script src="/pill.js"></script>
+</body>
+</html>

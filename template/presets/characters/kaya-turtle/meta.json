@@ -1,0 +1,12 @@
+{
+ "name": "Kaya Turtle",
+ "tags": [
+  "turtle",
+  "food",
+  "sleepy"
+ ],
+ "zone": "ground",
+ "size": 1,
+ "oneLine": "Carries a slice of kaya toast on its back and takes its time.",
+ "text": "a sleepy turtle whose shell is a slice of kaya toast with butter. It plods very slowly and hides in its shell when poked, but perks up near anything warm or food-like and loves sitting on a stool"
+}

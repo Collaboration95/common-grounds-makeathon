@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Commons</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="world">
+  <div id="app">
+    <div id="stage">
+      <div id="frame">
+        <canvas id="c" width="1600" height="900"></canvas>
+        <div id="tl" hidden></div>
+        <div id="foot"><b id="nWishes">0</b> wishes · <b id="nLiving">0</b> living · <b id="nDeclined">0</b> declined</div>
+        <div id="toast"></div>
+      </div>
+    </div>
+    <aside id="rail">
+      <div id="qrcard">
+        <b>Add one thing to the Commons</b>
+        <img id="qrImg" alt="QR code to make a wish">
+        <span>scan &middot; wish &middot; watch it walk in</span>
+        <code id="qrUrl"></code>
+      </div>
+      <h2>Codex workbench <i id="conn">connecting…</i> <button id="qrBtn" type="button" class="on" title="Toggle QR (Q)">QR</button></h2>
+      <div id="log"></div>
+    </aside>
+  </div>
+  <script type="module" src="/world.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Common Ground Makeathon: Design x Tech x Culture
 
-Source: https://luma.com/yjffwqr2 (fetched 2026-10-10). Anything not on the page is marked **UNKNOWN**. Don't invent it.
+Source: https://luma.com/yjffwqr2 (rechecked 2026-10-11, including the rendered event date/time), plus the on-site prize slide (see Prizes). Anything not in those sources is marked **UNKNOWN**. Don't invent it.
 
 ## What it is
 - One-day, in-person creative-tech makeathon in Singapore, **11 Oct**.
@@ -31,23 +31,32 @@ Source: https://luma.com/yjffwqr2 (fetched 2026-10-10). Anything not on the page
 - Bring: laptop, internet access, charger.
 
 ## Prizes
-- **USD $5,000** Codex credits prize pool.
-- All participants get Codex credits.
-- Per-place breakdown: **UNKNOWN**.
+Source: organisers' "Prizes" slide, shown on-site on 11 Oct 2026 at about 10:00. Photo: `prizes-slide-2026-10-11.jpg` in this folder.
+
+| Award | Decided by | Criterion (slide wording) | Prize |
+| --- | --- | --- | --- |
+| Design × Tech Award | Judged | "For the project that best combines originality, relevance and execution within its track." | USD $1K Codex credits |
+| Culture × Tech Award | Judged | Same wording as Design × Tech | USD $1K Codex credits |
+| Best Use of Codex | Judged, cross-track | "For the team that pushes Codex beyond the obvious and makes it essential to their build." | USD $1K Codex credits |
+| Common Ground Award | Judged, cross-track | "For the project that best embodies the … of interdisciplin…". The presenter's hand covers the middle; probably "spirit of interdisciplinary …", **unconfirmed**. | USD $1K (partly hidden; "…SD $1K" visible) |
+| People's Choice: Design × Tech | Voting | "For the project that leaves the biggest impression on the room." | USD $500 Codex credits |
+| People's Choice: Culture × Tech | Voting | Same wording as Design × Tech | USD $500 Codex credits |
+
+- Each winner also gets **1 year of Mobbin Pro**.
+- 4 × $1K + 2 × $500 = **$5,000**, which matches the advertised pool if the hidden Common Ground amount is $1K.
+- All participants also get Codex credits (separate from the prize pool).
+- The slide shows the code **MD8W7J** in the top-right corner. Its purpose isn't stated; it may be for voting or joining. **UNKNOWN**.
 
 ## Judging
 - Projects from both tracks are **presented and judged at the end of the day**.
-- Published criteria: **UNKNOWN**. Organisers said details would follow.
-- Reasonable assumptions, **unconfirmed**, based on the theme:
-  - Fit to track and theme (design/tech/culture)
-  - Creativity and originality
-  - A working, demoable result over a polished idea
-  - Clear story in a short presentation
-  - Meaningful use of Codex or partner tools
-- A similar Codex-partnered hackathon (Jakarta) scored on clarity of problem and user, demo usefulness, responsible AI use, and technical execution with Codex. This is only a hint, not this event's rubric.
+- Track awards: originality, relevance and execution within the track. Weights: **UNKNOWN**.
+- Cross-track awards: Best Use of Codex and Common Ground (see Prizes).
+- People's Choice is voted on, one per track. The voters, voting method and timing are **UNKNOWN**.
+- Whether one project can win several awards: **UNKNOWN**.
 
 ## Schedule
-- **UNKNOWN**. The organisers' full schedule is not published on the Luma page.
+- Confirmed event window: **Sunday, 11 October 2026, 9 a.m.–5 p.m., Singapore time (GMT+8)**.
+- Detailed timetable, build cutoff, and presentation duration: **UNKNOWN**. The organisers' full schedule is not published on the Luma page.
 - Known beats only:
   1. Onboarding session on Codex and partner tools
   2. Build time
@@ -59,7 +68,10 @@ Source: https://luma.com/yjffwqr2 (fetched 2026-10-10). Anything not on the page
 - Safe default: a working demo, a repo or link, and a 1-2 minute pitch.
 
 ## Open questions to resolve on the day
-- Exact judging rubric and weights
+- Judging weights within originality / relevance / execution
+- Can one project win several awards?
+- How and when People's Choice voting works, and what code MD8W7J is for
+- Full wording of the Common Ground Award criterion
 - Presentation format and length
 - Submission method and deadline
 - Which partner tools and API credits are provided, and how to claim them

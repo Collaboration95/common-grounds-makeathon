@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2a1c33">
+  <title>The Commons - characters</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+    .card { color: var(--ink); }
+    .card h2 { margin: 0; } .card .one { font: 500 15px/1.3 var(--hand); margin: 2px 0 8px; }
+    .card .row { display: flex; gap: 8px; align-items: center; }
+    .card img.s { height: 72px; } .card canvas { width: 96px; height: 92px; background: var(--paper-2); border-radius: 10px; }
+    .card img.f { width: 100%; image-rendering: auto; margin-top: 8px; background: var(--paper-2); border-radius: 8px; }
+    .card small { font: 600 12px var(--mono); color: #8a6c50; }
+    .phone .wrap { max-width: 1000px; }
+  </style>
+</head>
+<body class="phone">
+  <main class="wrap">
+    <div class="kicker">The Commons</div>
+    <h1>Characters</h1>
+    <p class="sub">Residents and presets. Each one has walk, idle, sit, sleep and action frames.</p>
+    <div class="grid" id="grid"></div>
+    <p class="small"><a href="/" style="color:#e6b58e">Back to start</a></p>
+  </main>
+<script>
+const SEQ = ["walk", "idle", "sit", "sleep", "action"], live = [];
+fetch("/api/characters").then((r) => r.json()).then(({ residents, presets }) => {
+  const all = [...residents.map((c) => ({ ...c, tag: "resident" })),
+    ...presets.map((c) => ({ ...c, frames: c.sprite.replace("sprite.png", "frames.png"), anim: c.sprite.replace("sprite.png", "anim.json"), tag: "preset" }))];
+  document.getElementById("grid").innerHTML = all.map((c, i) => `<div class="card"><h2>${c.name} <small>${c.tag}</small></h2><div class="one">${c.oneLine || ""}</div>
+    <div class="row"><img class="s" src="${c.sprite}"><canvas id="c${i}" width="192" height="184"></canvas><small id="l${i}"></small></div>
+    <img class="f" src="${c.frames}" onerror="this.remove()"></div>`).join("");
+  all.forEach(async (c, i) => {
+    try {
+      const a = await (await fetch(c.anim)).json(); if (!a.anims) return;
+      const img = new Image(); img.src = c.frames; await img.decode();
+      live.push({ a, img, cv: document.getElementById("c" + i), lb: document.getElementById("l" + i) });
+    } catch {}
+  });
+});
+let t0 = performance.now();
+setInterval(() => {
+  const t = (performance.now() - t0) / 1000;
+  for (const o of live) {
+    const name = SEQ[Math.floor(t / 2.5) % SEQ.length], fr = o.a.anims[name] || o.a.anims.idle;
+    const f = fr[Math.floor(t * 6) % fr.length], { frameW: w, frameH: h } = o.a, cols = Math.floor(o.img.width / w) || 1;
+    const g = o.cv.getContext("2d"); g.clearRect(0, 0, 192, 184);
+    const k = Math.min(192 / w, 184 / h); g.drawImage(o.img, (f % cols) * w, Math.floor(f / cols) * h, w, h, (192 - w * k) / 2, 184 - h * k, w * k, h * k);
+    o.lb.textContent = name;
+  }
+}, 100);
+</script>
+<script src="/pill.js"></script>
+</body>
+</html>

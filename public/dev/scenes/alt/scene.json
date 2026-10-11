@@ -1,0 +1,19 @@
+{
+  "id": "alt-room",
+  "name": "dev: lamplit living room",
+  "background": "/dev/scenes/alt/bg.svg",
+  "width": 1600,
+  "height": 900,
+  "ceilingY": 140,
+  "air": { "top": 150, "bottom": 470 },
+  "floor": { "backY": 540, "frontY": 870, "backX": [260, 1340], "frontX": [70, 1530] },
+  "depthScale": [0.5, 1.3],
+  "spots": [
+    { "id": "sofa", "name": "sofa", "kind": "seat", "x": 250, "y": 520, "tags": ["warm"] },
+    { "id": "rug", "name": "rug", "kind": "rest", "x": 800, "y": 700, "tags": ["warm"] },
+    { "id": "stool", "name": "stool", "kind": "seat", "x": 1350, "y": 640, "tags": [] },
+    { "id": "side-table", "name": "side table", "kind": "table", "x": 1210, "y": 560, "tags": [] },
+    { "id": "curtain-rail", "name": "curtain rail", "kind": "perch", "x": 540, "y": 100, "tags": [] },
+    { "id": "lamp", "name": "floor lamp", "kind": "perch", "x": 1210, "y": 300, "tags": ["warm", "light"] }
+  ]
+}
