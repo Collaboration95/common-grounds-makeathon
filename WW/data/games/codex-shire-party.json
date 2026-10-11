@@ -1,0 +1,74 @@
+{
+  "id": "codex-shire-party",
+  "createdAt": 1791697344604,
+  "source": "codex",
+  "baked": true,
+  "moment": "Bilbo's eleventy-first birthday party in the Shire",
+  "title": "An Unexpected Party Crasher",
+  "story": "Bilbo’s eleventy-first has everything: fireworks, cake, and one uninvited guest beneath the bench. He’s not here for the presents—just the precious.",
+  "world": "Bag End, the Shire: lanterns glow beneath the Party Tree, hobbits dance and feast, and Gandalf’s fireworks light the birthday sky.",
+  "bg": {
+    "src": "/data/assets/codex-shire-party-scene.webp",
+    "w": 1536,
+    "h": 1024
+  },
+  "targetId": "c0",
+  "characters": [
+    {
+      "id": "c0",
+      "name": "Gollum",
+      "role": "guest",
+      "sprite": "/data/assets/codex-shire-party-hit0.png",
+      "portrait": "/data/assets/codex-shire-party-portrait.png",
+      "quips": [
+        "Sneaky hobbitses! Hiding it in the cake?",
+        "We hates benches. Too many feet.",
+        "Not that shiny! The other shiny!"
+      ],
+      "line": "Birthday presents? Where is our precious, precious?",
+      "move": "hop",
+      "x": 0.1953125,
+      "y": 0.78515625,
+      "h": 0.0546875
+    },
+    {
+      "id": "c1",
+      "name": "Bilbo Baggins",
+      "role": "resident",
+      "sprite": "/data/assets/codex-shire-party-hit1.png",
+      "quips": [
+        "Eleventy-one, and still thirsty!",
+        "An unexpected guest? How very inconvenient.",
+        "I shall need another slice."
+      ],
+      "line": "Good gracious! I'm the birthday hobbit.",
+      "move": "wave",
+      "x": 0.548,
+      "y": 0.648,
+      "h": 0.146
+    },
+    {
+      "id": "c2",
+      "name": "Gandalf",
+      "role": "resident",
+      "sprite": "/data/assets/codex-shire-party-hit2.png",
+      "quips": [
+        "Those rockets are not toys.",
+        "A most suspicious party invitation.",
+        "Leave the difficult fireworks to me."
+      ],
+      "line": "Wrong fellow. Mind the fireworks.",
+      "move": "shake",
+      "x": 0.7715,
+      "y": 0.397,
+      "h": 0.249
+    }
+  ],
+  "hint": {
+    "x": 0,
+    "y": 0.42906741542516164,
+    "w": 0.4,
+    "h": 0.42,
+    "text": "Look beneath the left-hand feast bench, beside a little plate."
+  }
+}

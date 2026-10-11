@@ -1,0 +1,58 @@
+{
+  "id": "codex-hawker-centre",
+  "createdAt": 1791697349109,
+  "source": "codex",
+  "baked": true,
+  "moment": "A Singapore hawker centre at lunch rush",
+  "title": "Chope Till You Croak",
+  "story": "Kermit has reserved a prime lunch spot with tissues—the smallest landlord in Singapore. Being green is easy compared with getting a table at noon.",
+  "world": "A Singapore hawker centre at lunch rush: sizzling woks, snaking queues, iced kopi, and fiercely defended tables.",
+  "bg": {
+    "src": "/data/assets/codex-hawker-centre-scene.webp",
+    "w": 1536,
+    "h": 1024
+  },
+  "targetId": "c0",
+  "characters": [
+    {
+      "id": "c0",
+      "name": "Kermit the Frog",
+      "role": "guest",
+      "sprite": "/data/assets/codex-hawker-centre-hit0.png",
+      "portrait": "/data/assets/codex-hawker-centre-portrait.png",
+      "quips": [
+        "These tissues are legally binding, right?",
+        "One kopi, and absolutely no frog porridge.",
+        "Miss Piggy needs her own reservation."
+      ],
+      "line": "It's not easy being green—or finding a lunch table.",
+      "move": "hop",
+      "x": 0.546875,
+      "y": 0.625,
+      "h": 0.1015625
+    },
+    {
+      "id": "c1",
+      "name": "Phua Chu Kang",
+      "role": "resident",
+      "sprite": "/data/assets/codex-hawker-centre-hit1.png",
+      "quips": [
+        "Best in Singapore, JB, and this queue!",
+        "Yellow boots also can chope, okay?",
+        "Lunch first. Renovation later."
+      ],
+      "line": "Not me, lah! Don't play-play.",
+      "move": "wave",
+      "x": 0.1365,
+      "y": 0.575,
+      "h": 0.311
+    }
+  ],
+  "hint": {
+    "x": 0.2907045237522907,
+    "y": 0.376070256002019,
+    "w": 0.4,
+    "h": 0.42,
+    "text": "Look beside the red tissue box at the crowded middle table."
+  }
+}

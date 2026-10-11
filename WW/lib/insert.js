@@ -8,11 +8,13 @@ import sharp from 'sharp';
 
 const DATA = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'data');
 const EDIT = 1024;
+// Draft: the fast model. Final: the quality model, which is also the more precise editor.
+export const imageModel = () => process.env.IMAGE_MODEL || (process.env.MODE === 'final' ? 'gpt-image-2.5-sunburst' : 'gpt-image-2.5-flare');
 
 async function edit(crop, mask, prompt, quality, extra = {}) {
   if (!process.env.OPENAI_API_KEY) throw new Error('Add OPENAI_API_KEY to WW/.env');
   const form = new FormData();
-  form.append('model', process.env.IMAGE_MODEL || 'gpt-image-2.5-flare');
+  form.append('model', imageModel());
   form.append('prompt', prompt);
   form.append('quality', quality);
   form.append('size', `${EDIT}x${EDIT}`);
@@ -63,9 +65,11 @@ async function paintOne({ base, W, H, spot, c, quality }) {
 
   // Blend the new pixels into the scene. The model repaints the whole masked area, so the click
   // target is the painted ellipse rather than an exact silhouette.
+  // Keep a wider area than the mask so nothing the model drew gets half-faded into a ghost.
+  const wide = { ...r, rx: r.rx * 1.45, ry: r.ry * 1.3 };
   let changed = 0, inside = 0;
   for (let y = 0; y < r.S; y++) for (let x = 0; x < r.S; x++) {
-    const i = (y * r.S + x) * 4, w = weight(x, y, r);
+    const i = (y * r.S + x) * 4, w = weight(x, y, wide, 0.3);
     if (!w) continue;
     inside++;
     if (Math.abs(after[i] - before[i]) + Math.abs(after[i + 1] - before[i + 1]) + Math.abs(after[i + 2] - before[i + 2]) > 70) changed++;

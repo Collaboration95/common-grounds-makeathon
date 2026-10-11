@@ -1,0 +1,138 @@
+{
+  "id": "codex-cantina",
+  "createdAt": 1791697351248,
+  "source": "codex",
+  "baked": true,
+  "moment": "The Mos Eisley cantina at its busiest",
+  "title": "A Hive of Scumarmalade",
+  "story": "Paddington has found the cantina’s most civilised refreshment: a marmalade sandwich. The bartender has four arms, but apparently not one spare napkin.",
+  "world": "Mos Eisley cantina, at its busiest",
+  "bg": {
+    "src": "/data/assets/codex-cantina-scene.webp",
+    "w": 1536,
+    "h": 1024
+  },
+  "targetId": "c0",
+  "characters": [
+    {
+      "id": "c0",
+      "name": "Paddington Bear",
+      "role": "guest",
+      "sprite": "/data/assets/codex-cantina-hit0.png",
+      "portrait": "/data/assets/codex-cantina-portrait.png",
+      "quips": [
+        "My aunt warned me about sticky situations.",
+        "This sandwich needs a little more marmalade.",
+        "That gentleman deserves a very hard stare."
+      ],
+      "line": "A marmalade sandwich, please. And do you serve tea?",
+      "move": "hop",
+      "x": 0.5611979166666667,
+      "y": 0.45703125,
+      "h": 0.12109375
+    },
+    {
+      "id": "c1",
+      "name": "Luke Skywalker",
+      "role": "resident",
+      "sprite": "/data/assets/codex-cantina-hit1.png",
+      "quips": [
+        "This isn't much like home.",
+        "Ben said to watch myself.",
+        "Do they serve blue milk?"
+      ],
+      "line": "I'm looking for a pilot, not sandwiches.",
+      "move": "tilt",
+      "x": 0.1005,
+      "y": 0.463,
+      "h": 0.269
+    },
+    {
+      "id": "c2",
+      "name": "Obi-Wan Kenobi",
+      "role": "resident",
+      "sprite": "/data/assets/codex-cantina-hit2.png",
+      "quips": [
+        "A most unusual traveller.",
+        "Patience. Look more carefully.",
+        "The marmalade will be with you."
+      ],
+      "line": "This isn't the guest you're looking for.",
+      "move": "nod",
+      "x": 0.157,
+      "y": 0.43700000000000006,
+      "h": 0.266
+    },
+    {
+      "id": "c3",
+      "name": "R2-D2",
+      "role": "resident",
+      "sprite": "/data/assets/codex-cantina-hit3.png",
+      "quips": [
+        "Bleep bloop!",
+        "Brrr-weep?",
+        "Dweet! Dweet!"
+      ],
+      "line": "Bweep! Brrrt. Beep-beep!",
+      "move": "shake",
+      "x": 0.07150000000000001,
+      "y": 0.62,
+      "h": 0.162
+    },
+    {
+      "id": "c4",
+      "name": "Boba Fett",
+      "role": "resident",
+      "sprite": "/data/assets/codex-cantina-hit4.png",
+      "quips": [
+        "No bounty on marmalade.",
+        "Keep your hands off my gear.",
+        "I work alone."
+      ],
+      "line": "Wrong target. Check the coat.",
+      "move": "tilt",
+      "x": 0.20450000000000002,
+      "y": 0.611,
+      "h": 0.321
+    },
+    {
+      "id": "c5",
+      "name": "Han Solo",
+      "role": "resident",
+      "sprite": "/data/assets/codex-cantina-hit5.png",
+      "quips": [
+        "Sandwich delivery costs extra.",
+        "Chewie, we've got sticky company.",
+        "I've flown stranger passengers."
+      ],
+      "line": "Do I look like a bear?",
+      "move": "shake",
+      "x": 0.671,
+      "y": 0.585,
+      "h": 0.27
+    },
+    {
+      "id": "c6",
+      "name": "Chewbacca",
+      "role": "resident",
+      "sprite": "/data/assets/codex-cantina-hit6.png",
+      "quips": [
+        "Wrrroooaar!",
+        "Hrrrff! Raaagh!",
+        "Rrrnnnh…"
+      ],
+      "line": "Rrrrraaagh! Hrrrnnnh!",
+      "move": "wave",
+      "x": 0.741,
+      "y": 0.552,
+      "h": 0.298
+    }
+  ],
+  "hint": {
+    "x": 0.3629765255300761,
+    "y": 0.07358684061145498,
+    "w": 0.4,
+    "h": 0.42,
+    "text": "Look along the front of the curved bar, beside the sandwich plate."
+  }
+}

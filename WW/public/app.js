@@ -19,7 +19,10 @@ worlds.append(drift);
 const guestOf = g => g.characters.find(c => c.id === g.targetId);
 const pick = list => list[Math.floor(Math.random() * list.length)];
 const wait = ms => new Promise(r => setTimeout(r, ms));
-const stageSize = () => { const w = Math.min(innerWidth, innerHeight * 1.5); return { w, h: w / 1.5 }; };
+// Scenes come in different shapes (Codex picks its own size), so the stage follows the current scene.
+const ratioOf = g => (g?.bg?.w && g?.bg?.h ? g.bg.w / g.bg.h : 1.5);
+const stageSize = () => { const r = ratioOf(state.game); const w = Math.min(innerWidth, innerHeight * r); return { w, h: w / r }; };
+function sizeStage() { const { w, h } = stageSize(); Object.assign(stage.style, { width: `${w}px`, height: `${h}px` }); }
 
 // Sprites: crop to the drawn figure so the click area matches what you see. If the model ignored
 // the transparent background, key out the corner colour.
@@ -156,6 +159,7 @@ function backToWall() {
 
 async function startGame(g) {
   state.game = g;
+  sizeStage();
   state.found = false;
   state.hovered = null;
   stage.className = g.baked ? 'baked' : '';
@@ -215,6 +219,32 @@ function charAt(x, y) {
   }
   return null;
 }
+
+// Magnifying glass: a 2.5x view of the scene under the cursor.
+const loupe = $('#loupe'), ZOOM = 2.5;
+let loupeOn = true;
+function moveLoupe(e) {
+  const r = stage.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  const inside = x >= 0 && y >= 0 && x <= r.width && y <= r.height;
+  loupe.hidden = !loupeOn || state.found || !inside;
+  if (loupe.hidden) return;
+  const size = loupe.offsetWidth;
+  Object.assign(loupe.style, {
+    left: `${x}px`, top: `${y}px`, backgroundImage: `url("${state.game.bg.src}")`,
+    backgroundSize: `${r.width * ZOOM}px ${r.height * ZOOM}px`,
+    backgroundPosition: `${size / 2 - x * ZOOM}px ${size / 2 - y * ZOOM}px`,
+  });
+}
+stage.addEventListener('pointermove', moveLoupe);
+stage.addEventListener('pointerleave', () => { loupe.hidden = true; });
+function toggleLoupe() {
+  loupeOn = !loupeOn;
+  $('#loupe-btn').textContent = loupeOn ? '🔍 On' : '🔍 Off';
+  $('#loupe-btn').setAttribute('aria-pressed', loupeOn);
+  if (!loupeOn) loupe.hidden = true;
+}
+$('#loupe-btn').onclick = toggleLoupe;
+addEventListener('keydown', e => { if (e.key.toLowerCase() === 'm' && !game.hidden && !dialog.open) toggleLoupe(); });
 
 const charData = el => state.game.characters.find(c => c.id === el.dataset.id);
 
@@ -334,6 +364,6 @@ form.addEventListener('submit', async e => {
 
 // ---------- Boot ----------
 
-addEventListener('resize', layoutWall);
+addEventListener('resize', () => { layoutWall(); if (state.game) sizeStage(); });
 setInterval(() => { if (!wall.hidden) refresh(); }, 8000);
 refresh();

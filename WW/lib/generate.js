@@ -2,15 +2,15 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { paintCast } from './insert.js';
+import { paintCast, imageModel } from './insert.js';
 
 const DATA = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'data');
 const env = (key, fallback) => process.env[key] || fallback;
 
-const WORLD_STYLE = 'Richly detailed high-resolution pixel art illustration: realistic proportions, perspective and lighting rendered in fine visible pixels, like a premium modern pixel-art game or a large pixel-art poster. Believable, coherent layout where every building, prop and person makes sense for the place and moment.';
+const WORLD_STYLE = 'Clean, crisp, high-resolution pixel art illustration in the style of a premium modern pixel-art game, with a limited cohesive palette, strong dark outlines and clear readable silhouettes. Medium-scale single setting that fits in one room, courtyard or street, not an epic panorama. Logical, believable layout where every prop and person makes sense for the place and moment, lit by one consistent light source.';
 const MOVES = ['nod', 'hop', 'shake', 'wave', 'tilt'];
 // MODE=draft is cheap for testing; MODE=final is for the demo wall.
-const QUALITY = { draft: { bg: 'low', sprite: 'low' }, final: { bg: 'high', sprite: 'medium' } };
+const QUALITY = { draft: { bg: 'low', sprite: 'low' }, final: { bg: 'high', sprite: 'high' } };
 const quality = kind => env(kind === 'bg' ? 'BG_QUALITY' : 'SPRITE_QUALITY', (QUALITY[env('MODE', 'draft')] ?? QUALITY.draft)[kind]);
 
 const character = extra => ({
@@ -34,7 +34,7 @@ const PLAN_SCHEMA = {
     title: { type: 'string', description: 'Punchy scene title, max 6 words.' },
     story: { type: 'string', description: 'Caption revealed when the guest is found: one or two witty sentences about why they are here.' },
     world: { type: 'string', description: 'Short name of the setting, e.g. "Quidditch World Cup final".' },
-    background: { type: 'string', description: 'Image prompt for the background only, described visually without character names: the setting and moment from a wide elevated view, packed with a crowd of generic extras and lots of small incidents. Must not depict the guest or the residents.' },
+    background: { type: 'string', description: 'Image prompt for the background only, described visually without character names: one medium-scale setting (a single room, yard or street, never a stadium or vista) with about 25 to 40 large, distinct generic extras and lots of small incidents. Must not depict the guest or the residents.' },
     guest: character('What the guest says the moment they are found, in their own voice. Max 12 words.'),
     residents: { type: 'array', items: character('What they say when someone wrongly clicks them, a little disapproving. Max 8 words.'), description: 'Exactly 4 recognisable characters who belong in this world and moment.' },
   },
@@ -52,7 +52,7 @@ async function openai(endpoint, body) {
   return json;
 }
 
-async function ask(input, name, schema) {
+export async function ask(input, name, schema) {
   const json = await openai('responses', {
     model: env('TEXT_MODEL', 'gpt-6.1-sol'),
     input,
@@ -102,9 +102,38 @@ export async function findSpots(src) {
   return spots.filter(s => s.x > 0.03 && s.x < 0.97 && s.y - s.h > 0.02 && s.y < 0.99 && s.h > 0.02 && s.h < 0.35);
 }
 
+const REVIEW_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['pass', 'problems', 'revised_prompt_addition'],
+  properties: {
+    pass: { type: 'boolean' },
+    problems: { type: 'array', items: { type: 'string' }, description: 'Short, specific problems with where they are. Empty if it passes.' },
+    revised_prompt_addition: { type: 'string', description: 'One or two sentences to append to the image prompt so the next attempt fixes the problems. Empty if it passes.' },
+  },
+};
+
+export const CRITIC_RUBRIC = `You are the art director for a Where's Waldo style pixel-art game shown on a projector. Answer each check; pass only if all are yes.
+1. Smallest people: is the smallest person at least about 4% of the image height, with a clear head and body?
+2. Separation: can you count and tell apart individual figures everywhere, with no crowd blobs, smears or merged bodies?
+3. Scale: is the scene medium-scale (one room, yard or street), not a stadium, panorama or tiered crowd?
+4. Logic: does the layout make physical sense, with coherent props, furniture and architecture that fit the place?
+5. Light: is the lighting consistent, with no region so dark that figures lose their silhouettes?
+6. Frame: no big murky foreground objects, no cropped half-figures at the edges, no gibberish text?
+Set pass to false only if check 1, 2, 3 or 4 fails; list failures of checks 5 and 6 as problems but still pass, since a repaint costs a lot.
+Problems must say where and what, e.g. "upper-left: tiny crowd merges into noise".`;
+
+export async function reviewScene(src) {
+  const img = await readFile(path.join(DATA, src.replace(/^\/data\//, '')));
+  return ask([{ role: 'user', content: [
+    { type: 'input_text', text: CRITIC_RUBRIC },
+    { type: 'input_image', image_url: `data:image/${src.endsWith('.png') ? 'png' : 'webp'};base64,${img.toString('base64')}` },
+  ] }], 'art_review', REVIEW_SCHEMA);
+}
+
 async function image(prompt, { size, quality, transparent }) {
   const json = await openai('images/generations', {
-    model: env('IMAGE_MODEL', 'gpt-image-2.5-flare'),
+    model: imageModel(),
     // WebP keeps transparency and is a fraction of PNG's size, so the wall loads fast.
     prompt, size, quality, n: 1, output_format: 'webp', output_compression: 92,
     ...(transparent && { background: 'transparent' }),
@@ -112,7 +141,8 @@ async function image(prompt, { size, quality, transparent }) {
   return Buffer.from(json.data[0].b64_json, 'base64');
 }
 
-const backgroundPrompt = plan => `${WORLD_STYLE} ${plan.background} Wide elevated three-quarter view, packed edge to edge: crowds of extras going about believable business, props, stalls, decorations and small incidents everywhere to search through. People are drawn at a consistent realistic scale for their distance. No captions, UI or borders.`;
+// Prompt rules from the Sonnet art-direction review (art-direction.md): medium-scale, no tiny crowds.
+export const backgroundPrompt = plan => `${WORLD_STYLE} ${plan.background} Camera: moderately close elevated three-quarter view, like looking down into one scene from a balcony, with only three depth layers (foreground, middle, back wall or edge). Show about 25 to 40 people in total. The farthest person is still about 4 percent of the image height, with a distinct head, body and clothing colour. Never draw tiny distant crowds, spectator stands, packed audiences or masses of heads; instead use a few large clear groups, and show the back of the space as walls, scenery or empty open ground. Every person is a separate, fully drawn figure with clear space around them, overlapping at most slightly, in varied poses, outfits and silhouettes. Fill the space with large readable props, stalls, furniture and small funny incidents, each drawn as a complete object. Make the foreground and middle ground dense and detailed, and the background simple and calm. Avoid cropped figures at the frame edge, huge blurry foreground objects, gibberish text, captions, UI and borders.`;
 
 // Fallback when no spots came back: the lower part of the scene; lower on screen means closer, so bigger.
 function randomSpot() {
@@ -176,8 +206,18 @@ export async function createGame({ moment, guest, bg: cachedBg }, onStage = () =
     return `/data/assets/${name}`;
   };
 
-  onStage('Painting the world');
-  const base = cachedBg ?? await image(backgroundPrompt(plan), { size: '1536x1024', quality: quality('bg') }).then(b => save(`${id}-bg.webp`, b));
+  let base = cachedBg, review = null;
+  // Paint, let the art director check it, and repaint with its fixes if it fails.
+  for (let attempt = 0; !base; attempt++) {
+    onStage(attempt ? `Repainting: ${review.problems[0] ?? 'clearer scene'}` : 'Painting the world');
+    const prompt = backgroundPrompt(plan) + (review ? ` Fix these problems from the last attempt: ${review.revised_prompt_addition}` : '');
+    const file = await image(prompt, { size: '1536x1024', quality: quality('bg') }).then(b => save(`${id}-bg${attempt || ''}.webp`, b));
+    if (attempt >= Number(env('CRITIC_RETRIES', 1))) { base = file; break; }
+    onStage('Art director checking the scene');
+    review = await reviewScene(file).catch(err => { console.warn(`No review: ${err.message}`); return { pass: true, problems: [] }; });
+    console.log(`[art director] ${review.pass ? 'pass' : 'redo'}: ${review.problems.join('; ')}`);
+    if (review.pass) base = file;
+  }
   onStage('Finding hiding spots');
   const spots = await findSpots(base);
   const { scene, ...play } = await paintIntoScene({ id, bgFile: base, cast, spots, onStage });

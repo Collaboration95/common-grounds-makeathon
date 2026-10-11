@@ -32,6 +32,15 @@ WW/
 - Placement: a vision call lists believable standing spots, each with the size a person would be there and a nearby landmark. Characters go only in those spots, and the guest's landmark becomes the clue text. Spots are cached in the game file; `npm run rehide -- <id>` re-hides the cast for free.
 - `createGame({ moment, guest, bg })` can reuse a cached background and paint only characters.
 
+## Pipeline as of 11 Oct, afternoon
+
+1. The planner (`gpt-6.1-sol`) writes the title, story, a name-free background description and the cast with their lines.
+2. The background is painted (`gpt-image-2.5-flare` in draft; `gpt-image-2.5-sunburst` at high quality in final).
+3. The art director (a vision model applying the rubric from `art-direction.md`, written by a Sonnet critic agent) checks the background. If it fails, it is repainted once with the fixes.
+4. The vision model lists hiding spots, each with a size, a landmark and an action.
+5. The cast is painted into the scene with masked image edits: the guest first, then the residents. The guest is then lifted onto transparency for the "Find" card.
+6. In the game, clicks (not hovers) trigger reactions. A magnifying glass follows the cursor; toggle it with M.
+
 ## What we learned (11 Oct, first real runs)
 
 - The image model refuses named characters, so it only ever gets visual descriptions. It still refuses some well-known likenesses even when they're only described (Snape, Yoda, Luke, Obi-Wan). Creatures and cartoon-like characters get through (Gollum, Paddington, the Harry/Ron/Hermione types). The guest is drawn first; if they're refused, the job stops before paying for the rest and the create box says to pick someone else. Refused residents are simply left out.

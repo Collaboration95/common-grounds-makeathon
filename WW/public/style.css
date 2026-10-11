@@ -40,7 +40,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; }
   mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent), linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
   mask-composite: intersect;
 }
-.tile img { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+.tile img { width: 100%; height: 100%; display: block; object-fit: cover; image-rendering: pixelated; }
 .tile.fresh { opacity: 0; }
 .tile:hover, .tile:focus-visible { filter: brightness(1.12) saturate(1.1); z-index: 2; outline: none; }
 .tile .label {
@@ -119,6 +119,11 @@ html, body { margin: 0; height: 100%; overflow: hidden; }
 }
 @keyframes pulse { 50% { border-color: #fff; } }
 
+#loupe {
+  position: absolute; width: clamp(160px, 17vw, 260px); aspect-ratio: 1; border-radius: 50%; pointer-events: none; z-index: 7;
+  border: 5px solid var(--paper-edge); outline: 3px solid var(--paper); box-shadow: 0 8px 24px rgb(0 0 0 / 0.6);
+  background-repeat: no-repeat; image-rendering: pixelated; transform: translate(-50%, -50%);
+}
 #stage.is-found #bg { filter: brightness(0.5) saturate(0.6); }
 #stage.is-found .char:not(.found) { opacity: 0.2; filter: grayscale(1); }
 #stage.is-found .char.found { z-index: 6; }
