@@ -1,0 +1,600 @@
+{
+ "bpm": 120,
+ "sample_rate": 48000,
+ "duration": 24.0,
+ "beats": [
+  0.0,
+  0.5,
+  1.0,
+  1.5,
+  2.0,
+  2.5,
+  3.0,
+  3.5,
+  4.0,
+  4.5,
+  5.0,
+  5.5,
+  6.0,
+  6.5,
+  7.0,
+  7.5,
+  8.0,
+  8.5,
+  9.0,
+  9.5,
+  10.0,
+  10.5,
+  11.0,
+  11.5,
+  12.0,
+  12.5,
+  13.0,
+  13.5,
+  14.0,
+  14.5,
+  15.0,
+  15.5,
+  16.0,
+  16.5,
+  17.0,
+  17.5,
+  18.0,
+  18.5,
+  19.0,
+  19.5,
+  20.0,
+  20.5,
+  21.0,
+  21.5,
+  22.0,
+  22.5,
+  23.0,
+  23.5
+ ],
+ "sections": {
+  "hook": [
+   0,
+   2
+  ],
+  "build": [
+   2,
+   6
+  ],
+  "sheet": [
+   6,
+   9
+  ],
+  "arrival": [
+   9,
+   13
+  ],
+  "room": [
+   13,
+   17
+  ],
+  "pet": [
+   17,
+   21
+  ],
+  "end": [
+   21,
+   24
+  ]
+ },
+ "key": "C major (C Am F G)",
+ "master_gain_db": -0.35,
+ "loudness": {
+  "music_lufs": -14.0,
+  "music_tp": -2.0,
+  "mix_lufs": -14.0,
+  "mix_tp": -1.8
+ },
+ "note": "t = time the sfx file STARTS in mix.wav. For whoosh the energy peaks at t+peak_offset (=9.0); for swell peak is t+3.5. Every cue is also available as an individual file in sfx/ for re-placing.",
+ "cues": [
+  {
+   "t": 0.3,
+   "name": "key_click_1",
+   "file": "sfx/key_click_1.wav",
+   "gain_db": -12.0,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 0.388,
+   "name": "key_click_2",
+   "file": "sfx/key_click_2.wav",
+   "gain_db": -14.6,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 0.482,
+   "name": "key_click_3",
+   "file": "sfx/key_click_3.wav",
+   "gain_db": -14.6,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 0.602,
+   "name": "key_click_4",
+   "file": "sfx/key_click_4.wav",
+   "gain_db": -14.7,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 0.709,
+   "name": "key_click_1",
+   "file": "sfx/key_click_1.wav",
+   "gain_db": -12.1,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 0.807,
+   "name": "key_click_2",
+   "file": "sfx/key_click_2.wav",
+   "gain_db": -14.9,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 0.889,
+   "name": "key_click_3",
+   "file": "sfx/key_click_3.wav",
+   "gain_db": -12.2,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.007,
+   "name": "key_click_4",
+   "file": "sfx/key_click_4.wav",
+   "gain_db": -12.5,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.075,
+   "name": "key_click_1",
+   "file": "sfx/key_click_1.wav",
+   "gain_db": -12.1,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.173,
+   "name": "key_click_4",
+   "file": "sfx/key_click_4.wav",
+   "gain_db": -12.3,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.288,
+   "name": "key_click_1",
+   "file": "sfx/key_click_1.wav",
+   "gain_db": -12.4,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.386,
+   "name": "key_click_3",
+   "file": "sfx/key_click_3.wav",
+   "gain_db": -13.8,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.472,
+   "name": "key_click_1",
+   "file": "sfx/key_click_1.wav",
+   "gain_db": -15.0,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.581,
+   "name": "key_click_4",
+   "file": "sfx/key_click_4.wav",
+   "gain_db": -13.8,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.654,
+   "name": "key_click_3",
+   "file": "sfx/key_click_3.wav",
+   "gain_db": -13.2,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.757,
+   "name": "key_click_4",
+   "file": "sfx/key_click_4.wav",
+   "gain_db": -14.5,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "typing"
+  },
+  {
+   "t": 1.9,
+   "name": "key_click_5",
+   "file": "sfx/key_click_5.wav",
+   "gain_db": -9,
+   "dur": 0.09,
+   "peak_offset": 0.0,
+   "note": "enter"
+  },
+  {
+   "t": 2.0,
+   "name": "blip_step_1",
+   "file": "sfx/blip_step_1.wav",
+   "gain_db": -9,
+   "dur": 0.18,
+   "peak_offset": 0.0,
+   "note": "step 1: Checking/Queue/Codex writing/Testing/Drawing/Live"
+  },
+  {
+   "t": 2.5,
+   "name": "blip_step_2",
+   "file": "sfx/blip_step_2.wav",
+   "gain_db": -9,
+   "dur": 0.18,
+   "peak_offset": 0.0,
+   "note": "step 2: Checking/Queue/Codex writing/Testing/Drawing/Live"
+  },
+  {
+   "t": 3.0,
+   "name": "blip_step_3",
+   "file": "sfx/blip_step_3.wav",
+   "gain_db": -9,
+   "dur": 0.18,
+   "peak_offset": 0.0,
+   "note": "step 3: Checking/Queue/Codex writing/Testing/Drawing/Live"
+  },
+  {
+   "t": 4.0,
+   "name": "blip_step_4",
+   "file": "sfx/blip_step_4.wav",
+   "gain_db": -9,
+   "dur": 0.18,
+   "peak_offset": 0.0,
+   "note": "step 4: Checking/Queue/Codex writing/Testing/Drawing/Live"
+  },
+  {
+   "t": 4.5,
+   "name": "blip_step_5",
+   "file": "sfx/blip_step_5.wav",
+   "gain_db": -9,
+   "dur": 0.18,
+   "peak_offset": 0.0,
+   "note": "step 5: Checking/Queue/Codex writing/Testing/Drawing/Live"
+  },
+  {
+   "t": 5.5,
+   "name": "blip_step_6",
+   "file": "sfx/blip_step_6.wav",
+   "gain_db": -9,
+   "dur": 0.18,
+   "peak_offset": 0.0,
+   "note": "step 6: Checking/Queue/Codex writing/Testing/Drawing/Live"
+  },
+  {
+   "t": 6.0,
+   "name": "cell_tick_01",
+   "file": "sfx/cell_tick_01.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 1 assembles"
+  },
+  {
+   "t": 6.125,
+   "name": "cell_tick_02",
+   "file": "sfx/cell_tick_02.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 2 assembles"
+  },
+  {
+   "t": 6.25,
+   "name": "cell_tick_03",
+   "file": "sfx/cell_tick_03.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 3 assembles"
+  },
+  {
+   "t": 6.375,
+   "name": "cell_tick_04",
+   "file": "sfx/cell_tick_04.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 4 assembles"
+  },
+  {
+   "t": 6.5,
+   "name": "cell_tick_05",
+   "file": "sfx/cell_tick_05.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 5 assembles"
+  },
+  {
+   "t": 6.625,
+   "name": "cell_tick_06",
+   "file": "sfx/cell_tick_06.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 6 assembles"
+  },
+  {
+   "t": 6.75,
+   "name": "cell_tick_07",
+   "file": "sfx/cell_tick_07.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 7 assembles"
+  },
+  {
+   "t": 6.875,
+   "name": "cell_tick_08",
+   "file": "sfx/cell_tick_08.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 8 assembles"
+  },
+  {
+   "t": 7.0,
+   "name": "cell_tick_09",
+   "file": "sfx/cell_tick_09.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 9 assembles"
+  },
+  {
+   "t": 7.125,
+   "name": "cell_tick_10",
+   "file": "sfx/cell_tick_10.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 10 assembles"
+  },
+  {
+   "t": 7.25,
+   "name": "cell_tick_11",
+   "file": "sfx/cell_tick_11.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 11 assembles"
+  },
+  {
+   "t": 7.375,
+   "name": "cell_tick_12",
+   "file": "sfx/cell_tick_12.wav",
+   "gain_db": -12,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "sprite cell 12 assembles"
+  },
+  {
+   "t": 8.0,
+   "name": "whoosh",
+   "file": "sfx/whoosh.wav",
+   "gain_db": -9,
+   "dur": 1.6,
+   "peak_offset": 1.0,
+   "note": "peaks at 9.0 (peak_offset 1.0 s)"
+  },
+  {
+   "t": 10.5,
+   "name": "drop_thud",
+   "file": "sfx/drop_thud.wav",
+   "gain_db": -3,
+   "dur": 1.3,
+   "peak_offset": 0.0,
+   "note": "arrival drop"
+  },
+  {
+   "t": 10.5,
+   "name": "pop",
+   "file": "sfx/pop.wav",
+   "gain_db": -8,
+   "dur": 1.0,
+   "peak_offset": 0.0,
+   "note": "arrival drop, bright pop"
+  },
+  {
+   "t": 13.0,
+   "name": "swell",
+   "file": "sfx/swell.wav",
+   "gain_db": -10,
+   "dur": 4.0,
+   "peak_offset": 3.5,
+   "note": "room reveal swell, peaks at 16.5"
+  },
+  {
+   "t": 13.75,
+   "name": "cell_tick_03",
+   "file": "sfx/cell_tick_03.wav",
+   "gain_db": -16,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "pixel-dissolve sparkle"
+  },
+  {
+   "t": 14.0,
+   "name": "cell_tick_08",
+   "file": "sfx/cell_tick_08.wav",
+   "gain_db": -16,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "pixel-dissolve sparkle"
+  },
+  {
+   "t": 14.125,
+   "name": "cell_tick_04",
+   "file": "sfx/cell_tick_04.wav",
+   "gain_db": -16,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "pixel-dissolve sparkle"
+  },
+  {
+   "t": 14.375,
+   "name": "cell_tick_09",
+   "file": "sfx/cell_tick_09.wav",
+   "gain_db": -16,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "pixel-dissolve sparkle"
+  },
+  {
+   "t": 14.5,
+   "name": "cell_tick_05",
+   "file": "sfx/cell_tick_05.wav",
+   "gain_db": -16,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "pixel-dissolve sparkle"
+  },
+  {
+   "t": 14.75,
+   "name": "cell_tick_10",
+   "file": "sfx/cell_tick_10.wav",
+   "gain_db": -16,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "pixel-dissolve sparkle"
+  },
+  {
+   "t": 14.875,
+   "name": "cell_tick_06",
+   "file": "sfx/cell_tick_06.wav",
+   "gain_db": -16,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "pixel-dissolve sparkle"
+  },
+  {
+   "t": 15.25,
+   "name": "cell_tick_11",
+   "file": "sfx/cell_tick_11.wav",
+   "gain_db": -16,
+   "dur": 0.07,
+   "peak_offset": 0.0,
+   "note": "pixel-dissolve sparkle"
+  },
+  {
+   "t": 17.0,
+   "name": "ui_tap",
+   "file": "sfx/ui_tap.wav",
+   "gain_db": -10,
+   "dur": 0.14,
+   "peak_offset": 0.0,
+   "note": "phone montage tap"
+  },
+  {
+   "t": 17.5,
+   "name": "ui_tap",
+   "file": "sfx/ui_tap.wav",
+   "gain_db": -10,
+   "dur": 0.14,
+   "peak_offset": 0.0,
+   "note": "phone montage tap"
+  },
+  {
+   "t": 18.0,
+   "name": "ui_tap",
+   "file": "sfx/ui_tap.wav",
+   "gain_db": -10,
+   "dur": 0.14,
+   "peak_offset": 0.0,
+   "note": "phone montage tap"
+  },
+  {
+   "t": 18.5,
+   "name": "ui_tap",
+   "file": "sfx/ui_tap.wav",
+   "gain_db": -10,
+   "dur": 0.14,
+   "peak_offset": 0.0,
+   "note": "phone montage tap"
+  },
+  {
+   "t": 19.0,
+   "name": "rain_soft",
+   "file": "sfx/rain_soft.wav",
+   "gain_db": -13,
+   "dur": 2.2,
+   "peak_offset": 0.0,
+   "note": "Moody (rain)"
+  },
+  {
+   "t": 20.0,
+   "name": "zzz_bubble",
+   "file": "sfx/zzz_bubble.wav",
+   "gain_db": -11,
+   "dur": 1.5,
+   "peak_offset": 0.0,
+   "note": "Sleep (zzz)"
+  },
+  {
+   "t": 20.5,
+   "name": "pop",
+   "file": "sfx/pop.wav",
+   "gain_db": -9,
+   "dur": 1.0,
+   "peak_offset": 0.0,
+   "note": "Poke special attack"
+  },
+  {
+   "t": 20.5,
+   "name": "ui_tap",
+   "file": "sfx/ui_tap.wav",
+   "gain_db": -9,
+   "dur": 0.14,
+   "peak_offset": 0.0,
+   "note": "Poke"
+  },
+  {
+   "t": 21.0,
+   "name": "chime_end",
+   "file": "sfx/chime_end.wav",
+   "gain_db": -4,
+   "dur": 3.0,
+   "peak_offset": 0.0,
+   "note": "end resolve; tail ~2.5 s, silent by 24.0"
+  }
+ ]
+}

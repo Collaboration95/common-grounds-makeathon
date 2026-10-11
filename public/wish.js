@@ -15,7 +15,8 @@ const EXAMPLES = [
 
 const feed = createFeed({ auto: false });
 const engine = createWorld();
-bindWorld(engine, feed);
+const binder = bindWorld(engine, feed);
+binder.initialRoom = () => { const w = myId && feed.wishes.get(myId); return w ? binder.roomOf(w) : null; };
 
 let myId = store.get('wishId');
 let sawHello = false;
@@ -230,7 +231,8 @@ function renderPet() {
   $('#petCard').hidden = !show || els.track.hidden;
   $('#petLogin').hidden = !!(p && !manual) ;
   $('#petNo').textContent = w && w.n ? '#' + w.n : '';
-  $('#petPin').textContent = p ? `Your pet ${w && w.n ? '#' + w.n : ''} · PIN ${p.pin} — keep it to control your pet` : '';
+  const rn = w && feed.rooms.length ? feed.rooms.findIndex((r) => r.id === binder.roomOf(w)) + 1 : 0;
+  $('#petPin').textContent = p ? `Your pet ${w && w.n ? '#' + w.n : ''} · PIN ${p.pin} — keep it to control your pet` + (rn ? ` · in Room ${rn}` : '') : '';
 }
 async function petPost(body) {
   let p = pet();
@@ -271,6 +273,7 @@ function render() {
   renderPet();
   const w = myId && feed.wishes.get(myId);
   if (!w) return;
+  if (feed.rooms.length) binder.setRoom(binder.roomOf(w));
   engine.markId = w.status === 'live' ? w.id : null;
   const key = JSON.stringify([w.status, w.queuePos, w.sprite, w.thing && w.thing.name, w.reason]);
   const bad = w.status === 'declined' || w.status === 'failed';
@@ -334,7 +337,7 @@ feed.on('hello', () => {
   if (myId && !feed.wishes.has(myId)) { store.set('wishId', null); myId = null; engine.markId = null; }
   route();
 });
-feed.on('wish', (w) => { if (w.id === myId) render(); });
+feed.on('wish', (w) => { if (w.id === myId) { if (feed.rooms.length) binder.setRoom(binder.roomOf(w)); render(); } });
 feed.on('remove', ({ id }) => { if (id === myId) render(); });
 feed.on('status', () => {});
 

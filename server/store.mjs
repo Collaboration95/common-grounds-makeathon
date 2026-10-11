@@ -14,6 +14,8 @@ export const bus = new EventEmitter(); // wish (Wish) | log ({id,n,line,t}) | po
 bus.setMaxListeners(0);
 
 let wishes = [];
+let rooms = []; // [{ id, n, sceneId, createdAt }] (ROOMS=0 turns rooms off: old cap + depart)
+export const ROOMS_ON = process.env.ROOMS !== "0";
 let priv = {};
 const recentLogs = [];
 
@@ -23,7 +25,7 @@ const writeAtomic = (file, data) => {
   fs.renameSync(tmp, file);
 };
 const save = () => {
-  writeAtomic(MANIFEST, JSON.stringify({ version: 1, wishes }, null, 1));
+  writeAtomic(MANIFEST, JSON.stringify({ version: 1, wishes, rooms }, null, 1));
   writeAtomic(PRIVATE, JSON.stringify(priv));
 };
 
@@ -96,6 +98,7 @@ export function addWish({ text, name, deviceId, hat = null, ...extra }) {
     thing: null, bleed: null, hasPatch: false, reason: null,
     stats: { buildMs: 0, turns: 0, checkRuns: 0, checkFails: 0 },
     resident: false, kind: "wish", hat,
+    ...(ROOMS_ON ? { room: pickRoom() } : {}),
     ...extra,
   };
   wishes.push(w);
@@ -113,11 +116,42 @@ export function deviceAllowance(deviceId) {
   return null;
 }
 
+// ---------- rooms: a new one opens when the newest is full ----------
+const ENDED = ["declined", "failed", "vetoed", "departed"];
+const DEFAULT_SCENE_ID = "voiddeck";
+const sceneFile = (sid) => sid === DEFAULT_SCENE_ID ? DEFAULT_SCENE : path.join(WORLD, "scenes", sid, "scene.json");
+const sceneChoices = () => {
+  let ids = [];
+  try { ids = fs.readdirSync(path.join(WORLD, "scenes")).filter((d) => /^[a-z0-9-]+$/.test(d) && fs.existsSync(sceneFile(d))).sort(); } catch {}
+  return [DEFAULT_SCENE_ID, ...ids];
+};
+const roomOf = (w) => w.room || rooms[0]?.id;
+function pickRoom() {
+  const cur = rooms[rooms.length - 1];
+  if (!cur) return undefined;
+  if (wishes.filter((w) => roomOf(w) === cur.id && !ENDED.includes(w.status)).length < MAX_CHARACTERS) return cur.id;
+  const choices = sceneChoices(), n = rooms.length + 1;
+  const room = { id: "r" + n, n, sceneId: choices[(n - 1) % choices.length], createdAt: Date.now() };
+  rooms.push(room);
+  bus.emit("rooms", publicRooms());
+  return room.id;
+}
+/** Rooms for clients, each with its resolved scene (room 1 always follows the live scene). */
+export function publicRooms() {
+  if (!ROOMS_ON) return [];
+  return rooms.map((r, i) => {
+    let sc = i === 0 ? scene : null;
+    if (!sc) { try { sc = JSON.parse(fs.readFileSync(sceneFile(r.sceneId), "utf8")); } catch { sc = JSON.parse(fs.readFileSync(DEFAULT_SCENE, "utf8")); } }
+    return { ...r, scene: sc };
+  });
+}
+
 // ---------- the cap ----------
 export const MAX_CHARACTERS = Number(process.env.MAX_CHARACTERS) || 10;
 
 /** Over the cap: the oldest live thing by acceptedAt leaves, except the founder (the single oldest). Residents count. */
 export function enforceCap() {
+  if (ROOMS_ON) return;
   const live = () => wishes.filter((w) => w.status === "live").sort((a, b) => (a.acceptedAt || 0) - (b.acceptedAt || 0));
   for (let l = live(); l.length > MAX_CHARACTERS && l.length > 1; l = live()) {
     const w = l[1]; // l[0] is the founder
@@ -141,10 +175,11 @@ const checkDir = (dir) => new Promise((resolve) =>
   }));
 export { checkDir as checkThing };
 
+const SEED = (process.env.SEED_RESIDENTS || "oyen").split(","); // kopi's files stay in template/residents, unseeded
 async function seedResidents() {
   const src = path.join(ROOT, "template", "residents");
   if (!fs.existsSync(src)) return;
-  for (const id of fs.readdirSync(src).filter((d) => fs.statSync(path.join(src, d)).isDirectory())) {
+  for (const id of fs.readdirSync(src).filter((d) => SEED.includes(d) && fs.statSync(path.join(src, d)).isDirectory())) {
     const from = path.join(src, id), to = thingDir(id);
     fs.mkdirSync(to, { recursive: true });
     let newest = 0;
@@ -182,6 +217,7 @@ export const getScene = () => scene;
 /** Replace the current scene; clients get an SSE `scene` event. */
 export function setScene(next) {
   scene = next;
+  if (rooms[0]) rooms[0].sceneId = next.id || rooms[0].sceneId;
   writeAtomic(SCENE, JSON.stringify(scene, null, 1));
   bus.emit("scene", scene);
   return scene;
@@ -190,9 +226,11 @@ export function setScene(next) {
 export async function init() {
   fs.mkdirSync(THINGS, { recursive: true });
   for (const f of [SCENE, DEFAULT_SCENE]) { try { scene = JSON.parse(fs.readFileSync(f, "utf8")); break; } catch {} }
-  try { wishes = JSON.parse(fs.readFileSync(MANIFEST, "utf8")).wishes || []; } catch (e) { if (e.code !== "ENOENT") console.error("manifest unreadable, starting empty:", e.message); }
+  try { const m = JSON.parse(fs.readFileSync(MANIFEST, "utf8")); wishes = m.wishes || []; rooms = m.rooms || []; } catch (e) { if (e.code !== "ENOENT") console.error("manifest unreadable, starting empty:", e.message); }
   try { priv = JSON.parse(fs.readFileSync(PRIVATE, "utf8")); } catch { priv = {}; }
   for (const w of wishes) { w.kind ??= w.resident ? "resident" : "wish"; w.hat ??= null; w.departedAt ??= null; } // v1 manifests
+  if (ROOMS_ON && !rooms.length) rooms = [{ id: "r1", n: 1, sceneId: scene?.id || DEFAULT_SCENE_ID, createdAt: Date.now() }];
   await seedResidents();
+  if (ROOMS_ON) for (const w of wishes) if (w.kind === "resident") w.room ??= rooms[0].id;
   save();
 }

@@ -174,6 +174,36 @@ function tickTimelapse(now) {
   }
 }
 
+// ---- rooms: one at a time, auto-cycling every 12s, <-/-> to switch, jump to wherever something arrives ----
+const roomLbl = document.createElement('div');
+roomLbl.style.cssText = 'position:absolute;left:50%;top:2.2%;transform:translateX(-50%);padding:.5em 1.1em;background:#f6ecd4;color:#3a2b1a;border:2px solid #3a2b1a;border-radius:.3em;font:600 clamp(11px,1.5vw,22px)/1 Georgia,serif;box-shadow:2px 3px 0 rgba(0,0,0,.25);z-index:5;pointer-events:none;transition:opacity .4s';
+roomLbl.hidden = true;
+frame.appendChild(roomLbl);
+let cycleT = 0;
+function renderRoom() {
+  const rs = feed.rooms;
+  roomLbl.hidden = rs.length < 2;
+  if (!binder.room) return;
+  const i = Math.max(0, rs.findIndex((r) => r.id === binder.room));
+  const here = [...feed.wishes.values()].filter((w) => w.status === 'live' && binder.roomOf(w) === binder.room).length;
+  roomLbl.textContent = `Room ${i + 1} of ${rs.length} · ${here} here`;
+}
+function goRoom(id) { binder.setRoom(id); clearInterval(cycleT); cycleT = setInterval(() => step(1), 12000); renderRoom(); }
+function step(d) {
+  const rs = feed.rooms;
+  if (rs.length < 2) return;
+  const i = Math.max(0, rs.findIndex((r) => r.id === binder.room));
+  goRoom(rs[(i + d + rs.length) % rs.length].id);
+}
+['hello', 'wish', 'remove', 'rooms'].forEach((t) => feed.on(t, renderRoom));
+feed.on('wish', (w, prev) => { // an arrival: go see it
+  const fresh = !prev || (prev.status !== 'live' && w.status === 'live');
+  if (fresh && !w.resident && feed.rooms.length > 1 && !['declined', 'failed', 'vetoed', 'departed'].includes(w.status) && binder.roomOf(w) !== binder.room) goRoom(binder.roomOf(w));
+});
+feed.on('rooms', (list, prev) => { if (list.length > prev && prev > 0) toast('A new room opened!'); });
+feed.on('hello', () => { if (feed.rooms.length > 1) goRoom(binder.room); });
+window.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1); });
+
 // ---- main loop --------------------------------------------------------------------------------------
 let last = performance.now();
 function frameLoop(now) {

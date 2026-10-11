@@ -1,0 +1,64 @@
+# Motion render progress
+
+Plan: 9x16 (chunks) -> 16x9 -> 1x1 -> contact sheet. Resumable: rerun `node src/render-par.mjs <aspect>`; finished chunks in out/tmp are reused.
+
+- 07:20:59 9x16 start (6 chunks)
+- 07:21:38 9x16 chunk 1 frames 120-239 done
+- 07:21:39 9x16 chunk 5 frames 600-719 done
+- 07:21:39 9x16 chunk 2 frames 240-359 done
+- 07:21:39 9x16 chunk 0 frames 0-119 done
+- 07:21:40 9x16 chunk 3 frames 360-479 done
+- 07:21:40 9x16 chunk 4 frames 480-599 done
+- 07:21:40 9x16 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/video/out/commons-motion-9x16.mp4 (41s)
+- re-render all aspects after layout fixes
+- 07:22:39 9x16 start (6 chunks)
+- 07:23:11 9x16 chunk 5 frames 600-719 done
+- 07:23:11 9x16 chunk 1 frames 120-239 done
+- 07:23:11 9x16 chunk 4 frames 480-599 done
+- 07:23:11 9x16 chunk 2 frames 240-359 done
+- 07:23:11 9x16 chunk 0 frames 0-119 done
+- 07:23:11 9x16 chunk 3 frames 360-479 done
+- 07:23:12 9x16 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/video/out/commons-motion-9x16.mp4 (33s)
+- 07:23:12 16x9 start (6 chunks)
+- 07:23:41 16x9 chunk 5 frames 600-719 done
+- 07:23:41 16x9 chunk 1 frames 120-239 done
+- 07:23:41 16x9 chunk 3 frames 360-479 done
+- 07:23:41 16x9 chunk 0 frames 0-119 done
+- 07:23:41 16x9 chunk 4 frames 480-599 done
+- 07:23:42 16x9 chunk 2 frames 240-359 done
+- 07:23:42 16x9 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/video/out/commons-motion-16x9.mp4 (30s)
+- 07:23:42 1x1 start (6 chunks)
+- 07:24:00 1x1 chunk 2 frames 240-359 done
+- 07:24:00 1x1 chunk 1 frames 120-239 done
+- 07:24:01 1x1 chunk 5 frames 600-719 done
+- 07:24:01 1x1 chunk 0 frames 0-119 done
+- 07:24:01 1x1 chunk 4 frames 480-599 done
+- 07:24:01 1x1 chunk 3 frames 360-479 done
+- 07:24:01 1x1 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/video/out/commons-motion-1x1.mp4 (19s)
+- contact-sheet-motion.png written from final 9x16; ALL DELIVERABLES DONE
+- re-render: fix pix_fmt yuvj420p -> yuv420p (tv range)
+- 07:24:34 9x16 start (6 chunks)
+- 07:25:05 9x16 chunk 1 frames 120-239 done
+- 07:25:05 9x16 chunk 5 frames 600-719 done
+- 07:25:05 9x16 chunk 2 frames 240-359 done
+- 07:25:05 9x16 chunk 0 frames 0-119 done
+- 07:25:06 9x16 chunk 4 frames 480-599 done
+- 07:25:06 9x16 chunk 3 frames 360-479 done
+- 07:25:06 9x16 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/video/out/commons-motion-9x16.mp4 (33s)
+- 07:25:06 16x9 start (6 chunks)
+- 07:25:34 16x9 chunk 0 frames 0-119 done
+- 07:25:35 16x9 chunk 5 frames 600-719 done
+- 07:25:35 16x9 chunk 4 frames 480-599 done
+- 07:25:35 16x9 chunk 2 frames 240-359 done
+- 07:25:35 16x9 chunk 1 frames 120-239 done
+- 07:25:35 16x9 chunk 3 frames 360-479 done
+- 07:25:35 16x9 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/video/out/commons-motion-16x9.mp4 (29s)
+- 07:25:36 1x1 start (6 chunks)
+- 07:25:53 1x1 chunk 5 frames 600-719 done
+- 07:25:53 1x1 chunk 2 frames 240-359 done
+- 07:25:53 1x1 chunk 1 frames 120-239 done
+- 07:25:53 1x1 chunk 4 frames 480-599 done
+- 07:25:53 1x1 chunk 0 frames 0-119 done
+- 07:25:53 1x1 chunk 3 frames 360-479 done
+- 07:25:53 1x1 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/video/out/commons-motion-1x1.mp4 (18s)
+- final contact-sheet-motion.png; ALL DELIVERABLES DONE

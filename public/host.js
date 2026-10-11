@@ -166,8 +166,9 @@ $('#use').addEventListener('click', async () => {
   $('#use').disabled = true; $('#use').textContent = 'Switching…'; say($('#rvErr'), '');
   const r = await post(`/api/host/scene/${jobId}/apply`, { floor: { backY: tweak.backY, frontY: tweak.frontY }, ceilingY: tweak.ceilingY });
   if (!r.ok) { say($('#rvErr'), r.error); $('#use').disabled = false; $('#use').textContent = 'Use this room'; return; }
-  $('#dnTitle').textContent = "It's live!"; $('#dnMsg').textContent = 'Look up at the big screen. Everyone is walking into the new room.';
+  $('#dnTitle').textContent = "It's live!"; $('#dnMsg').textContent = 'Taking you to the live room…';
   show('done');
+  setTimeout(() => location.assign('/world'), 1500); // same origin, so the tunnel link stays on the tunnel
 });
 
 async function reset() {

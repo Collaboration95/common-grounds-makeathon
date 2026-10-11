@@ -44,7 +44,7 @@ export function counts(wishes) {
 export function createFeed({ auto = false } = {}) {
   const wishes = new Map();
   const handlers = {};
-  const feed = { wishes, DEV, status: 'connecting', sim: null, scene: null };
+  const feed = { wishes, DEV, status: 'connecting', sim: null, scene: null, rooms: [] };
   const emit = (type, ...args) => {
     for (const fn of handlers[type] || []) {
       try { fn(...args); } catch (e) { console.error(`[feed:${type}]`, e); }
@@ -55,8 +55,9 @@ export function createFeed({ auto = false } = {}) {
   feed.localRemove = (id) => push.remove({ id }); // same path as the SSE 'remove' event
 
   const push = {
-    hello(list, scene) {
+    hello(list, scene, rooms) {
       if (scene) push.scene(scene); // before the wishes, so things land in the right room
+      if (rooms) feed.rooms = rooms;
       const seen = new Set();
       for (const w of list) { wishes.set(w.id, w); seen.add(w.id); }
       for (const id of [...wishes.keys()]) if (!seen.has(id)) wishes.delete(id);
@@ -78,7 +79,14 @@ export function createFeed({ auto = false } = {}) {
     scene(s) {
       if (!s || typeof s !== 'object') return;
       feed.scene = s;
+      if (feed.rooms[0]) feed.rooms[0].scene = s; // room 1 follows the live scene
       emit('scene', s);
+    },
+    rooms(list) {
+      if (!Array.isArray(list)) return;
+      const prev = feed.rooms.length;
+      feed.rooms = list;
+      emit('rooms', list, prev);
     },
     depart(d) { // cap of 10: the oldest thing says bye and walks off
       const w = wishes.get(d.id);
@@ -102,7 +110,8 @@ export function createFeed({ auto = false } = {}) {
       try { data = JSON.parse(ev.data); } catch { return; }
       fn(data);
     });
-    on('hello', (d) => push.hello(d.wishes || [], d.scene));
+    on('hello', (d) => push.hello(d.wishes || [], d.scene, d.rooms));
+    on('rooms', push.rooms);
     on('wish', push.wish);
     on('log', push.log);
     on('poke', push.poke);
@@ -118,8 +127,9 @@ export function createFeed({ auto = false } = {}) {
       try {
         const d = await (await fetch('/api/world', { cache: 'no-store' })).json();
         const list = d.wishes || [];
-        if (!polling) { polling = true; lastScene = d.scene?.id; push.hello(list, d.scene); }
+        if (!polling) { polling = true; lastScene = d.scene?.id; push.hello(list, d.scene, d.rooms); }
         else {
+          if (d.rooms && JSON.stringify(d.rooms.map((r) => r.id)) !== JSON.stringify(feed.rooms.map((r) => r.id))) push.rooms(d.rooms);
           if (d.scene && d.scene.id !== lastScene) { lastScene = d.scene.id; push.scene(d.scene); }
           const seen = new Set();
           for (const w of list) {
@@ -163,7 +173,20 @@ export function bindWorld(engine, feed) {
   const known = new Map(); // id -> last status this client has seen (drives "should it animate in?")
   const loading = new Set();
   const animLoading = new Set();
-  const binder = { assets: new Map(), hold: false };
+  const binder = { assets: new Map(), hold: false, room: null, initialRoom: null };
+  const roomOf = (w) => w.room || (feed.rooms[0] && feed.rooms[0].id) || null;
+  const inRoom = (w) => !binder.room || roomOf(w) === binder.room;
+  binder.roomOf = roomOf;
+  const PENDING = ['screening', 'queued', 'coding', 'testing'];
+  // Show one room: crossfade to its scene, only its things stay on stage.
+  binder.setRoom = (id) => {
+    if (!id || id === binder.room) return;
+    binder.room = id;
+    const r = feed.rooms.find((x) => x.id === id);
+    if (r && r.scene) engine.setScene(r.scene);
+    for (const t of engine.list()) { const w = feed.wishes.get(t.id); if (w && !inRoom(w)) engine.remove(t.id, { silent: true }); }
+    for (const w of feed.wishes.values()) if (w.status === 'live' || PENDING.includes(w.status)) apply(w);
+  };
 
   async function load(w) {
     const [mod, sprite, patch, anim] = await Promise.all([
@@ -205,7 +228,7 @@ export function bindWorld(engine, feed) {
     const cur = feed.wishes.get(w.id) || w;
     if (cur.status !== 'live') return;
     binder.assets.set(w.id, { wish: cur, ...a });
-    if (binder.hold) return;
+    if (binder.hold || !inRoom(cur)) return;
     binder.addNow(w.id, arrive);
   }
 
@@ -219,18 +242,22 @@ export function bindWorld(engine, feed) {
       case 'testing':
         if (engine.has(w.id)) engine.remove(w.id, { silent: true });
         binder.assets.delete(w.id);
-        engine.setScaffold(w);
+        if (inRoom(w)) engine.setScaffold(w); else engine.clearScaffold(w.id, false);
         break;
       case 'live': {
         const a = binder.assets.get(w.id);
         if (a) a.wish = w;
-        if (engine.has(w.id)) {
+        if (!inRoom(w)) { // another room: keep it loaded, off stage
+          if (engine.has(w.id)) engine.remove(w.id, { silent: true });
+          if (!a && !loading.has(w.id)) bringLive(w, false);
+        } else if (engine.has(w.id)) {
           engine.updateWish(w);
           if (w.anim && !engine.hasAnim(w.id) && !animLoading.has(w.id)) { // it learns to walk
             animLoading.add(w.id);
             loadAnim(w).then((an) => { animLoading.delete(w.id); if (an) { if (a) a.anim = an; engine.setAnim(w.id, an, { sparkle: true }); } });
           }
         }
+        else if (a && !loading.has(w.id) && !binder.hold && prev === 'live') binder.addNow(w.id, false); // back in the room
         else if (!loading.has(w.id) && !(a && binder.hold)) bringLive(w, prev !== undefined && prev !== 'live');
         break;
       }
@@ -249,6 +276,12 @@ export function bindWorld(engine, feed) {
   }
 
   feed.on('hello', (list) => {
+    if (feed.rooms.length) {
+      const want = (binder.initialRoom && binder.initialRoom()) || binder.room || feed.rooms[0].id;
+      binder.room = feed.rooms.some((r) => r.id === want) ? want : feed.rooms[0].id;
+      const r = feed.rooms.find((x) => x.id === binder.room);
+      if (r && r.scene) engine.setScene(r.scene);
+    }
     const ids = new Set(list.map((w) => w.id));
     for (const w of list) apply(w);
     for (const id of [...known.keys()]) {
@@ -256,7 +289,7 @@ export function bindWorld(engine, feed) {
     }
   });
   feed.on('wish', apply);
-  feed.on('scene', (s) => engine.setScene(s));
+  feed.on('scene', (s) => { if (!feed.rooms.length || binder.room === feed.rooms[0].id) engine.setScene(s); });
   feed.on('depart', ({ id }) => {
     known.set(id, 'departed');
     engine.clearScaffold(id, false);

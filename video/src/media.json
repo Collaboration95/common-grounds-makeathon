@@ -1,0 +1,84 @@
+{
+ "clips": {
+  "phone": {
+   "dir": "/video/assets/frames/phone",
+   "fps": 30,
+   "n": 188,
+   "ext": "jpg"
+  },
+  "arrival": {
+   "dir": "/video/assets/frames/arrival",
+   "fps": 30,
+   "n": 128,
+   "ext": "jpg"
+  },
+  "swap": {
+   "dir": "/video/assets/frames/swap",
+   "fps": 30,
+   "n": 63,
+   "ext": "jpg"
+  },
+  "pet.phone": {
+   "dir": "/video/assets/frames/pet.phone",
+   "fps": 30,
+   "n": 128,
+   "ext": "jpg"
+  },
+  "pet.world": {
+   "dir": "/video/assets/frames/pet.world",
+   "fps": 30,
+   "n": 128,
+   "ext": "jpg"
+  }
+ },
+ "wish": "a durian in sunglasses",
+ "arrival": {
+  "cam": [
+   [
+    0,
+    0.5,
+    0.62,
+    1
+   ],
+   [
+    1.4,
+    0.52,
+    0.8,
+    1.9
+   ],
+   [
+    3,
+    0.52,
+    0.78,
+    1.9
+   ],
+   [
+    4.25,
+    0.5,
+    0.7,
+    1.35
+   ]
+  ],
+  "caps": [
+   [
+    0.15,
+    "SCAFFOLD"
+   ],
+   [
+    1.5,
+    "DROP."
+   ],
+   [
+    2.4,
+    "TOO COOL DURIAN"
+   ],
+   [
+    3.2,
+    "WISHED BY MEI"
+   ]
+  ]
+ },
+ "room": {
+  "clip": true
+ }
+}

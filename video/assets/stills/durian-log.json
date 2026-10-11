@@ -1,0 +1,259 @@
+{
+ "wish": {
+  "id": "wx3q",
+  "n": 12,
+  "text": "a durian in sunglasses",
+  "name": "Mei",
+  "stats": {
+   "buildMs": 34264,
+   "turns": 1,
+   "checkRuns": 2,
+   "checkFails": 0
+  },
+  "thing": {
+   "name": "Too Cool Durian",
+   "tags": [
+    "food",
+    "spiky",
+    "cool"
+   ],
+   "zone": "ground",
+   "size": 1,
+   "oneLine": "A shades-wearing durian bobs, strikes poses, and lounges like VIP produce."
+  },
+  "statusTransitions": [
+   {
+    "status": "screening",
+    "sprite": "pending",
+    "t": 6.79
+   },
+   {
+    "status": "coding",
+    "sprite": "drawing",
+    "t": 13.33
+   },
+   {
+    "status": "testing",
+    "sprite": "drawing",
+    "t": 42.99
+   },
+   {
+    "status": "live",
+    "sprite": "done",
+    "t": 98.24
+   }
+  ]
+ },
+ "logs": [
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 Mei: \"a durian in sunglasses\"",
+   "t": 1791701572927
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 checking the wish…",
+   "t": 1791701572927
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 accepted: A durian wearing sunglasses bobs cheerfully with a laid-back swagger.",
+   "t": 1791701581029
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 drawing it",
+   "t": 1791701581029
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 Codex is writing it",
+   "t": 1791701581031
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 wrote thing.js (91 lines)",
+   "t": 1791701612717
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 check → passed",
+   "t": 1791701612717
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 server re-check → passed",
+   "t": 1791701617116
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 code passed in 36.1s",
+   "t": 1791701617117
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 sprite failed, using a paper blob",
+   "t": 1791701636807
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 LIVE: Too Cool Durian (built by Codex in 36s)",
+   "t": 1791701636807
+  },
+  {
+   "id": "wpbk",
+   "n": 10,
+   "line": "#10 vetoed",
+   "t": 1791701669960
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 Mei: \"a durian in sunglasses\"",
+   "t": 1791701686392
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 checking the wish…",
+   "t": 1791701686392
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 accepted: A durian wearing sunglasses bobs confidently and gives a cheeky little wiggle.",
+   "t": 1791701693997
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 drawing it",
+   "t": 1791701693999
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 Codex is writing it",
+   "t": 1791701694000
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 wrote thing.js (91 lines)",
+   "t": 1791701723201
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 check → passed",
+   "t": 1791701723201
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 server re-check → passed",
+   "t": 1791701727383
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 code passed in 33.4s",
+   "t": 1791701727384
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 sprite ready",
+   "t": 1791701846918
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 LIVE: Too Cool Durian (built by Codex in 33s)",
+   "t": 1791701846919
+  },
+  {
+   "id": "wrqo",
+   "n": 11,
+   "line": "#11 vetoed",
+   "t": 1791701970871
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 Mei: \"a durian in sunglasses\"",
+   "t": 1791701988149
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 checking the wish…",
+   "t": 1791701988149
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 accepted: A durian wearing sunglasses bobs happily and strikes cool poses.",
+   "t": 1791701995723
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 drawing it",
+   "t": 1791701995724
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 Codex is writing it",
+   "t": 1791701995727
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 wrote thing.js (86 lines)",
+   "t": 1791702025730
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 check → passed",
+   "t": 1791702025730
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 server re-check → passed",
+   "t": 1791702029990
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 code passed in 34.3s",
+   "t": 1791702029991
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 sprite ready",
+   "t": 1791702080892
+  },
+  {
+   "id": "wx3q",
+   "n": 12,
+   "line": "#12 LIVE: Too Cool Durian (built by Codex in 34s)",
+   "t": 1791702080892
+  }
+ ]
+}

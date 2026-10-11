@@ -67,7 +67,7 @@ const clients = new Set();
 const PAD = ":" + " ".repeat(2048) + "\n"; // pushes each event through proxy buffers
 const sse = (res, event, data) => res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n${PAD}\n`);
 const broadcast = (event, data) => { for (const c of clients) sse(c, event, data); };
-for (const ev of ["wish", "log", "poke", "remove", "scene", "depart"]) store.bus.on(ev, (d) => broadcast(ev, d));
+for (const ev of ["wish", "log", "poke", "remove", "scene", "depart", "rooms"]) store.bus.on(ev, (d) => broadcast(ev, d));
 setInterval(() => { for (const c of clients) c.write(": hb\n\n"); }, 15000).unref();
 
 // ---------- host: a scene from a photo (all /api/host/* need the x-host-key header; logic in scene.mjs) ----------
@@ -152,13 +152,13 @@ async function handle(req, res) {
     return res.end(svg);
   }
 
-  if (p === "/api/world" && m === "GET") return json(res, 200, { wishes: store.publicWishes(), scene: store.getScene(), logs: store.logs() });
+  if (p === "/api/world" && m === "GET") return json(res, 200, { wishes: store.publicWishes(), scene: store.getScene(), rooms: store.publicRooms(), logs: store.logs() });
   if (p === "/api/scene" && m === "GET") return json(res, 200, store.getScene());
 
   if (p === "/api/events" && m === "GET") {
     res.writeHead(200, { "content-type": "text/event-stream", "cache-control": "no-cache, no-transform", connection: "keep-alive", "x-accel-buffering": "no" });
     res.write("retry: 2000\n:" + " ".repeat(8192) + "\n\n"); // pad: tunnels buffer small SSE chunks
-    sse(res, "hello", { wishes: store.publicWishes(), logs: store.logs(), scene: store.getScene(), room: { name: room?.name || null } });
+    sse(res, "hello", { wishes: store.publicWishes(), logs: store.logs(), scene: store.getScene(), rooms: store.publicRooms(), room: { name: room?.name || null } });
     clients.add(res);
     req.on("close", () => clients.delete(res));
     return;
