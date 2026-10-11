@@ -1,12 +1,12 @@
 {
   "id": "codex-shire-party",
-  "createdAt": 1791697344604,
+  "createdAt": 1791698150955,
   "source": "codex",
   "baked": true,
   "moment": "Bilbo's eleventy-first birthday party in the Shire",
-  "title": "An Unexpected Party Crasher",
-  "story": "Bilbo’s eleventy-first has everything: fireworks, cake, and one uninvited guest beneath the bench. He’s not here for the presents—just the precious.",
-  "world": "Bag End, the Shire: lanterns glow beneath the Party Tree, hobbits dance and feast, and Gandalf’s fireworks light the birthday sky.",
+  "title": "One Guest Too Precious",
+  "story": "Bilbo invited half the Shire, but one guest came strictly for the precious party favors. Apparently, a waistcoat and flower crown count as a convincing disguise.",
+  "world": "Bag End, the Shire: Bilbo’s eleventy-first birthday party. Lanterns glow, fireworks bloom, and an uninvited hobbit impersonator eyes the feast.",
   "bg": {
     "src": "/data/assets/codex-shire-party-scene.webp",
     "w": 1536,
@@ -21,14 +21,14 @@
       "sprite": "/data/assets/codex-shire-party-hit0.png",
       "portrait": "/data/assets/codex-shire-party-portrait.png",
       "quips": [
-        "Sneaky hobbitses! Hiding it in the cake?",
-        "We hates benches. Too many feet.",
-        "Not that shiny! The other shiny!"
+        "The waistcoat itches, precious.",
+        "We wants birthday presents too.",
+        "Nasty cake. Where’s the fish?"
       ],
-      "line": "Birthday presents? Where is our precious, precious?",
+      "line": "We’re respectable hobbits, precious. Pass the fish.",
       "move": "hop",
-      "x": 0.1953125,
-      "y": 0.78515625,
+      "x": 0.6979166666666666,
+      "y": 0.38671875,
       "h": 0.0546875
     },
     {
@@ -37,38 +37,54 @@
       "role": "resident",
       "sprite": "/data/assets/codex-shire-party-hit1.png",
       "quips": [
-        "Eleventy-one, and still thirsty!",
-        "An unexpected guest? How very inconvenient.",
-        "I shall need another slice."
+        "Eleventy-one, and still hosting.",
+        "Do leave room for cake.",
+        "I’ve a speech to escape."
       ],
-      "line": "Good gracious! I'm the birthday hobbit.",
+      "line": "Uninvited? I’m the birthday boy!",
       "move": "wave",
-      "x": 0.548,
-      "y": 0.648,
-      "h": 0.146
+      "x": 0.0755,
+      "y": 0.821,
+      "h": 0.298
     },
     {
       "id": "c2",
-      "name": "Gandalf",
+      "name": "Frodo Baggins",
       "role": "resident",
       "sprite": "/data/assets/codex-shire-party-hit2.png",
       "quips": [
-        "Those rockets are not toys.",
-        "A most suspicious party invitation.",
-        "Leave the difficult fireworks to me."
+        "Bilbo’s looking unusually pleased.",
+        "Another toast? Very well.",
+        "Something feels odd tonight."
       ],
-      "line": "Wrong fellow. Mind the fireworks.",
+      "line": "I’m family, not a gatecrasher.",
+      "move": "tilt",
+      "x": 0.1595,
+      "y": 0.835,
+      "h": 0.307
+    },
+    {
+      "id": "c3",
+      "name": "Gandalf",
+      "role": "resident",
+      "sprite": "/data/assets/codex-shire-party-hit3.png",
+      "quips": [
+        "Keep clear of the fireworks.",
+        "Some guests require watching.",
+        "The entertainment is quite deliberate."
+      ],
+      "line": "A disguise? This is my usual hat.",
       "move": "shake",
-      "x": 0.7715,
-      "y": 0.397,
-      "h": 0.249
+      "x": 0.2245,
+      "y": 0.792,
+      "h": 0.382
     }
   ],
   "hint": {
-    "x": 0,
-    "y": 0.42906741542516164,
+    "x": 0.5470126724984191,
+    "y": 0.08979675810031523,
     "w": 0.4,
     "h": 0.42,
-    "text": "Look beneath the left-hand feast bench, beside a little plate."
+    "text": "Look at the right-hand feast table, beneath a borrowed flower crown."
   }
 }

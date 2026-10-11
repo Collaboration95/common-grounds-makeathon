@@ -67,7 +67,10 @@ const plan = await ask([{ role: 'user', content: [
   },
 });
 
-const guestBox = (await diffBox()) ?? plan.guest_box;
+const overlaps = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+let guestBox = (await diffBox()) ?? plan.guest_box;
+// A tiny diff blob is usually just the face; prefer the vision model's full-body box if it agrees.
+if (guestBox !== plan.guest_box && guestBox.h < 0.06 && overlaps(guestBox, plan.guest_box)) guestBox = plan.guest_box;
 console.log(`guest box from ${guestBox === plan.guest_box ? 'vision' : 'diff'}:`, guestBox);
 
 // 3. Hit areas are rectangles cut from the scene; the guest's portrait is the transparent painting.
