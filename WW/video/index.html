@@ -1,0 +1,14 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+<canvas id="c"></canvas>
+<script type="module">
+import * as comp from './comp.js';
+const q = new URLSearchParams(location.search);
+comp.setSize(+(q.get('w') || 1080), +(q.get('h') || 1920));
+window.comp = comp;
+window.ready = comp.load().then(() => { comp.renderFrame(+(q.get('t') || 0)); return true; });
+// Live preview: ?play to loop the timeline in real time.
+if (q.has('play')) window.ready.then(() => { const t0 = performance.now(); const tick = () => { comp.renderFrame(((performance.now() - t0) / 1000) % comp.DUR); requestAnimationFrame(tick); }; tick(); });
+</script>
