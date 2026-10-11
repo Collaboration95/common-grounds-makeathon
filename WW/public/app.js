@@ -68,6 +68,71 @@ function copyCanvas(src) {
   return c;
 }
 
+// ---------- Logo and world themes ----------
+
+// A typeface per world; unknown (newly created) worlds cycle through these.
+const THEMES = {
+  'codex-shire-party': { font: '"Uncial Antiqua", serif', accent: '#9bd46a' },
+  'codex-great-hall': { font: '"Cinzel Decorative", serif', accent: '#ffcf4a' },
+  'codex-cantina': { font: 'Audiowide, sans-serif', accent: '#ff9a4a' },
+  'codex-hawker-centre': { font: 'Bungee, sans-serif', accent: '#ff5a4a' },
+};
+const FALLBACK = Object.values(THEMES);
+const themeOf = g => THEMES[g.id] ?? FALLBACK[state.games.indexOf(g) % FALLBACK.length] ?? FALLBACK[0];
+const LOGO = "WHO'S HIDING?";
+let logoTick = 0, logoLock = null;
+
+function buildLogo() {
+  $('#logo').replaceChildren(...[...LOGO].map((c, i) => {
+    const s = document.createElement('span');
+    s.className = c === ' ' ? 'gap' : 'ch';
+    s.textContent = c === ' ' ? '' : c;
+    s.dataset.i = i;
+    return s;
+  }));
+}
+
+// Paint each letter with a world: its typeface, and a slice of its painting as the fill.
+function paintLogo(flip) {
+  const games = state.games;
+  if (!games.length) return;
+  $('#logo').querySelectorAll('.ch').forEach((s, k) => {
+    const g = logoLock ?? games[(k + logoTick) % games.length];
+    Object.assign(s.style, {
+      fontFamily: themeOf(g).font,
+      backgroundImage: `url("${g.bg.src}")`,
+      backgroundPosition: `${(k * 37) % 100}% ${30 + ((k * 23) % 40)}%`,
+    });
+    if (flip) { s.classList.remove('flip'); s.offsetWidth; s.style.animationDelay = `${k * 45}ms`; s.classList.add('flip'); }
+  });
+}
+
+function buildSuspects() {
+  $('#suspects').replaceChildren(...state.games.map(g => {
+    const guest = guestOf(g);
+    const b = document.createElement('button');
+    b.title = `${g.title}`;
+    b.style.setProperty('--face', `url("${guest.portrait ?? guest.sprite}")`);
+    b.onmouseenter = () => focusWorld(g);
+    b.onmouseleave = () => focusWorld(null);
+    b.onclick = () => zoomInto(g);
+    b.dataset.id = g.id;
+    return b;
+  }));
+}
+
+// Hovering a world (or its suspect) turns the whole logo into that world.
+function focusWorld(g) {
+  if (logoLock === g) return;
+  logoLock = g;
+  $('#suspects').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.id === g?.id));
+  $('#tagline').textContent = g ? `${g.title} · Find ${guestOf(g).name}` : "Every world hides someone who doesn't belong. Pick a world.";
+  paintLogo(true);
+}
+
+buildLogo();
+setInterval(() => { if (!wall.hidden && !logoLock) { logoTick++; paintLogo(true); } }, 2800);
+
 // ---------- World of worlds ----------
 
 async function refresh() {
@@ -76,7 +141,7 @@ async function refresh() {
   const games = real.length ? real : all;
   const changed = games.map(g => g.id).join() !== state.games.map(g => g.id).join();
   state.games = games;
-  if (changed) layoutWall();
+  if (changed) { layoutWall(); buildSuspects(); paintLogo(false); }
   return games;
 }
 
@@ -111,6 +176,8 @@ function layoutWall() {
       img.onload = () => el.classList.remove('fresh');
       img.src = g.bg.src;
       el.onclick = () => zoomInto(g);
+      el.onmouseenter = () => focusWorld(g);
+      el.onmouseleave = () => focusWorld(null);
       drift.append(el);
       tiles.set(g.id, el);
     }
@@ -160,6 +227,7 @@ function backToWall() {
 async function startGame(g) {
   state.game = g;
   sizeStage();
+  document.body.style.setProperty('--world-font', themeOf(g).font);
   state.found = false;
   state.hovered = null;
   stage.className = g.baked ? 'baked' : '';

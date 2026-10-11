@@ -55,8 +55,36 @@ html, body { margin: 0; height: 100%; overflow: hidden; }
   position: absolute; top: 1.2rem; left: 50%; transform: translateX(-50%); text-align: center;
   color: var(--paper); text-shadow: 0 3px 0 #000, 0 0 24px #000; pointer-events: none;
 }
-.wall-head h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.6rem); letter-spacing: 0.04em; }
-.wall-head p { margin: 0.2rem 0 0; font-weight: 600; }
+.wall-head { font-family: Fredoka, ui-rounded, system-ui, sans-serif; perspective: 900px; }
+/* Loki-style logo: every letter is a different world, in its typeface and filled with its painting. */
+#logo { margin: 0; display: flex; justify-content: center; align-items: baseline; gap: 0.02em; font-size: clamp(2.6rem, 7vw, 5.6rem); line-height: 1; text-shadow: none; }
+#logo .ch {
+  display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
+  background-size: 900% auto; -webkit-text-stroke: 2px rgb(255 240 210 / 0.85);
+  filter: drop-shadow(0 4px 0 #000) drop-shadow(0 0 18px rgb(0 0 0 / 0.9));
+  transition: font-family 0s, background-position 1.2s ease; transform-origin: 50% 60%;
+}
+#logo .ch.flip { animation: flip 0.7s cubic-bezier(0.5, 0, 0.3, 1); }
+#logo .gap { width: 0.35em; }
+@keyframes flip { 0% { transform: rotateX(0); } 50% { transform: rotateX(90deg) scale(0.9); } 100% { transform: rotateX(0); } }
+#tagline { margin: 0.4rem 0 0; font-weight: 600; font-size: clamp(0.9rem, 1.3vw, 1.15rem); letter-spacing: 0.02em; transition: opacity 0.3s; }
+#suspects { display: flex; justify-content: center; gap: 0.7rem; margin-top: 0.7rem; pointer-events: auto; }
+#suspects button {
+  width: 3.6rem; height: 3.6rem; border-radius: 50%; border: 3px solid var(--paper); background: #000; overflow: hidden;
+  cursor: pointer; transition: transform 0.3s; padding: 0; position: relative;
+  box-shadow: 0 0 12px rgb(255 216 74 / 0.6);
+}
+#suspects button::after {
+  content: "?"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--gold);
+  font: 900 1.8rem "Cinzel Decorative", serif; text-shadow: 0 2px 0 #000; transition: opacity 0.3s;
+}
+#suspects button.on::after, #suspects button:hover::after { opacity: 0; }
+#suspects button.on, #suspects button:hover { transform: translateY(-4px) scale(1.12); }
+#suspects button::before {
+  content: ""; position: absolute; inset: 0; background: var(--face) center 20% / cover no-repeat;
+  filter: blur(2.5px) grayscale(1) brightness(0.55); transition: filter 0.4s;
+}
+#suspects button.on::before, #suspects button:hover::before { filter: none; }
 #wall-empty { position: absolute; inset: 0; display: grid; place-items: center; color: var(--paper); font-size: 1.3rem; }
 #create-btn { position: absolute; right: 1.5rem; bottom: 1.5rem; font-size: 1.2rem; }
 #wall.zooming .wall-head, #wall.zooming #create-btn { opacity: 0; transition: opacity 0.3s; }
@@ -138,7 +166,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; }
 #target-card span { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); }
 #target-portrait { height: clamp(7rem, 14vw, 12rem); display: flex; justify-content: center; padding: 0.4rem 0; }
 #target-portrait canvas { height: 100%; width: auto; max-width: 100%; object-fit: contain; }
-#target-name { display: block; font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.15; }
+#target-name { display: block; font-family: var(--world-font, inherit); font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.15; }
 .game-controls { position: absolute; top: 1rem; left: 1rem; display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; max-width: calc(100vw - 18rem); }
 #hint-text {
   margin: 0; padding: 0.5em 0.9em; background: var(--gold); border: 3px solid var(--paper-edge); border-radius: 10px;
@@ -151,7 +179,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; }
   text-align: center; box-shadow: 0 8px 0 var(--paper-edge); animation: rise 0.5s ease-out;
 }
 @keyframes rise { from { transform: translate(-50%, 30px); opacity: 0; } }
-#found h2 { margin: 0 0 0.3rem; font-size: clamp(1.3rem, 2.4vw, 2rem); }
+#found h2 { font-family: var(--world-font, inherit); margin: 0 0 0.3rem; font-size: clamp(1.3rem, 2.4vw, 2rem); }
 #found p { margin: 0 0 0.9rem; font-size: clamp(1rem, 1.4vw, 1.2rem); }
 
 /* Create */
@@ -173,3 +201,5 @@ dialog::backdrop { background: rgb(0 0 0 / 0.55); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
 }
+/* A soft dark pool behind the logo so it reads over any world. */
+.wall-head { padding: 1.2rem 4rem 1.4rem; background: radial-gradient(ellipse at center, rgb(12 8 4 / 0.82) 0%, rgb(12 8 4 / 0.5) 55%, transparent 75%); }
