@@ -1,0 +1,120 @@
+{
+ "sol-low": {
+  "note": "production today: screen + build",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6.1-sol",
+   "SCREEN_EFFORT": "low",
+   "CODEX_MODEL": "gpt-6.1-sol",
+   "CODEX_EFFORT": "low"
+  }
+ },
+ "luna-low": {
+  "note": "smaller: gpt-6-luna",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6-luna",
+   "SCREEN_EFFORT": "low",
+   "CODEX_MODEL": "gpt-6-luna",
+   "CODEX_EFFORT": "low"
+  }
+ },
+ "luna-medium": {
+  "note": "gpt-6-luna with more thinking",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6-luna",
+   "SCREEN_EFFORT": "medium",
+   "CODEX_MODEL": "gpt-6-luna",
+   "CODEX_EFFORT": "medium"
+  }
+ },
+ "sol-medium": {
+  "note": "bigger thinking budget",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6.1-sol",
+   "SCREEN_EFFORT": "medium",
+   "CODEX_MODEL": "gpt-6.1-sol",
+   "CODEX_EFFORT": "medium"
+  }
+ },
+ "draw-luna": {
+  "note": "production drawing model",
+  "env": {
+   "ANIM_MODEL": "gpt-6-luna",
+   "ANIM_EFFORT": "low"
+  }
+ },
+ "draw-sol": {
+  "note": "drawing with sol",
+  "env": {
+   "ANIM_MODEL": "gpt-6.1-sol",
+   "ANIM_EFFORT": "low"
+  }
+ },
+ "luna-fast": {
+  "note": "luna-low on the fast tier",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6-luna",
+   "SCREEN_EFFORT": "low",
+   "CODEX_MODEL": "gpt-6-luna",
+   "CODEX_EFFORT": "low",
+   "CODEX_TIER": "fast"
+  }
+ },
+ "luna-fast-b": {
+  "note": "luna-low on the fast tier",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6-luna",
+   "SCREEN_EFFORT": "low",
+   "CODEX_MODEL": "gpt-6-luna",
+   "CODEX_EFFORT": "low",
+   "CODEX_TIER": "fast"
+  }
+ },
+ "luna-med-fast": {
+  "note": "luna-medium on the fast tier",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6-luna",
+   "SCREEN_EFFORT": "medium",
+   "CODEX_MODEL": "gpt-6-luna",
+   "CODEX_EFFORT": "medium",
+   "CODEX_TIER": "fast"
+  }
+ },
+ "sol-fast": {
+  "note": "sol-low on the fast tier",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6.1-sol",
+   "SCREEN_EFFORT": "low",
+   "CODEX_MODEL": "gpt-6.1-sol",
+   "CODEX_EFFORT": "low",
+   "CODEX_TIER": "fast"
+  }
+ },
+ "draw-luna-fast": {
+  "note": "drawing luna, fast tier",
+  "env": {
+   "ANIM_MODEL": "gpt-6-luna",
+   "ANIM_EFFORT": "low",
+   "CODEX_TIER": "fast"
+  }
+ },
+ "luna-med-fast-b": {
+  "note": "luna-medium on the fast tier",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6-luna",
+   "SCREEN_EFFORT": "medium",
+   "CODEX_MODEL": "gpt-6-luna",
+   "CODEX_EFFORT": "medium",
+   "CODEX_TIER": "fast"
+  }
+ },
+ "luna-med-fast-c": {
+  "note": "luna-medium on the fast tier",
+  "env": {
+   "SCREEN_CODEX_MODEL": "gpt-6-luna",
+   "SCREEN_EFFORT": "medium",
+   "CODEX_MODEL": "gpt-6-luna",
+   "CODEX_EFFORT": "medium",
+   "CODEX_TIER": "fast"
+  }
+ }
+}

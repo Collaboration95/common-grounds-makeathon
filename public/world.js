@@ -28,6 +28,7 @@ function resize() {
   canvas.height = Math.round(h * dpr);
 }
 window.addEventListener('resize', resize);
+new ResizeObserver(resize).observe(stage); // the stage changes size when the rail collapses or the browser goes fullscreen
 resize();
 
 // ---- counter ----------------------------------------------------------------------------------------
@@ -104,8 +105,13 @@ function toggleSceneOnly(on = !document.body.classList.contains('sceneonly')) {
   document.body.classList.toggle('sceneonly', on);
   if (on && !document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
   if (!on && document.fullscreenElement) document.exitFullscreen().catch(() => {});
-  window.dispatchEvent(new Event('resize'));
+  resize();
 }
+// leaving browser-fullscreen with Esc brings the rail back; entering it by F11 or the button hides it
+document.addEventListener('fullscreenchange', () => {
+  document.body.classList.toggle('sceneonly', !!document.fullscreenElement);
+  resize();
+});
 {
   const b = document.createElement('button');
   b.id = 'fsBtn'; b.type = 'button'; b.title = 'Room only / fullscreen (F)'; b.textContent = '⛶';
