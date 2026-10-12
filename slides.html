@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Commons — a room that builds itself</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--night:#1d1424;--ink:#3b2414;--cream:#fbf3e2;--amber:#f2a65a;--lamp:#ffd27a;--teal:#5fb3a1;--dim:#cdbfa8;
+  --disp:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0e0914;overflow:hidden;color:var(--cream);font-family:var(--disp)}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0;background:var(--night);overflow:hidden}
+/* paper grain + vignette over everything */
+#stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:50;opacity:.16;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5 0 0 0 0 .4 0 0 0 0 .3 0 0 0 1.4 -.2'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+#stage::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:49;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(10,5,15,.55) 100%)}
+.slide{position:absolute;inset:0;padding:78px 96px 96px;opacity:0;visibility:hidden;transform:translateX(36px);transition:opacity .55s ease,transform .55s ease,visibility 0s .55s;
+  background:radial-gradient(ellipse at 20% 0%,#3a2440 0%,var(--night) 60%)}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .55s ease,transform .55s ease}
+.slide.past{transform:translateX(-36px)}
+.rise{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.active .rise{opacity:1;transform:none}
+.active .rise:nth-child(2){transition-delay:.12s}.active .rise:nth-child(3){transition-delay:.24s}.active .rise:nth-child(4){transition-delay:.36s}.active .rise:nth-child(5){transition-delay:.48s}.active .rise:nth-child(6){transition-delay:.6s}.active .rise:nth-child(7){transition-delay:.72s}.active .rise:nth-child(8){transition-delay:.84s}
+/* twelve-cells motif */
+.cells{position:absolute;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:8px;pointer-events:none}
+.cells i{border:3px solid rgba(255,210,122,.16);border-radius:6px;background:rgba(255,210,122,.03)}
+.kicker{font:700 26px var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+h1,h2{font-weight:900;letter-spacing:-.02em;line-height:.95;text-transform:uppercase}
+h2{font-size:100px;color:var(--lamp);text-shadow:5px 5px 0 rgba(0,0,0,.35);margin-bottom:34px}
+h2 small{display:block;font:700 30px var(--mono);letter-spacing:.04em;text-transform:none;color:var(--cream);opacity:.8;margin-top:18px;text-shadow:none;line-height:1.3}
+p,li{font-size:34px;line-height:1.32;color:var(--cream)}
+b{color:var(--lamp)} em{color:var(--teal);font-style:normal} .am{color:var(--amber)}
+.mono{font-family:var(--mono)}
+.px{image-rendering:pixelated}
+.paper{background:var(--cream);color:var(--ink);border-radius:10px;box-shadow:0 14px 0 rgba(0,0,0,.28),0 30px 60px rgba(0,0,0,.4)}
+.shot{border:10px solid var(--cream);border-radius:8px;box-shadow:0 14px 0 rgba(0,0,0,.28),0 30px 60px rgba(0,0,0,.45);display:block}
+.cap{font:700 24px var(--mono);color:var(--dim);margin-top:16px}
+.row{display:flex;gap:44px;align-items:flex-start}
+.col{display:flex;flex-direction:column}
+.pill{display:inline-block;font:700 24px var(--mono);padding:6px 16px;border-radius:999px;border:3px solid var(--amber);color:var(--amber);margin:0 10px 10px 0}
+.pill.t{border-color:var(--teal);color:var(--teal)}
+.term{background:#120b18;border:3px solid #4a3556;border-radius:14px;font:500 27px/1.5 var(--mono);color:#e9ddc6;padding:0 0 18px;box-shadow:0 14px 0 rgba(0,0,0,.3),0 30px 60px rgba(0,0,0,.5)}
+.term .bar{display:flex;gap:10px;align-items:center;padding:14px 22px;border-bottom:3px solid #4a3556;font-size:22px;color:var(--dim);margin-bottom:12px}
+.term .bar s{width:16px;height:16px;border-radius:50%;background:var(--amber);display:block}.term .bar s:nth-child(2){background:var(--lamp)}.term .bar s:nth-child(3){background:var(--teal)}
+.term div.l{padding:0 26px;white-space:pre-wrap;word-break:break-word}
+.l .g{color:var(--teal)}.l .a{color:var(--amber)}.l .d{color:#8f7d9c}.l .y{color:var(--lamp)}
+pre.code{font:500 22px/1.42 var(--mono);color:#e9ddc6;background:#120b18;border:3px solid #4a3556;border-radius:14px;padding:22px 28px;box-shadow:0 14px 0 rgba(0,0,0,.3);overflow:hidden}
+pre.code .k{color:var(--amber)}pre.code .s{color:var(--teal)}pre.code .c{color:#8f7d9c}pre.code .f{color:var(--lamp)}
+.box{border:4px solid var(--amber);border-radius:14px;padding:12px 22px;background:rgba(242,166,90,.08);font-size:29px;line-height:1.25}
+.box small{display:block;font:500 22px var(--mono);color:var(--dim);margin-top:4px}
+.box.t{border-color:var(--teal);background:rgba(95,179,161,.1)}
+.box.l{border-color:var(--lamp);background:rgba(255,210,122,.14)}
+.arrow{color:var(--amber);font:900 34px var(--mono);text-align:center;line-height:.9;height:30px}
+/* progress cells + counter */
+#hud{position:absolute;left:0;right:0;bottom:0;height:56px;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:0 96px 6px}
+#prog{display:grid;grid-template-columns:repeat(12,26px);gap:6px}
+#prog i{height:14px;border-radius:3px;background:rgba(255,210,122,.18);transition:background .3s}
+#prog i.on{background:var(--lamp)}#prog i.cur{background:var(--amber);box-shadow:0 0 12px var(--amber)}
+#ctr{font:700 24px var(--mono);color:var(--dim);letter-spacing:.1em}
+/* light slides */
+.slide.cream{background:radial-gradient(ellipse at 50% 30%,#fff8e8,#f0dfb8 80%);color:var(--ink)}
+.cream h2{color:var(--ink);text-shadow:4px 4px 0 var(--amber)}.cream p,.cream li{color:var(--ink)}.cream b{color:#b5651d}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 1 TITLE -->
+<section class="slide" style="padding:0;background:#000">
+  <img src="slides/v12.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" class="px" alt="">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,20,36,.1) 0%,rgba(29,20,36,.25) 40%,rgba(29,20,36,.9) 72%,rgba(29,20,36,1) 92%)"></div>
+  <div class="cells" style="right:96px;top:78px;width:360px;height:270px"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div style="position:absolute;left:96px;bottom:150px">
+    <div class="kicker rise">Common Ground Makeathon &middot; Design &times; Tech &middot; 11 Oct 2026</div>
+    <h1 class="rise" style="font-size:230px;color:var(--cream);text-shadow:10px 10px 0 var(--amber)">The Commons</h1>
+    <p class="rise" style="font-size:62px;font-weight:800;color:var(--lamp);margin-top:20px">a room that builds itself</p>
+  </div>
+</section>
+
+<!-- 2 IDEA -->
+<section class="slide">
+  <div class="kicker rise">The idea</div>
+  <h2 class="rise" style="font-size:84px;max-width:1500px">Scan a QR. Add one thing to the room.<small>Codex makes it real while you watch &mdash; credited to you.</small></h2>
+  <div class="row rise" style="gap:50px;margin-top:6px">
+    <div class="col" style="width:520px"><img class="shot" src="slides/06-wish-wish-tab.png" style="width:520px;height:560px;object-fit:cover;object-position:top" alt=""><div class="cap"><span class="am">1</span> Wish for one</div><p style="font-size:30px;margin-top:6px"><b>Codex writes it.</b> Code, then art.</p></div>
+    <div class="col" style="width:520px"><img class="shot" src="slides/07-wish-pick-tab.png" style="width:520px;height:560px;object-fit:cover;object-position:top" alt=""><div class="cap"><span class="am">2</span> Pick one</div><p style="font-size:30px;margin-top:6px">6 presets + 6 hats. <b>Instant.</b></p></div>
+    <div class="col" style="width:520px"><img class="shot" src="slides/08-wish-sketch-tab.png" style="width:520px;height:560px;object-fit:cover;object-position:top" alt=""><div class="cap"><span class="am">3</span> Sketch one</div><p style="font-size:30px;margin-top:6px"><b>gpt-6-luna</b> draws it.</p></div>
+  </div>
+</section>
+
+<!-- 3 DEMO FLOW -->
+<section class="slide">
+  <div class="kicker rise">Live demo</div>
+  <h2 class="rise" style="font-size:76px;margin-bottom:26px">Scan &rarr; wish &rarr; watch it walk in</h2>
+  <div class="row rise" style="gap:40px;align-items:center">
+    <div class="col" style="align-items:center;width:330px"><img class="shot" src="slides/joinqr.png" style="width:330px;height:186px;object-fit:cover" alt=""><div class="cap">1. scan</div></div>
+    <div class="arrow" style="width:40px;height:auto">&rarr;</div>
+    <div class="col" style="align-items:center;width:340px"><img class="shot" src="slides/ph-placed.png" style="width:340px;height:470px;object-fit:cover;object-position:top" alt=""><div class="cap">2. wish &middot; status on phone</div></div>
+    <div class="arrow" style="width:40px;height:auto">&rarr;</div>
+    <div class="col" style="width:820px"><img class="shot" src="slides/room.png" style="width:820px;height:461px;object-fit:cover" alt=""><div class="cap">3. it lands in the projected room &middot; <span class="am">live in ~65 s</span></div></div>
+  </div>
+  <p class="rise" style="margin-top:22px;max-width:1700px;font-size:30px">No app, no account. Everyone in the room is looking at the same screen &mdash; and the creature on it has <b>their name</b> on it.</p>
+</section>
+
+<!-- 4 CODEX LOOP -->
+<section class="slide">
+  <div class="kicker rise">Behind the scenes</div>
+  <h2 class="rise" style="font-size:78px;margin-bottom:22px">The Codex loop</h2>
+  <div class="row" style="gap:50px;align-items:stretch">
+    <div class="col rise" style="width:960px;gap:6px">
+      <div class="box">Phone &rarr; <span class="mono">POST /api/wish</span></div>
+      <div class="arrow">&darr;</div>
+      <div class="box t">Screening &middot; local Codex, <span class="mono">gpt-6.1-sol</span> <span class="am">~7 s</span><small>structured output: allowed &middot; thingSummary &middot; spritePrompt &middot; bleed</small></div>
+      <div class="arrow">&darr;</div>
+      <div class="box">Queue &middot; concurrency <b>3</b> &middot; flood guard 40</div>
+      <div class="arrow">&darr;</div>
+      <div class="box l">Codex SDK thread &middot; <span class="mono">gpt-6.1-sol</span> &middot; low effort<small>workspace-write sandbox &middot; no network &middot; writes thing.js &nbsp;<span class="am">~30 s</span></small></div>
+      <div class="arrow" style="font-size:26px;height:34px">&darr; runs <span class="mono">check-thing.mjs</span> &nbsp; &uarr; reads errors, fixes</div>
+      <div class="box t">Server re-check (authoritative) &middot; one follow-up turn max</div>
+      <div class="arrow">&darr;</div>
+      <div class="box l" style="font-weight:800">LIVE &middot; sprite sheet drawn in parallel (gpt-6-luna)</div>
+    </div>
+    <div class="col rise" style="flex:1">
+      <div class="term" style="flex:1">
+        <div class="bar"><s></s><s></s><s></s>&nbsp; codex workbench &middot; wish #11 &middot; "a durian in sunglasses"</div>
+        <div class="l"><span class="d">checking the wish…</span></div>
+        <div class="l"><span class="g">accepted:</span> A durian wearing sunglasses bobs confidently and gives a cheeky little wiggle.</div>
+        <div class="l"><span class="d">drawing it</span></div>
+        <div class="l"><span class="y">Codex is writing it</span></div>
+        <div class="l"><span class="a">wrote thing.js (91 lines)</span></div>
+        <div class="l"><span class="g">check → passed</span></div>
+        <div class="l"><span class="g">server re-check → passed</span></div>
+        <div class="l">code passed in <b>33.4s</b></div>
+        <div class="l"><span class="g">sprite ready</span></div>
+        <div class="l"><span class="y">LIVE: Too Cool Durian (built by Codex in 33s)</span></div>
+      </div>
+      <div class="cap">real log lines from the workbench rail</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 CONTRACT -->
+<section class="slide">
+  <div class="kicker rise">Behind the scenes</div>
+  <h2 class="rise" style="font-size:84px;margin-bottom:22px">The thing contract<small>Codex writes only behaviour. One file, 6 KB max, no imports.</small></h2>
+  <div class="row" style="gap:40px">
+    <pre class="code rise" style="width:960px"><span class="k">export default</span> {
+  name: <span class="s">"Too Cool Durian"</span>, tags: [<span class="s">"food"</span>,<span class="s">"spiky"</span>],
+  zone: <span class="s">"ground"</span>, size: 1,
+  <span class="f">update</span>(me, world, dt) {
+    <span class="k">if</span> (world.<span class="f">steer</span>(me, {x: s.tx, y: s.ty}, 85) &lt; 18) {
+      <span class="c">// wander in depth, not just left-right</span>
+    }
+    <span class="k">const</span> spots = world.<span class="f">spots</span>().filter(q =&gt; !q.occupant);
+    <span class="k">if</span> (world.<span class="f">goTo</span>(me, s.spot, 100)) me.<span class="f">say</span>(<span class="s">"VIP."</span>);
+  },
+  <span class="f">onMeet</span>(me, world, other) {
+    me.<span class="f">signal</span>(<span class="s">"cool"</span>, other.id);
+    world.<span class="f">fx</span>(<span class="s">"sparkle"</span>, me.x, <span class="c">/* head */</span>);
+  },
+  <span class="f">onPoke</span>(me, world) { me.vz = 450; me.<span class="f">say</span>(<span class="s">"Designer spikes."</span>); }
+};</pre>
+    <div class="col rise" style="flex:1;gap:20px">
+      <div class="box t"><b>world API</b><small>steer &middot; goTo / leave &middot; nearby / nearest &middot; onMeet &middot; onSignal / me.signal &middot; fx &middot; seeded random()</small></div>
+      <div class="box">Reads <span class="mono">world.scene</span>: floor trapezoid, air band, spots (seat / table / rest / perch). No hard-coded coordinates &mdash; the room can change.</div>
+      <div class="box" style="border-color:#e0675a;background:rgba(224,103,90,.1)"><b style="color:#ff9a8a">forbidden</b><small>import &middot; require &middot; fetch &middot; eval &middot; Function &middot; window &middot; document &middot; Math.random &middot; setTimeout &middot; process &middot; async/await &middot; while(true)</small></div>
+      <div class="box l">Quality bar: move in depth &middot; use a spot &middot; react to neighbours</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 CHECKER -->
+<section class="slide">
+  <div class="kicker rise">Behind the scenes</div>
+  <h2 class="rise" style="font-size:84px">Codex fixes its own bugs<small>tools/check-thing.mjs &mdash; the same script runs in Codex's sandbox and again on the server</small></h2>
+  <div class="row" style="gap:40px;margin-top:10px">
+    <div class="col rise" style="width:1040px;gap:20px">
+      <div class="box"><b>1 &middot; Static ban list</b><small>forbidden identifiers, 6 KB cap, shape (name, tags, zone, size, update)</small></div>
+      <div class="box t"><b>2 &middot; node:vm simulation</b><small>3600 ticks (60 s of room time) &middot; stub world &middot; dummy neighbours wander close &middot; signals + pokes injected &middot; 50 ms timeout per call &middot; code generation disabled</small></div>
+      <div class="box"><b>3 &middot; Asserts</b><small>every me.x / y / vx / vy / angle / scale stays a finite number &middot; state is plain JSON &middot; target args valid</small></div>
+      <div class="box l"><b>4 &middot; Verdict</b><small>warnings for flat movement, no spot used, ignores neighbours</small></div>
+    </div>
+    <div class="col rise" style="flex:1">
+      <div class="term">
+        <div class="bar"><s></s><s></s><s></s>&nbsp; node check-thing.mjs .</div>
+        <div class="l"><span class="d">// Codex reads this, edits thing.js, re-runs</span></div>
+        <div class="l">{</div>
+        <div class="l">  <span class="a">"ok"</span>: <span class="a">false</span>,</div>
+        <div class="l">  <span class="a">"errors"</span>: [</div>
+        <div class="l">    <span class="y">"me.vy is NaN after update"</span>,</div>
+        <div class="l">    <span class="y">"banned identifier: Math.random"</span></div>
+        <div class="l">  ]</div>
+        <div class="l">}</div>
+        <div class="l"><span class="d">…fix…</span></div>
+        <div class="l">{<span class="g">"ok": true, "errors": []</span>}</div>
+      </div>
+      <div class="cap">shape of the output: {ok, errors[], warnings[]} &middot; illustrative example errors</div>
+      <p style="font-size:30px;margin-top:14px">Fails twice? Nothing goes live. Only passing code reaches the room.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 CODEX DRAWS -->
+<section class="slide">
+  <div class="kicker rise">Behind the scenes</div>
+  <h2 class="rise" style="font-size:84px;margin-bottom:20px">Codex draws too<small>one unified action map: every character, one 4&times;3 sheet</small></h2>
+  <div class="row" style="gap:50px;align-items:flex-start">
+    <div class="col rise" style="width:720px"><div class="paper" style="padding:14px"><img class="px" src="slides/durian-sheet.png" style="width:100%;display:block" alt=""></div><div class="cap">the real sheet, drawn by gpt-6-luna via Codex &middot; 1536&times;1024</div></div>
+    <div class="col rise" style="flex:1;gap:14px">
+      <div class="mono" style="font-size:28px;line-height:1.6"><span class="am">cells 1&ndash;4</span> walk<br><span class="am">cells 5&ndash;8</span> fly<br><span class="am">cell 9</span> idle &nbsp; <span class="am">10</span> sit &nbsp; <span class="am">11</span> sleep &nbsp; <span class="am">12</span> special</div>
+      <div class="box t" style="margin-top:8px">slice-sheet &rarr; <span class="mono">frames.png</span> + <span class="mono">anim.json</span><small>{frameW, frameH, count: 12, anims: {walk, fly, idle, sit, sleep, action}}</small></div>
+      <div class="box l">The engine picks the frame from the thing's motion &mdash; no per-character art code.</div>
+    </div>
+  </div>
+  <div class="rise paper" style="margin-top:22px;padding:8px;width:1728px"><img class="px" src="slides/merlion-pup.png" style="width:100%;display:block" alt=""></div>
+</section>
+
+<!-- 8 ROOM -->
+<section class="slide">
+  <div class="kicker rise">Behind the scenes</div>
+  <h2 class="rise" style="font-size:84px;margin-bottom:20px">Point a phone at any room<small>photo &rarr; gpt-image redraw (~17 s) &rarr; Codex vision maps it (~15 s) &rarr; sliders &rarr; live</small></h2>
+  <div class="row rise" style="gap:30px;align-items:center">
+    <div class="col"><img class="shot" src="slides/venue-photo.jpg" style="width:600px;height:450px;object-fit:cover" alt=""><div class="cap">1. the real venue photo</div></div>
+    <div class="arrow" style="height:auto">&rarr;</div>
+    <div class="col"><img class="shot" src="slides/venue-redraw.png" style="width:600px;height:450px;object-fit:cover" alt=""><div class="cap">2. paper-style redraw</div></div>
+    <div class="arrow" style="height:auto">&rarr;</div>
+    <div class="col" style="flex:1"><div class="box t" style="font-size:26px">Codex vision, <span class="mono">outputSchema</span><small>floor trapezoid &middot; air band &middot; ceiling<br>depthScale &middot; up to 10 spots<br>(seat / table / rest / perch)</small></div><div class="cap" style="margin-top:14px">3. host nudges sliders &rarr; <b>Use this room</b></div></div>
+  </div>
+  <p class="rise" style="margin-top:44px;font-size:34px">Creatures re-clamp to the new floor with a hop. The only OpenAI API call in the whole system is this image edit.</p>
+</section>
+
+<!-- 9 ENGINE -->
+<section class="slide">
+  <div class="kicker rise">Behind the scenes</div>
+  <h2 class="rise" style="font-size:84px;margin-bottom:24px">The engine</h2>
+  <div class="row" style="gap:44px">
+    <ul class="col rise" style="list-style:none;gap:12px;width:880px">
+      <li><b>Depth floor.</b> Feet stay in the trapezoid; nearer = bigger.</li>
+      <li><b>Spots.</b> Stools, tables, rests, lamps: goTo pins you there.</li>
+      <li><b>Neighbours.</b> Tags, <span class="mono">onMeet</span>, <span class="mono">signal</span> &mdash; they react to each other.</li>
+      <li><b>Hats</b> &middot; <b>moods</b> (sleep, moody) &middot; <b>status</b> + 3-digit PIN.</li>
+      <li><b>Rooms grow.</b> A new room opens at 10 characters.</li>
+      <li><b>Quarantine.</b> A thing that throws goes "resting&hellip;", the show goes on.</li>
+    </ul>
+    <div class="col rise" style="flex:1"><img class="shot" src="slides/room.png" style="width:100%" alt=""><div class="cap">real room, real creatures</div></div>
+  </div>
+</section>
+
+<!-- 10 ARCHITECTURE -->
+<section class="slide">
+  <div class="kicker rise">Behind the scenes</div>
+  <h2 class="rise" style="font-size:84px;margin-bottom:26px">Architecture: one Node process</h2>
+  <div class="row" style="gap:40px;align-items:stretch">
+    <div class="col rise" style="flex:1;gap:18px">
+      <div class="box l" style="font-size:34px"><b>server/</b> plain <span class="mono">http</span><small>REST + SSE, with 2 s polling fallback for tunnels that buffer</small></div>
+      <div class="box">Persistence<small>manifest.json + per-thing folders (thing.js, frames.png, anim.json)</small></div>
+      <div class="box">Phones &rarr; <span class="mono">cloudflared</span> quick tunnel &rarr; localhost:8787<small>projector on localhost</small></div>
+    </div>
+    <div class="col rise" style="flex:1;gap:18px">
+      <div class="box t" style="font-size:34px"><b>Local Codex CLI</b> on a ChatGPT login<small>screening &middot; thing.js &middot; sprite sheets &middot; room mapping via @openai/codex-sdk</small></div>
+      <div class="box">gpt-6.1-sol (low effort) for text + code<br>gpt-6-luna for images</div>
+      <div class="box" style="border-color:#8f7d9c">OpenAI API key: <b>only</b> the room-photo redraw<small>kept out of Codex's environment</small></div>
+    </div>
+  </div>
+  <p class="rise" style="margin-top:34px;font-size:30px;color:var(--dim)">Honest note: the app was written with Claude Code agents. Codex is the runtime engine.</p>
+</section>
+
+<!-- 11 BEST USE OF CODEX -->
+<section class="slide cream">
+  <div class="cells" style="right:96px;top:70px;width:300px;height:225px"><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i></div>
+  <div class="kicker rise" style="color:#2f7f70">Best Use of Codex</div>
+  <h2 class="rise" style="font-size:118px;margin-bottom:40px">Codex is the runtime</h2>
+  <ul class="col rise" style="list-style:none;gap:14px;font-size:44px">
+    <li style="font-size:44px"><b>Screens</b> every wish &nbsp;&middot;&nbsp; <b>writes</b> its program</li>
+    <li style="font-size:44px"><b>Tests</b> it &nbsp;&middot;&nbsp; <b>fixes</b> its own bugs</li>
+    <li style="font-size:44px"><b>Draws</b> the sprite sheet &nbsp;&middot;&nbsp; <b>maps</b> your room</li>
+  </ul>
+  <p class="rise" style="font-size:52px;font-weight:900;margin-top:46px;color:var(--ink)">Live, in front of the audience.<br><span style="color:#b5651d">Remove Codex and nothing exists.</span></p>
+</section>
+
+<!-- 12 END -->
+<section class="slide" style="padding:0">
+  <img src="slides/v10_5.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18" alt="">
+  <div style="position:absolute;left:96px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker rise">Scan &amp; add one thing</div>
+    <h1 class="rise" style="font-size:140px;color:var(--cream);text-shadow:8px 8px 0 var(--amber)">The Commons</h1>
+    <p class="rise" style="font-size:54px;font-weight:800;color:var(--lamp);margin-top:20px">Wish it. Watch it walk in.</p>
+    <p class="rise" style="font-size:44px;margin-top:40px">Thank you.</p>
+  </div>
+  <div class="paper rise" style="position:absolute;right:110px;top:50%;margin-top:-250px;width:440px;padding:24px;text-align:center">
+    <img src="qr.svg" style="width:392px;height:392px;display:block" alt="join QR">
+    <div class="mono" style="font-weight:700;font-size:26px;margin-top:14px">scan &middot; wish &middot; watch</div>
+  </div>
+</section>
+
+<div id="hud"><div id="prog"></div><div id="ctr"></div></div>
+</div>
+<script>
+const stage=document.getElementById('stage'),slides=[...document.querySelectorAll('.slide')],prog=document.getElementById('prog'),ctr=document.getElementById('ctr');
+slides.forEach(()=>prog.appendChild(document.createElement('i')));
+let cur=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.slice(1))||1)-1));
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`scale(${s}) translate(-50%,-50%)`;stage.style.left=innerWidth/2+'px';stage.style.top=innerHeight/2+'px';}
+function show(n){cur=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,i)=>{s.classList.toggle('active',i===cur);s.classList.toggle('past',i<cur);});
+  [...prog.children].forEach((c,i)=>{c.className=i<cur?'on':i===cur?'cur':'';});
+  ctr.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+  history.replaceState(null,'','#'+(cur+1));}
+addEventListener('resize',fit);
+addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' ','PageDown','Enter'].includes(e.key)){e.preventDefault();show(cur+1);}
+  else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();show(cur-1);}
+  else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+  else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+});
+addEventListener('click',e=>{show(e.clientX<innerWidth*.25?cur-1:cur+1);});
+fit();show(cur);
+</script>
+</body>
+</html>
