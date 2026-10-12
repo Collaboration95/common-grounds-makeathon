@@ -3,7 +3,7 @@ import { serve, openPage, ROOT } from "./lib.mjs";
 import fs from "node:fs"; import { spawn } from "node:child_process";
 const A = { "9x16": [1080, 1920], "1x1": [1080, 1080], "16x9": [1920, 1080] };
 const args = process.argv.slice(2), want = (args.find((a) => !a.startsWith("--")) || "9x16,1x1,16x9").split(",");
-const fps = +(args.find((a) => a.startsWith("--fps="))?.slice(6) || 30), dur = 24, N = +(args.find((a) => a.startsWith("--frames="))?.slice(9) || fps * dur);
+const fps = +(args.find((a) => a.startsWith("--fps="))?.slice(6) || 30), dur = JSON.parse(fs.readFileSync(`${ROOT}/video/audio/cues.json`, "utf8")).duration, N = +(args.find((a) => a.startsWith("--frames="))?.slice(9) || fps * dur);
 fs.mkdirSync(`${ROOT}/video/out`, { recursive: true });
 const { srv, port } = await serve();
 const audio = fs.existsSync(`${ROOT}/video/audio/mix.wav`) ? `${ROOT}/video/audio/mix.wav` : null;

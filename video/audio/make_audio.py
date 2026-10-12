@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""The Commons, 24 s score + sound design. Deterministic (seeded per-asset).
+"""The Commons, 60 s slow-cut score + sound design. Deterministic (seeded per-asset).
 
 Run:  python3 video/audio/make_audio.py
 Out:  music.wav, mix.wav, mix.png, cues.json, sfx/*.wav   (next to this file)
 
 120 BPM, C major (C - Am - F - G), chiptune pulse arp + triangle bass + detuned
-saw pad + soft kick/hats + vinyl bed. Cue times follow video/BRIEF.md.
+saw pad + soft kick/hats + vinyl bed. Same song as the 24 s cut, with every section
+extended by whole bars/beats to follow the slow-cut timeline in video/src/timeline.js
+(sections below). Instruments, key, tempo, patterns and SFX are unchanged.
 """
 import json
 import os
@@ -19,7 +21,10 @@ from scipy.io import wavfile
 from scipy.ndimage import minimum_filter1d, uniform_filter1d
 
 SR = 48000
-DUR = 24.0
+DUR = 60.0
+# section starts (s), mirrors T in video/src/timeline.js. 24 s cut was 0/2/6/9/10.5/13/15/17/21/24.
+HOOK, BUILD, SHEET, ARR, DROP, ROOM, ROOM2, PET, END = 0.0, 4.0, 18.0, 24.0, 26.5, 34.0, 37.0, 40.0, 54.0
+STEPS = [4.0, 6.0, 8.5, 11.5, 13.5, 16.0]
 N = int(DUR * SR)
 BPM = 120
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -144,8 +149,15 @@ CHORDS = {  # root pitch class, intervals, bass midi, pad voicing
     "G": (7, [0, 4, 7], 43, [50, 55, 59, 62]),
     "Cadd9": (0, [0, 4, 7], 36, [52, 55, 62, 64, 67]),
 }
-SEG = [(0.0, "C"), (1.0, "C"), (3.0, "Am"), (5.0, "F"), (7.0, "G"), (9.0, "G"), (10.5, "C"), (12.0, "Am"),
-       (13.0, "F"), (15.0, "G"), (17.0, "C"), (18.0, "Am"), (19.0, "F"), (20.0, "G"), (21.0, "Cadd9"), (DUR, None)]
+# same C-Am-F-G loop, one chord per bar; G is held through the sheet into the arrival "breath" and
+# resolves to C on the drop (as in the 24 s cut); the pet turnaround speeds up to 1 s chords into Cadd9.
+SEG = [(0.0, "C"), (1.0, "C"),
+       (4.0, "Am"), (6.0, "F"), (8.0, "C"), (10.0, "G"), (12.0, "Am"), (14.0, "F"), (16.0, "C"),   # build
+       (18.0, "Am"), (20.0, "F"), (22.0, "G"),                                                      # sheet (G held)
+       (DROP, "C"), (28.5, "Am"), (30.5, "C"), (32.5, "Am"),                                        # arrival
+       (ROOM, "F"), (ROOM2, "G"),                                                                   # room
+       (40.0, "C"), (42.0, "Am"), (44.0, "F"), (46.0, "G"), (48.0, "C"), (50.0, "Am"), (52.0, "F"), (53.0, "G"),  # pet
+       (END, "Cadd9"), (DUR, None)]
 
 
 def chord_at(t):
@@ -182,47 +194,50 @@ def chip_note(f, dur, tau, duty, osr=4):
 def arp_events():
     ev = []  # (t, midi, dur, vel, tau, duty)
     S = 0.125
-    for k in range(int(1.0 / S), int(21.0 / S)):
+    for k in range(int(1.0 / S), int(END / S)):
         t = k * S
         ch = chord_at(t)
-        if t < 2.0:
+        if t < BUILD:          # hook: sparse 8ths fading in
             if k % 2: continue
             tn = ext(ch, 72, 92)
-            ev.append((t, tn[[0, 1, 2, 1][(k // 2) % 4]], 0.22, 0.5 * (t - 1.0 + 0.2) / 1.2, 0.14, 0.25))
-        elif t < 6.0:
+            ev.append((t, tn[[0, 1, 2, 1][(k // 2) % 4]], 0.22, 0.5 * (t - 1.0 + 0.2) / (BUILD - 0.8), 0.14, 0.25))
+        elif t < SHEET:        # build: 8th-note arp, slowly rising
             if k % 2: continue
             tn = ext(ch, 72, 96)
             i = [0, 1, 2, 1, 0, 1, 2, 3][(k // 2) % 8]
-            ev.append((t, tn[i], 0.24, 0.6 + 0.15 * (t - 2) / 4, 0.14, 0.25))
-        elif t < 9.0:
+            ev.append((t, tn[i], 0.24, 0.6 + 0.15 * (t - BUILD) / (SHEET - BUILD), 0.14, 0.25))
+        elif t < ARR:          # sheet: ascending 16th runs; the run start climbs one chord tone per beat
             tn = ext(ch, 60, 101)
-            kk = int(round((t - 6.0) / S))
-            sec = kk // 8
+            kk = int(round((t - SHEET) / S))
+            sec = (kk // 8) // 2 + (kk // 8) % 2
             i = min(len(tn) - 1, sec + (kk % 8) + 0)
-            ev.append((t, tn[i], 0.11, 0.6 + 0.35 * (t - 6) / 3, 0.09, 0.5 - 0.25 * (t - 6) / 3))
-        elif t < 10.5:
-            if k % 2 or t >= 10.25: continue
+            q = (t - SHEET) / (ARR - SHEET)
+            ev.append((t, tn[i], 0.11, 0.6 + 0.35 * q, 0.09, 0.5 - 0.25 * q))
+        elif t < DROP:         # arrival breath: quarter notes up the chord, swelling to the drop
+            if k % 2 or t >= DROP - 0.25: continue
             tn = ext(ch, 67, 90)
-            ev.append((t, tn[[0, 1, 2, 3][(k // 2) % 4]], 0.3, 0.25 + 0.12 * (t - 9), 0.2, 0.5))
-        elif t < 13.0:
+            ev.append((t, tn[[0, 1, 2, 3][(k // 2) % 4]], 0.3, 0.25 + 0.18 * (t - ARR) / (DROP - ARR), 0.2, 0.5))
+        elif t < ROOM:         # landed: bouncing 8ths
             if k % 2: continue
             tn = ext(ch, 72, 96)
-            i = [0, 2, 1, 2, 0, 2, 3, 2][int(round((t - 10.5) / 0.25)) % 8]
+            i = [0, 2, 1, 2, 0, 2, 3, 2][int(round((t - DROP) / 0.25)) % 8]
             ev.append((t, tn[i], 0.2, 0.8, 0.12, 0.25))
-        elif t < 17.0:
+        elif t < PET:          # room: high quarter notes under the swell
             if k % 4: continue
             tn = ext(ch, 76, 100)
-            i = [0, 1, 2, 3][int(round((t - 13) / 0.5)) % 4]
-            ev.append((t, tn[i], 0.4, 0.45 + 0.3 * (t - 13) / 4, 0.3, 0.5))
-        else:
+            i = [0, 1, 2, 3][int(round((t - ROOM) / 0.5)) % 4]
+            ev.append((t, tn[i], 0.4, 0.45 + 0.3 * (t - ROOM) / (PET - ROOM), 0.3, 0.5))
+        else:                  # pet: bouncy 16ths, accent build in the last bar
             tn = ext(ch, 72, 100)
-            j = int(round((t - 17) / S)) % 8
+            j = int(round((t - PET) / S)) % 8
             i = [0, 1, 2, 1, 2, 3, 2, 1][j]
             acc = 1.0 if j % 2 == 0 else 0.7
-            if t >= 20.0: acc *= 1 + 0.2 * (t - 20)
+            if t >= END - 1.0: acc *= 1 + 0.2 * (t - (END - 1.0))
             ev.append((t, tn[i], 0.09, 0.75 * acc, 0.05, 0.25 if j < 4 else 0.125))
     for j, m in enumerate([72, 76, 79, 84]):  # soft resolve pluck under the chime
-        ev.append((21.0 + 0.09 * j, m, 0.6, 0.5, 0.45, 0.5))
+        ev.append((END + 0.09 * j, m, 0.6, 0.5, 0.45, 0.5))
+    for j, m in enumerate([72, 76, 79, 84]):  # and its echo one bar later, quieter, as the end card settles
+        ev.append((END + 2.0 + 0.09 * j, m, 0.6, 0.22, 0.45, 0.5))
     return ev
 
 
@@ -290,43 +305,45 @@ def build_music():
     for k in range(1, 4):
         c = k % 2
         put(echo[:, c], src * 0.42 ** k * 0.9, k * 0.375)
-    echo_gain = interp_curve([(0, 0.5), (13, 0.5), (13.5, 1.3), (17, 1.3), (17.5, 0.5), (24, 0.5)])
+    echo_gain = interp_curve([(0, 0.5), (ROOM, 0.5), (ROOM + 0.5, 1.3), (PET, 1.3), (PET + 0.5, 0.5), (DUR, 0.5)])
     arp = arp + echo * echo_gain[:, None]
     arp = set_rms(arp, -21)
 
     # ---- drums
     kk = np.zeros((N, 2)); hh = np.zeros((N, 2)); sn = np.zeros((N, 2))
     kick_t = []
-    for b in range(int(2.0 / 0.5), int(21.0 / 0.5)):
+    for b in range(int(BUILD / 0.5), int(END / 0.5)):
         t = b * 0.5
-        if 9.0 <= t < 10.5 or 13.0 <= t < 15.0 or t >= 21.0: continue
+        if ARR <= t < DROP or ROOM <= t < ROOM2 or t >= END: continue
         v = 1.0 if (b % 2 == 0) else 0.65
-        if 15.0 <= t < 17.0: v *= 0.55
-        if 10.5 <= t < 13.0: v *= 1.15
+        if ROOM2 <= t < PET: v *= 0.55
+        if DROP <= t < ROOM: v *= 1.15
         kick_t.append((t, v))
         put(kk, pan(kick(v), 0), t)
     hat_i = 0
-    for k in range(int(3.0 / 0.125), int(21.0 / 0.125)):
+    HAT_ON8 = 14.0   # build hats go from off-beats to straight 8ths for the last steps (was 5.0)
+    for k in range(int((BUILD + 2.0) / 0.125), int(END / 0.125)):
         t = k * 0.125
-        if 9.0 <= t < 10.5 or 13.0 <= t < 15.0: continue
+        if ARR <= t < DROP or ROOM <= t < ROOM2: continue
         off8 = abs((t / 0.25) - round(t / 0.25)) < 1e-6 and int(round(t / 0.25)) % 2 == 1   # 8th off-beat
         on8 = abs((t / 0.25) - round(t / 0.25)) < 1e-6
-        if t < 5.0:
+        if t < HAT_ON8:
             ok, v = off8, 0.6
-        elif t < 9.0:
+        elif t < ARR:
             ok, v = on8, 0.5 + (0.3 if off8 else 0)
-        elif t < 13.0:
+        elif t < ROOM:
             ok, v = on8, 0.7 if off8 else 0.4
-        elif t < 17.0:
+        elif t < PET:
             ok, v = on8, 0.35
         else:
             ok, v = True, (0.75 if off8 else 0.5 if on8 else 0.3)
         if not ok: continue
-        op = off8 and (10.5 <= t < 13.0 or t >= 17.0) and int(round(t / 0.25)) % 4 == 3
+        op = off8 and (DROP <= t < ROOM or t >= PET) and int(round(t / 0.25)) % 4 == 3
         hat_i += 1
         put(hh, pan(hat(op, hat_i % 5) * v, ((hat_i * 37) % 100) / 100 * 0.6 - 0.3), t)
-    for t in list(np.arange(11.5, 13.0, 1.0)) + list(np.arange(15.5, 17.0, 1.0)) + list(np.arange(17.5, 21.0, 1.0)):
-        put(sn, pan(snare() * (0.5 if t < 17 else 0.8), 0.1), t)
+    # backbeat (beats 2 & 4): from one second after the drop, in the second half of the room, and through the pet
+    for t in list(np.arange(DROP + 1.0, ROOM, 1.0)) + list(np.arange(ROOM2 + 0.5, PET, 1.0)) + list(np.arange(PET + 0.5, END, 1.0)):
+        put(sn, pan(snare() * (0.5 if t < PET else 0.8), 0.1), t)
     kk *= db(-8) / np.abs(kk).max()
     hh *= db(-26) / np.abs(hh).max()
     sn *= db(-18) / np.abs(sn).max()
@@ -340,19 +357,19 @@ def build_music():
     bs = np.zeros(N)
     for si in range(len(SEG) - 1):
         s0, ch = SEG[si]
-        if ch is None or s0 < 2.0: continue
+        if ch is None or s0 < BUILD: continue
         s1 = SEG[si + 1][0]
         bm = CHORDS[ch][2]
-        if 9.0 <= s0 < 10.5:
-            continue
         t = s0
         while t < s1 - 1e-6:
             rel = t - s0
-            if 13.0 <= s0 < 15.0:
-                if rel < 1e-6: put(bs, bass_note(bm, 1.8) * 0.9, t)
-            elif s0 >= 21.0:
-                if rel < 1e-6: put(bs, bass_note(bm, 2.4) * 0.9, t)
-            elif s0 >= 17.0:   # bouncy off-beat bass
+            if ARR <= t < DROP:   # the breath: no bass
+                t += 0.5; continue
+            if ROOM <= s0 < ROOM2:
+                if rel < 1e-6: put(bs, bass_note(bm, ROOM2 - ROOM - 0.2) * 0.9, t)
+            elif s0 >= END:
+                if rel < 1e-6: put(bs, bass_note(bm, 3.4) * 0.9, t)
+            elif s0 >= PET:   # bouncy off-beat bass
                 put(bs, bass_note(bm, 0.2) * 0.9, t + 0.0)
                 put(bs, bass_note(bm + 12, 0.14) * 0.6, t + 0.25)
                 put(bs, bass_note(bm + 7, 0.2) * 0.7, t + 0.5)
@@ -363,7 +380,7 @@ def build_music():
                 elif b == 1: put(bs, bass_note(bm + 7, 0.22) * 0.8, t)
                 elif b == 2: put(bs, bass_note(bm, 0.3) * 0.9, t)
                 else: put(bs, bass_note(bm + 12, 0.2) * 0.6, t)
-            t += 0.5 if s0 < 13.0 or 15.0 <= s0 < 17.0 else 1.0
+            t += 0.5 if s0 < ROOM or ROOM2 <= s0 < PET else 1.0
     bs = filt(bs, 900)
     bs = set_rms(bs, -22) * duck
     bass = pan(bs, 0)
@@ -373,9 +390,7 @@ def build_music():
     for si in range(len(SEG) - 1):
         s0, ch = SEG[si]
         if ch is None or s0 < 1.0: continue
-        if si > 0 and SEG[si - 1][1] == ch and s0 in (9.0,): continue  # G continues through 9.0
         s1 = SEG[si + 1][0]
-        if ch == "G" and s0 == 7.0: s1 = 10.5
         n = int((s1 - s0 + 0.7) * SR)
         t = np.arange(n) / SR
         env = np.interp(t, [0, 0.35, s1 - s0, s1 - s0 + 0.65], [0, 1, 1, 0])
@@ -388,10 +403,10 @@ def build_music():
                 put(padL, v * env * gl, s0); put(padR, v * env * gr, s0)
             sn_ = np.sin(TWO_PI * f * t) * env * 0.6
             put(padL, sn_ * 0.7, s0); put(padR, sn_ * 0.7, s0)
-    fc = interp_curve([(0, 400), (1, 500), (3, 900), (6, 1200), (9, 1000), (10.4, 5000), (10.5, 1800), (13, 1500),
-                       (16.5, 5500), (17.0, 3000), (17.5, 1600), (21, 1600), (21.05, 2800), (24, 700)], log=True)
-    gp = interp_curve([(0, 0), (1, 0), (3, .5), (6, .6), (8, .7), (9, .9), (10.4, 1.1), (10.5, .65), (13, .65),
-                       (15.5, 1.0), (17, 1.0), (17.5, .45), (21, .45), (21.05, .85), (22.5, .55), (24, 0)])
+    fc = interp_curve([(0, 400), (1, 500), (6, 900), (SHEET, 1200), (ARR, 1000), (DROP - 0.1, 5000), (DROP, 1800), (ROOM, 1500),
+                       (PET - 0.5, 5500), (PET, 3000), (PET + 0.5, 1600), (END, 1600), (END + 0.05, 2800), (DUR, 700)], log=True)
+    gp = interp_curve([(0, 0), (1, 0), (6, .5), (SHEET, .6), (22, .7), (ARR, .9), (DROP - 0.1, 1.1), (DROP, .65), (ROOM, .65),
+                       (38.5, 1.0), (PET, 1.0), (PET + 0.5, .45), (END, .45), (END + 0.05, .85), (END + 3.0, .55), (DUR, 0)])
     pad = np.stack([tv_filter(padL, fc), tv_filter(padR, fc)], axis=1)
     pad = set_rms(pad, -25)
     pad = pad * gp[:, None] * duck[:, None]
@@ -411,7 +426,7 @@ def build_music():
     # slow "tape" breathing on the hiss
     breath = 1 + 0.25 * np.sin(TWO_PI * 0.13 * np.arange(N) / SR)
     vinyl = (hiss * breath[:, None] + crack)
-    vinyl *= interp_curve([(0, 1.1), (1, 1.0), (9, 1.0), (24, 0.9)])[:, None]
+    vinyl *= interp_curve([(0, 1.1), (1, 1.0), (ARR, 1.0), (DUR, 0.9)])[:, None]
 
     # ---- sum with reverb sends
     dry = arp * db(0) + kk + hh + sn + bass + pad
@@ -424,8 +439,8 @@ def build_music():
     # gentle width: side +8 %
     mid, side = (m[:, 0] + m[:, 1]) / 2, (m[:, 0] - m[:, 1]) / 2
     m = np.stack([mid + side * 1.08, mid - side * 1.08], 1)
-    # master fade: music resolves, ends in true silence at 24.0
-    m *= interp_curve([(0, 1), (22.2, 1), (24, 0)])[:, None] ** 2
+    # master fade: music resolves, ends in true silence at DUR
+    m *= interp_curve([(0, 1), (DUR - 2.6, 1), (DUR, 0)])[:, None] ** 2
     m[-1] = 0
     # near-silence in the first second (clicks only): ride vinyl, pad is already 0 until 1.0
     return m
@@ -617,27 +632,29 @@ def build_cues(sfx):
     r = R("typing")
     t = 0.30
     i = 0
-    while t < 1.84:
+    while t < 2.34:   # wish typed 0.35-2.35, in step with the real phone capture
         cues.append((round(t, 3), "key_click_%d" % (1 + (i * 3 + int(r.integers(0, 3))) % 4), -13 + float(r.uniform(-2, 1)), "typing"))
         t += float(r.uniform(0.06, 0.12)); i += 1
-    cues.append((1.90, "key_click_5", -9, "enter"))
-    for t, i in zip([2.0, 2.5, 3.0, 4.0, 4.5, 5.5], range(1, 7)):
+    for tt in (2.88, 3.1, 3.31):   # name "Mei" typed on the phone capture
+        cues.append((tt, "key_click_%d" % (1 + int(tt * 10) % 4), -16, "typing name"))
+    cues.append((BUILD - 0.1, "key_click_5", -9, "enter"))
+    for t, i in zip(STEPS, range(1, 7)):
         cues.append((t, "blip_step_%d" % i, -9, "step %d: Checking/Queue/Codex writing/Testing/Drawing/Live" % i))
     for i in range(12):
-        cues.append((6.0 + 0.125 * i, "cell_tick_%02d" % (i + 1), -12, "sprite cell %d assembles" % (i + 1)))
-    cues.append((8.0, "whoosh", -9, "peaks at 9.0 (peak_offset 1.0 s)"))
-    cues.append((10.5, "drop_thud", -3, "arrival drop"))
-    cues.append((10.5, "pop", -8, "arrival drop, bright pop"))
-    cues.append((13.0, "swell", -10, "room reveal swell, peaks at 16.5"))
-    for j, tt in enumerate([13.75, 14.0, 14.125, 14.375, 14.5, 14.75, 14.875, 15.25]):
-        cues.append((tt, "cell_tick_%02d" % (3 + (j * 5) % 9), -16, "pixel-dissolve sparkle"))
-    for tt in (17.0, 17.5, 18.0, 18.5):
+        cues.append((SHEET + 0.25 * i, "cell_tick_%02d" % (i + 1), -12, "sprite cell %d assembles" % (i + 1)))
+    cues.append((ARR - 1.0, "whoosh", -9, "peaks at %.1f (peak_offset 1.0 s)" % ARR))
+    cues.append((DROP, "drop_thud", -3, "arrival drop"))
+    cues.append((DROP, "pop", -8, "arrival drop, bright pop"))
+    cues.append((PET - 4.0, "swell", -10, "room reveal swell, peaks at %.1f" % (PET - 0.5)))
+    for j, dt in enumerate([0, 0.25, 0.375, 0.625, 0.75, 1.0, 1.125, 1.5]):   # room dissolve runs ROOM+1.25..+2.75
+        cues.append((ROOM + 1.25 + dt, "cell_tick_%02d" % (3 + (j * 5) % 9), -16, "pixel-dissolve sparkle"))
+    for tt in (PET, PET + 2, PET + 4, PET + 6):
         cues.append((tt, "ui_tap", -10, "phone montage tap"))
-    cues.append((19.0, "rain_soft", -13, "Moody (rain)"))
-    cues.append((20.0, "zzz_bubble", -11, "Sleep (zzz)"))
-    cues.append((20.5, "ui_tap", -9, "Poke"))
-    cues.append((20.5, "pop", -9, "Poke special attack"))
-    cues.append((21.0, "chime_end", -4, "end resolve; tail ~2.5 s, silent by 24.0"))
+    cues.append((PET + 8, "rain_soft", -13, "Moody (rain)"))
+    cues.append((PET + 10, "zzz_bubble", -11, "Sleep (zzz)"))
+    cues.append((PET + 12, "ui_tap", -9, "Poke"))
+    cues.append((PET + 12, "pop", -9, "Poke special attack"))
+    cues.append((END, "chime_end", -4, "end resolve; chime ~2.5 s, pad tail silent by %.1f" % DUR))
     return sorted(cues, key=lambda c: (c[0], c[1]))
 
 
@@ -660,7 +677,7 @@ def main():
     for t, name, gdb, _ in cues:
         x = sfx[name][0] * db(gdb)
         put(sfx_bus, x, t)
-    final_fade = interp_curve([(0, 1), (23.2, 1), (24, 0)])[:, None]
+    final_fade = interp_curve([(0, 1), (DUR - 1.0, 1), (DUR, 0)])[:, None]
     g = music_g * 0.95
     sg = 1.0
     for _ in range(4):
@@ -680,13 +697,13 @@ def main():
         "sample_rate": SR,
         "duration": DUR,
         "beats": [round(i * 60 / BPM, 3) for i in range(int(DUR * BPM / 60))],
-        "sections": {"hook": [0, 2], "build": [2, 6], "sheet": [6, 9], "arrival": [9, 13], "room": [13, 17],
-                     "pet": [17, 21], "end": [21, 24]},
+        "sections": {"hook": [HOOK, BUILD], "build": [BUILD, SHEET], "sheet": [SHEET, ARR], "arrival": [ARR, ROOM],
+                     "room": [ROOM, PET], "pet": [PET, END], "end": [END, DUR]},
         "key": "C major (C Am F G)",
         "master_gain_db": round(20 * np.log10(g / music_g), 2),
         "loudness": {"music_lufs": ml, "music_tp": mtp, "mix_lufs": xl, "mix_tp": xtp},
-        "note": "t = time the sfx file STARTS in mix.wav. For whoosh the energy peaks at t+peak_offset (=9.0); for swell peak is t+3.5. "
-                "Every cue is also available as an individual file in sfx/ for re-placing.",
+        "note": ("t = time the sfx file STARTS in mix.wav. For whoosh the energy peaks at t+peak_offset (=%.1f); for swell peak is t+3.5. "
+                 "Every cue is also available as an individual file in sfx/ for re-placing." % ARR),
         "cues": [{"t": t, "name": n, "file": "sfx/%s.wav" % n, "gain_db": round(gd, 1), "dur": round(len(sfx[n][0]) / SR, 3),
                   "peak_offset": sfx[n][1], "note": note} for t, n, gd, note in cues],
     }

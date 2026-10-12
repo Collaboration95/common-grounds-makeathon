@@ -3,31 +3,31 @@
   "phone": {
    "dir": "/video/assets/frames/phone",
    "fps": 30,
-   "n": 188,
+   "n": 548,
    "ext": "jpg"
   },
   "arrival": {
    "dir": "/video/assets/frames/arrival",
    "fps": 30,
-   "n": 128,
+   "n": 308,
    "ext": "jpg"
   },
   "swap": {
    "dir": "/video/assets/frames/swap",
    "fps": 30,
-   "n": 63,
+   "n": 98,
    "ext": "jpg"
   },
   "pet.phone": {
    "dir": "/video/assets/frames/pet.phone",
    "fps": 30,
-   "n": 128,
+   "n": 428,
    "ext": "jpg"
   },
   "pet.world": {
    "dir": "/video/assets/frames/pet.world",
    "fps": 30,
-   "n": 128,
+   "n": 428,
    "ext": "jpg"
   }
  },
@@ -41,22 +41,28 @@
     1
    ],
    [
-    1.4,
+    2.4,
     0.52,
     0.8,
     1.9
    ],
    [
-    3,
+    4.2,
     0.52,
     0.78,
     1.9
    ],
    [
-    4.25,
+    6.4,
     0.5,
     0.7,
     1.35
+   ],
+   [
+    10.25,
+    0.5,
+    0.66,
+    1.2
    ]
   ],
   "caps": [
@@ -65,15 +71,15 @@
     "SCAFFOLD"
    ],
    [
-    1.5,
+    2.5,
     "DROP."
    ],
    [
-    2.4,
+    4.5,
     "TOO COOL DURIAN"
    ],
    [
-    3.2,
+    7,
     "WISHED BY MEI"
    ]
   ]
