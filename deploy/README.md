@@ -32,6 +32,10 @@ pm2 save && pm2 startup
 | `HOST_KEY` | Fallback host key |
 | `PUBLIC_HOST=1` | Anyone can change the room (online vote) |
 | `CONCURRENCY` | Codex builds at once (default 3) |
+| `ANIM_CONCURRENCY` | Sprite sheets drawn at once (default 3) |
+| `CODEX_TIER=fast` | Priority processing for every Codex call (uses more of the ChatGPT plan) |
+| `ANIM_MODEL`, `ANIM_EFFORT` | Model that calls the image tool (default `gpt-6-luna`, `low`) |
+| `EARLY_START=0` | Wait for the screen before drawing and coding (default: all three run side by side) |
 | `MAX_CHARACTERS` | Pets per room before a new room opens (default 10) |
 | `ADMIN_PASSWORD`, `ADMIN_PATH` | Turn on the hidden keeper page at `ADMIN_PATH` (remove pets, merge or clear rooms) |
 | `CANONICAL_URL` | Page loads on a `*.ts.net` host redirect here |
@@ -41,3 +45,8 @@ pm2 save && pm2 startup
 
 - Tailscale Funnel (`tailscale funnel --bg 8787`) gives a permanent `https://<machine>.<tailnet>.ts.net` link for free. It went into the voting form.
 - Funnel's ingress was about 80 ms away, so each request cost about 150 ms. A CloudFront distribution in front of the box (origin on port 8787, caching disabled, all viewer headers forwarded) brought that to about 30 ms. `CANONICAL_URL` sends Funnel visitors there.
+
+## Run log and test runs
+
+- Every pet adds a line to `commons-world/runs.jsonl` when it goes live, is declined, fails or is removed: the wish, the hat, the models, and how long the screen, the drawing and the coding took. The keeper page shows the latest runs and downloads the whole file.
+- `node tools/try-wishes.mjs ["a wish" ...]` runs wishes end to end on a throwaway server (its own temp world, a free port), then prints the timings and writes `report.html` with every pet's frames. It never touches the live room, so it is safe to run on the box.
