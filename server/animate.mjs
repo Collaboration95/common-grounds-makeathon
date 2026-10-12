@@ -33,12 +33,12 @@ const release = () => { active--; waiting.shift()?.(); };
 function runCodex(cwd, prompt) {
   return new Promise((resolve, reject) => {
     const p = spawn(bin, ["exec", "--json", "--skip-git-repo-check", "-s", "workspace-write", "-m", MODEL, "-c", "model_reasoning_effort=low", prompt], { cwd, env, stdio: ["ignore", "pipe", "pipe"] });
-    let err = "";
+    let err = "", out = "", thread = null;
     p.stderr.on("data", (d) => { err = (err + d).slice(-500); });
-    p.stdout.on("data", () => {});
+    p.stdout.on("data", (d) => { if (!thread) { out += d; thread = /"thread_id":"([^"]+)"/.exec(out)?.[1] || null; } });
     const timer = setTimeout(() => { p.kill("SIGKILL"); reject(new Error("timeout")); }, TIMEOUT_MS);
     p.on("error", (e) => { clearTimeout(timer); reject(e); });
-    p.on("close", (code) => { clearTimeout(timer); code === 0 ? resolve() : reject(new Error(`codex exited ${code}: ${err}`)); });
+    p.on("close", (code) => { clearTimeout(timer); code === 0 ? resolve(thread) : reject(new Error(`codex exited ${code}: ${err}`)); });
   });
 }
 
@@ -48,7 +48,14 @@ export async function makeFrames(outDir, description) {
   fs.mkdirSync(work, { recursive: true });
   fs.rmSync(path.join(work, "sheet.png"), { force: true });
   await slot();
-  try { await runCodex(work, sheetPrompt(description)); } finally { release(); }
+  let thread = null;
+  try { thread = await runCodex(work, sheetPrompt(description)); } finally { release(); }
+  if (!fs.existsSync(path.join(work, "sheet.png")) && thread) { // the model drew it but couldn't save it: Codex keeps its own copy
+    const dir = path.join(os.homedir(), ".codex", "generated_images", thread);
+    const pngs = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith(".png")).map((f) => path.join(dir, f)) : [];
+    const newest = pngs.sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs)[0];
+    if (newest) fs.copyFileSync(newest, path.join(work, "sheet.png"));
+  }
   if (!fs.existsSync(path.join(work, "sheet.png"))) throw new Error("no sheet.png produced");
   return sliceSheet(path.join(work, "sheet.png"), outDir);
 }
