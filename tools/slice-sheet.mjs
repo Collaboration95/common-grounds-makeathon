@@ -14,7 +14,7 @@ export function sliceSheet(sheetPath, outDir, layout = "auto") {
   let ROWS = layout === "4x3" ? 3 : layout === "4x2" ? 2 : 0;
   let cw, ch;
 
-  // flat background (no real transparency)? key near-white connected to each cell border
+  // flat background (no real transparency)? key the border colours (white, a solid colour, a painted checkerboard) in each cell
   let clear = 0;
   for (let i = 3; i < data.length; i += 4) if (data[i] < 250) clear++;
   const flat = clear < data.length / 4 * 0.02;
@@ -25,7 +25,7 @@ export function sliceSheet(sheetPath, outDir, layout = "auto") {
     for (let r = 0; r < rows; r++) for (let c = 0; c < COLS; c++) {
       const g = Buffer.alloc(cw * ch * 4);
       for (let y = 0; y < ch; y++) data.copy(g, y * cw * 4, ((r * ch + y) * W + c * cw) * 4, ((r * ch + y) * W + c * cw + cw) * 4);
-      if (flat) keyWhite(g, cw, ch);
+      if (flat) keyBackground(g, cw, ch);
       out.push(cropCell(g, cw, ch));
     }
     return out;
@@ -36,6 +36,9 @@ export function sliceSheet(sheetPath, outDir, layout = "auto") {
   const N = ROWS * COLS;
   const live = cells.filter(Boolean);
   if (live.length < N) throw new Error(`only ${live.length}/${N} cells have a character`);
+  // a cell that is still a full rectangle kept its background: better to redraw than show a box
+  const boxed = cells.filter((c) => c.w >= cw * 0.97 && c.h >= ch * 0.97).length;
+  if (boxed >= 3) throw new Error(`background left in ${boxed}/${N} cells`);
 
   // ONE scale for all frames: the tallest frame fits MAX_H
   const maxW = Math.max(...cells.map((c) => c.w)), maxH = Math.max(...cells.map((c) => c.h));
@@ -60,17 +63,37 @@ export function sliceSheet(sheetPath, outDir, layout = "auto") {
   return { ...anim, flatBackground: flat, sheet: [W, H], scale: +k.toFixed(3) };
 }
 
-function keyWhite(g, w, h) {
-  const near = (i) => g[i + 3] > 0 && g[i] > 235 && g[i + 1] > 235 && g[i + 2] > 235;
+/** No real alpha: the colours along the cell's edge are the background. Flood them out from the edges (the dark outline stops it). */
+function keyBackground(g, w, h) {
+  const buckets = new Map(); // 4-bit colour bucket -> [count, r, g, b]
+  let edge = 0;
+  const tally = (p) => {
+    const i = p * 4, k = ((g[i] >> 4) << 8) | ((g[i + 1] >> 4) << 4) | (g[i + 2] >> 4), b = buckets.get(k) || [0, 0, 0, 0];
+    b[0]++; b[1] += g[i]; b[2] += g[i + 1]; b[3] += g[i + 2]; buckets.set(k, b); edge++;
+  };
+  for (let x = 0; x < w; x++) { tally(x); tally((h - 1) * w + x); }
+  for (let y = 1; y < h - 1; y++) { tally(y * w); tally(y * w + w - 1); }
+  const pal = [];
+  for (let got = 0, sorted = [...buckets.values()].sort((a, b) => b[0] - a[0]); pal.length < 4 && got < edge * 0.9 && sorted[pal.length];) {
+    const b = sorted[pal.length]; got += b[0]; pal.push([b[1] / b[0], b[2] / b[0], b[3] / b[0]]);
+  }
+  const diff = (i, c) => Math.max(Math.abs(g[i] - c[0]), Math.abs(g[i + 1] - c[1]), Math.abs(g[i + 2] - c[2]));
+  const isBg = (i, tol) => pal.some((c) => diff(i, c) <= tol);
+  const step = (i, j) => Math.max(Math.abs(g[i] - g[j]), Math.abs(g[i + 1] - g[j + 1]), Math.abs(g[i + 2] - g[j + 2])) <= 6; // soft gradients
   const seen = new Uint8Array(w * h), stack = [];
-  const push = (x, y) => { if (x < 0 || y < 0 || x >= w || y >= h) return; const p = y * w + x; if (seen[p] || !near(p * 4)) return; seen[p] = 1; stack.push(p); };
-  for (let x = 0; x < w; x++) { push(x, 0); push(x, h - 1); }
-  for (let y = 0; y < h; y++) { push(0, y); push(w - 1, y); }
-  while (stack.length) { const p = stack.pop(), x = p % w, y = (p / w) | 0; g[p * 4 + 3] = 0; push(x + 1, y); push(x - 1, y); push(x, y + 1); push(x, y - 1); }
-  // soften the halo: near-white pixels touching the keyed area become half transparent
+  const push = (x, y, from) => {
+    if (x < 0 || y < 0 || x >= w || y >= h) return;
+    const p = y * w + x;
+    if (seen[p] || !(isBg(p * 4, 26) || (from >= 0 && step(p * 4, from * 4)))) return;
+    seen[p] = 1; stack.push(p);
+  };
+  for (let x = 0; x < w; x++) { push(x, 0, -1); push(x, h - 1, -1); }
+  for (let y = 0; y < h; y++) { push(0, y, -1); push(w - 1, y, -1); }
+  while (stack.length) { const p = stack.pop(), x = p % w, y = (p / w) | 0; g[p * 4 + 3] = 0; push(x + 1, y, p); push(x - 1, y, p); push(x, y + 1, p); push(x, y - 1, p); }
+  // soften the halo: background-ish pixels touching the keyed area become half transparent
   for (let y = 1; y < h - 1; y++) for (let x = 1; x < w - 1; x++) {
     const p = y * w + x;
-    if (!seen[p] && g[p * 4 + 3] && (seen[p - 1] || seen[p + 1] || seen[p - w] || seen[p + w]) && g[p * 4] > 215 && g[p * 4 + 1] > 215 && g[p * 4 + 2] > 215) g[p * 4 + 3] = 90;
+    if (!seen[p] && g[p * 4 + 3] && (seen[p - 1] || seen[p + 1] || seen[p - w] || seen[p + w]) && isBg(p * 4, 48)) g[p * 4 + 3] = 90;
   }
 }
 
