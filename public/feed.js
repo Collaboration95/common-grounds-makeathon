@@ -211,7 +211,7 @@ export function bindWorld(engine, feed) {
     await Promise.all(list.map(async (w) => {
       const a = binder.assets.get(w.id);
       if (a) { a.wish = w; return; }
-      binder.assets.set(w.id, { wish: w, ...(await load(w)) });
+      binder.assets.set(w.id, { wish: w, ...(await load(w)), animAt: w.animAt });
     }));
   };
 
@@ -227,7 +227,7 @@ export function bindWorld(engine, feed) {
     loading.delete(w.id);
     const cur = feed.wishes.get(w.id) || w;
     if (cur.status !== 'live') return;
-    binder.assets.set(w.id, { wish: cur, ...a });
+    binder.assets.set(w.id, { wish: cur, ...a, animAt: w.animAt });
     if (binder.hold || !inRoom(cur)) return;
     binder.addNow(w.id, arrive);
   }
@@ -252,9 +252,9 @@ export function bindWorld(engine, feed) {
           if (!a && !loading.has(w.id)) bringLive(w, false);
         } else if (engine.has(w.id)) {
           engine.updateWish(w);
-          if (w.anim && !engine.hasAnim(w.id) && !animLoading.has(w.id)) { // it learns to walk
+          if (w.anim && (!engine.hasAnim(w.id) || (a && a.animAt !== w.animAt)) && !animLoading.has(w.id)) { // it learns to walk, or got redrawn
             animLoading.add(w.id);
-            loadAnim(w).then((an) => { animLoading.delete(w.id); if (an) { if (a) a.anim = an; engine.setAnim(w.id, an, { sparkle: true }); } });
+            loadAnim(w).then((an) => { animLoading.delete(w.id); if (an) { if (a) { a.anim = an; a.animAt = w.animAt; } engine.setAnim(w.id, an, { sparkle: true }); } });
           }
         }
         else if (a && !loading.has(w.id) && !binder.hold && prev === 'live') binder.addNow(w.id, false); // back in the room

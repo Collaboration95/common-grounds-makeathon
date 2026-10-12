@@ -6,8 +6,9 @@ import path from "node:path";
 import { Codex } from "@openai/codex-sdk";
 import { ROOT, thingDir, checkThing } from "./store.mjs";
 
-const MODEL = process.env.CODEX_MODEL || "gpt-6.1-sol";
-const EFFORT = process.env.CODEX_EFFORT || "low";
+export const MODEL = process.env.CODEX_MODEL || "gpt-6.1-sol";
+export const EFFORT = process.env.CODEX_EFFORT || "low";
+const TIER = process.env.CODEX_TIER || ""; // "fast" = priority processing on the ChatGPT plan
 const TIMEOUT_MS = Number(process.env.CODEX_TIMEOUT_MS) || 4 * 60 * 1000;
 
 const expand = (p) => (p.startsWith("~") ? path.join(os.homedir(), p.slice(1)) : p);
@@ -16,7 +17,7 @@ const binPath = expand(process.env.CODEX_BIN || "~/.local/bin/codex");
 // Codex uses the ChatGPT login. Keep our API keys out of its environment.
 const env = Object.fromEntries(Object.entries(process.env).filter(([k, v]) => v !== undefined && !/^(OPENAI_API_KEY|CODEX_API_KEY)$/.test(k)));
 let codex;
-const getCodex = () => (codex ||= new Codex({ ...(fs.existsSync(binPath) ? { codexPathOverride: binPath } : {}), env }));
+const getCodex = () => (codex ||= new Codex({ ...(fs.existsSync(binPath) ? { codexPathOverride: binPath } : {}), env, ...(TIER ? { config: { service_tier: TIER } } : {}) }));
 
 const CONTRACT = fs.readFileSync(path.join(ROOT, "template", "CONTRACT.md"), "utf8");
 const sample = (f) => fs.readFileSync(path.join(ROOT, "template", "samples", f), "utf8");

@@ -6,6 +6,7 @@ import path from "node:path";
 import QRCode from "qrcode";
 import * as store from "./store.mjs";
 import * as queue from "./queue.mjs";
+import * as runlog from "./runlog.mjs";
 import * as scene from "./scene.mjs";
 import * as presets from "./presets.mjs";
 import { timingSafeEqual } from "node:crypto";
@@ -90,9 +91,11 @@ async function keeperApi(req, res, p) {
   let b; try { b = await readBody(req); } catch { return json(res, 400, { error: "Bad request." }); }
   if (p === "/api/keeper/list") return json(res, 200, {
     room: room?.name || null, rooms: store.publicRooms().length || 1,
-    pets: store.all().filter((w) => !ENDED.includes(w.status)).map(({ id, n, name, text, status, kind, room }) => ({ id, n, name, text, status, kind, room })),
+    pets: store.all().filter((w) => !ENDED.includes(w.status)).map(({ id, n, name, text, status, kind, room, hat, sprite, animAt }) => ({ id, n, name, text, status, kind, room, hat, sprite, animAt })),
   });
   if (p === "/api/keeper/remove") { queue.veto(String(b.id)); return json(res, 200, { ok: true }); }
+  if (p === "/api/keeper/redraw") return queue.redraw(String(b.id)) ? json(res, 202, { ok: true }) : json(res, 409, { error: "Only a live wished pet can be redrawn, one at a time." });
+  if (p === "/api/keeper/runs") return json(res, 200, { runs: runlog.tail(Math.min(Number(b.n) || 2000, 5000)) });
   if (p === "/api/keeper/clear") {
     const gone = store.all().filter((w) => w.kind !== "resident" && !ENDED.includes(w.status));
     for (const w of gone) queue.veto(w.id);

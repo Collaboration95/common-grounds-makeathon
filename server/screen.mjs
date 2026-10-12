@@ -1,12 +1,14 @@
 // Wish screening on the LOCAL codex CLI (ChatGPT login, no API key): one short read-only turn with a
-// structured outputSchema. Never throws. Codex error / timeout (15s) / bad output -> small keyword blocklist.
+// structured outputSchema. Never throws. Codex error / timeout (30s) / bad output -> small keyword blocklist.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { Codex } from "@openai/codex-sdk";
 
-const MODEL = process.env.SCREEN_CODEX_MODEL || process.env.CODEX_MODEL || "gpt-6.1-sol";
-const TIMEOUT_MS = Number(process.env.SCREEN_TIMEOUT_MS) || 15000;
+export const MODEL = process.env.SCREEN_CODEX_MODEL || process.env.CODEX_MODEL || "gpt-6.1-sol";
+export const EFFORT = process.env.SCREEN_EFFORT || "low";
+const TIER = process.env.CODEX_TIER || "";
+const TIMEOUT_MS = Number(process.env.SCREEN_TIMEOUT_MS) || 30000; // it runs alongside the build now, so it can take its time
 
 const expand = (p) => (p.startsWith("~") ? path.join(os.homedir(), p.slice(1)) : p);
 const binPath = expand(process.env.CODEX_BIN || "~/.local/bin/codex");
@@ -14,7 +16,7 @@ const binPath = expand(process.env.CODEX_BIN || "~/.local/bin/codex");
 // Same construction as server/codex.mjs: ChatGPT login, our API keys kept out of Codex's environment.
 const env = Object.fromEntries(Object.entries(process.env).filter(([k, v]) => v !== undefined && !/^(OPENAI_API_KEY|CODEX_API_KEY)$/.test(k)));
 let codex, cwd;
-const getCodex = () => (codex ||= new Codex({ ...(fs.existsSync(binPath) ? { codexPathOverride: binPath } : {}), env }));
+const getCodex = () => (codex ||= new Codex({ ...(fs.existsSync(binPath) ? { codexPathOverride: binPath } : {}), env, ...(TIER ? { config: { service_tier: TIER } } : {}) }));
 const getCwd = () => (cwd ||= fs.mkdtempSync(path.join(os.tmpdir(), "commons-screen-")));
 
 const SYSTEM = `You screen wishes for "The Commons", a friendly shared digital room (a Singapore HDB void deck at dusk, opening onto a grass field) where each visitor adds ONE small living paper-cutout creature or object.
@@ -53,7 +55,7 @@ async function askCodex(text, signal) {
   const thread = getCodex().startThread({
     workingDirectory: getCwd(), sandboxMode: "read-only", approvalPolicy: "never",
     networkAccessEnabled: false, webSearchEnabled: false, skipGitRepoCheck: true,
-    model: MODEL, modelReasoningEffort: "low",
+    model: MODEL, modelReasoningEffort: EFFORT,
   });
   const { events } = await thread.runStreamed(`${SYSTEM}\n\nwish: ${JSON.stringify({ wish: text })}`, { outputSchema: SCHEMA, signal });
   let final = null;
@@ -66,7 +68,7 @@ async function askCodex(text, signal) {
   return JSON.parse(final);
 }
 
-// A burst of phones shouldn't spawn dozens of codex processes: at most SCREEN_CONCURRENCY at once (waiting doesn't eat the 15s).
+// A burst of phones shouldn't spawn dozens of codex processes: at most SCREEN_CONCURRENCY at once (waiting doesn't eat the timeout).
 const LIMIT = Number(process.env.SCREEN_CONCURRENCY) || 4;
 let busy = 0;
 const waiters = [];
@@ -80,8 +82,8 @@ export async function screen(text) {
 
 async function screenNow(text) {
   const fallback = () => BLOCK.test(text)
-    ? { allowed: false, userMessage: DECLINE, thingSummary: "", spritePrompt: "", bleed: null }
-    : { allowed: true, userMessage: "", thingSummary: text, spritePrompt: text, bleed: null };
+    ? { allowed: false, userMessage: DECLINE, thingSummary: "", spritePrompt: "", bleed: null, fallback: true }
+    : { allowed: true, userMessage: "", thingSummary: text, spritePrompt: text, bleed: null, fallback: true };
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   try {
