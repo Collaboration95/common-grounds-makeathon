@@ -187,7 +187,10 @@ body.console { background: #17111d; color: #eadcc6; font: 15px/1.4 system-ui, sa
 .world #qrcard { background: #fff3d6; color: #3a2416; border: 3px solid #3a2416; border-radius: 12px; padding: 10px 12px; margin: 0 0 12px; text-align: center; box-shadow: 0 4px 0 rgba(58,36,22,.55); display: flex; flex-direction: column; gap: 6px; align-items: center; font-size: 14px; }
 .world #qrcard[hidden] { display: none; }
 .world #qrcard img { width: 70%; max-width: 220px; display: block; background: #fff8e6; mix-blend-mode: multiply; }
-.world #qrcard code { font-size: 12px; word-break: break-all; opacity: .8; }
+.world #qrcard #qrUrl { font: 600 13px var(--mono, monospace); word-break: break-all; color: #3a2416; }
+.world #qrcard #wishBtn { display: block; width: 100%; box-sizing: border-box; background: #e0694b; color: #fff8e6; border: 3px solid #3a2416; border-radius: 10px; padding: 9px 10px; font-weight: 800; font-size: 16px; text-decoration: none; box-shadow: 0 3px 0 rgba(58,36,22,.6); }
+.world #qrcard #wishBtn:hover { filter: brightness(1.08); }
+.world #qrcard #roomBtn { color: #3a2416; font-size: 13px; opacity: .8; }
 .world #qrBtn { font: inherit; font-size: 11px; padding: 1px 8px; border-radius: 999px; border: 1px solid currentColor; background: none; color: inherit; cursor: pointer; opacity: .6; }
 .world #qrBtn.on { opacity: 1; }
 
@@ -197,3 +200,14 @@ body.sceneonly #stage { flex: 1; }
 #fsBtn { position: fixed; right: 12px; bottom: 12px; z-index: 50; width: 38px; height: 38px; border-radius: 10px; border: 1px solid #6b4a2b;
   background: #fbf3e2cc; color: #4a2f1a; font-size: 20px; cursor: pointer; opacity: .35; transition: opacity .2s; }
 #fsBtn:hover { opacity: 1; }
+
+/* vote card (vote.js): on the projector rail it matches the QR card; on phones it's a normal card */
+.votecard { position: relative; display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+.votecard img { display: block; width: 100%; height: auto; border: 2px solid #3a2416; border-radius: 8px; }
+.votecard .vbtn { display: block; width: 100%; box-sizing: border-box; background: #e0694b; color: #fff8e6; border: 3px solid #3a2416; border-radius: 10px; padding: 9px 10px; font-weight: 800; font-size: 16px; text-decoration: none; box-shadow: 0 3px 0 rgba(58,36,22,.6); }
+.votecard .vbtn:hover { filter: brightness(1.08); }
+.votecard span { font-size: 13px; opacity: .85; }
+.votecard .vclose { position: absolute; top: 4px; right: 6px; background: none; border: 0; font-size: 20px; line-height: 1; color: inherit; opacity: .6; cursor: pointer; padding: 4px; }
+.world .votecard { background: #fff3d6; color: #3a2416; border: 3px solid #3a2416; border-radius: 12px; padding: 10px 12px; margin: 0 0 12px; box-shadow: 0 4px 0 rgba(58,36,22,.55); font-size: 14px; animation: votein .5s ease-out; }
+.phone .votecard { color: var(--ink); animation: votein .5s ease-out; }
+@keyframes votein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }

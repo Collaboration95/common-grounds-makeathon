@@ -1,6 +1,8 @@
 // /wish - the phone page. Form -> status timeline -> live mini view centred on your thing + Poke it.
 import { createWorld } from '/engine.js';
 import { createFeed, bindWorld, getDeviceId, DEV } from '/feed.js';
+import { voteCard } from '/vote.js';
+const showVote = voteCard((c) => document.getElementById('liveCard').after(c), { className: 'card votecard' }); // once your own creature is live
 
 const $ = (s) => document.querySelector(s);
 const store = {
@@ -328,6 +330,7 @@ function render() {
     const nm = (w.thing && w.thing.name) || 'Your thing';
     const secs = w.stats && w.stats.buildMs ? Math.max(1, Math.round(w.stats.buildMs / 1000)) : null;
     $('#lvTitle').textContent = `${nm} is live!`;
+    showVote(6000);
     $('#lvLine').textContent = (w.thing && w.thing.oneLine ? w.thing.oneLine + ' ' : '') + (secs ? (w.kind === 'sketch' ? `Sketched in ${secs}s.` : `Built by Codex in ${secs}s.`) : '');
   }
 }

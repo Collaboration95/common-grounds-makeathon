@@ -41,7 +41,8 @@ const sendFile = (req, res, file) => {
   let st;
   try { st = fs.statSync(file); if (!st.isFile()) throw 0; } catch { return none(res, 404); }
   const etag = `"${st.size.toString(36)}-${Math.floor(st.mtimeMs).toString(36)}"`;
-  const headers = { "content-type": TYPES[path.extname(file).toLowerCase()] || "application/octet-stream", "cache-control": "no-cache", etag };
+  const ext = path.extname(file).toLowerCase(), img = [".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico"].includes(ext);
+  const headers = { "content-type": TYPES[ext] || "application/octet-stream", "cache-control": img ? "public, max-age=3600" : "no-cache", etag };
   if (req.headers["if-none-match"] === etag) { res.writeHead(304, headers); return res.end(); }
   res.writeHead(200, { ...headers, "content-length": st.size });
   if (req.method === "HEAD") return res.end();
@@ -56,7 +57,7 @@ const lanUrl = () => {
 const publicUrl = (req) => { // derive from the request (tunnel URL changes); env/LAN only when there is no request
   const h = req && String(req.headers["x-forwarded-host"] || req.headers.host || "").split(",")[0].trim();
   if (h && /^[a-z0-9.\-:\[\]]+$/i.test(h)) {
-    const proto = String(req.headers["x-forwarded-proto"] || "").split(",")[0].trim() || (/^(localhost|127\.|\[::1\])/.test(h) ? "http" : /\.trycloudflare\.com$/.test(h) ? "https" : "http");
+    const proto = String(req.headers["x-forwarded-proto"] || "").split(",")[0].trim() || (/^(localhost|127\.|\[::1\])/.test(h) ? "http" : /\.(trycloudflare\.com|ts\.net|cloudfront\.net)$/.test(h) ? "https" : "http");
     return `${proto}://${h}`;
   }
   return (process.env.PUBLIC_URL || lanUrl()).replace(/\/+$/, "");
@@ -77,7 +78,32 @@ const mkCode = () => Array.from({ length: 4 }, () => "ABCDEFGHJKLMNPQRSTUVWXYZ23
 const hostKey = () => room?.code || scene.HOST_KEY;
 const hostUrl = (req) => `${publicUrl(req)}/host?k=${hostKey()}`;
 const same = (x, y) => { const a = Buffer.from(String(x)), b = Buffer.from(String(y)); return a.length === b.length && timingSafeEqual(a, b); };
-const hostOk = (req) => { const k = String(req.headers["x-host-key"] || ""); return (room && same(k.toUpperCase(), room.code)) || same(k, scene.HOST_KEY); };
+const PUBLIC_HOST = process.env.PUBLIC_HOST === "1"; // online vote: anyone may change the room
+const hostOk = (req) => { const k = String(req.headers["x-host-key"] || ""); return PUBLIC_HOST || (room && same(k.toUpperCase(), room.code)) || same(k, scene.HOST_KEY); };
+// Keeper: a hidden page (ADMIN_PATH) + password (ADMIN_PASSWORD) to remove pets and clear rooms. Off unless both are set.
+const ADMIN_PASS = process.env.ADMIN_PASSWORD || "", ADMIN_PATH = process.env.ADMIN_PATH || "";
+const CANONICAL = (process.env.CANONICAL_URL || "").replace(/\/+$/, "");
+const ENDED = ["declined", "failed", "departed", "vetoed"];
+async function keeperApi(req, res, p) {
+  if (!ADMIN_PASS || !ADMIN_PATH) return none(res, 404);
+  if (!same(String(req.headers["x-admin-pass"] || ""), ADMIN_PASS)) { await new Promise((r) => setTimeout(r, 1000)); return json(res, 401, { error: "Wrong password." }); }
+  let b; try { b = await readBody(req); } catch { return json(res, 400, { error: "Bad request." }); }
+  if (p === "/api/keeper/list") return json(res, 200, {
+    room: room?.name || null, rooms: store.publicRooms().length || 1,
+    pets: store.all().filter((w) => !ENDED.includes(w.status)).map(({ id, n, name, text, status, kind, room }) => ({ id, n, name, text, status, kind, room })),
+  });
+  if (p === "/api/keeper/remove") { queue.veto(String(b.id)); return json(res, 200, { ok: true }); }
+  if (p === "/api/keeper/clear") {
+    const gone = store.all().filter((w) => w.kind !== "resident" && !ENDED.includes(w.status));
+    for (const w of gone) queue.veto(w.id);
+    store.resetRooms();
+    return json(res, 200, { removed: gone.length });
+  }
+  if (p === "/api/keeper/merge-rooms") { store.resetRooms(); return json(res, 200, { ok: true }); }
+  if (p === "/api/keeper/reset-scene") { scene.resetScene(); return json(res, 200, { ok: true }); }
+  none(res, 404);
+}
+
 const roomPanel = (req) => ({ name: room.name, code: room.code, hostUrl: hostUrl(req), qr: "/qr?u=" + encodeURIComponent("/host?k=" + room.code) });
 const RESIDENTS = path.join(store.ROOT, "template", "residents");
 const residents = () => { try { return fs.readdirSync(RESIDENTS).filter((id) => /^[a-z0-9-]+$/.test(id)).map((id) => {
@@ -122,8 +148,12 @@ async function handle(req, res) {
   const p = decodeURIComponent(url.pathname);
   const m = req.method;
 
+  if (CANONICAL && m === "GET" && /\.ts\.net$/.test(String(req.headers.host || "").split(":")[0]) && (p === "/" || PAGES[p] || p.endsWith(".html") || p === ADMIN_PATH)) {
+    res.writeHead(302, { location: CANONICAL + req.url, "cache-control": "no-store" }); return res.end(); // the voting link is the Funnel URL; CloudFront is the fast path
+  }
   if (m === "GET" && p === "/") return sendFile(req, res, path.join(PUBLIC, "index.html"));
   if (p === "/api/room" && m === "GET") return json(res, 200, { name: room?.name || null });
+  if (p === "/api/vote" && m === "GET") return json(res, 200, { url: process.env.VOTE_URL || null });
   if (p === "/api/room" && m === "POST") {
     let b; try { b = await readBody(req); } catch { return json(res, 400, { error: "Bad request." }); }
     const name = String(b.name ?? "").replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
@@ -241,6 +271,8 @@ async function handle(req, res) {
 
   if (p === "/api/host-link" && m === "GET") return isLocal(req) ? json(res, 200, { url: hostUrl(req) }) : json(res, 403, { error: "localhost only" }); // console shows it
   if (p.startsWith("/api/host/")) return hostApi(req, res, p, m);
+  if (p.startsWith("/api/keeper/") && m === "POST") return keeperApi(req, res, p);
+  if (m === "GET" && ADMIN_PATH && ADMIN_PASS && p === ADMIN_PATH) return sendFile(req, res, path.join(store.ROOT, "server", "keeper.html"));
   if ((m === "GET" || m === "HEAD") && p.startsWith("/scenes/")) { // host-made rooms live in commons-world/scenes; voiddeck falls through to public/scenes
     const [, , sid, file] = p.split("/");
     const mine = /^[a-z0-9-]+$/.test(sid || "") && ["background.png", "scene.json"].includes(file) ? path.join(scene.SCENES, sid, file) : null;

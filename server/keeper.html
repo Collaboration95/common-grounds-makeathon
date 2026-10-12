@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <title>Keeper</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .card, .card p { color: var(--ink); }
+    .card + .card { margin-top: 14px; }
+    .row2 { display: flex; gap: 8px; } .row2 input { flex: 1; min-width: 0; text-transform: none; }
+    .pet { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-top: 1px dashed #c9a77c; }
+    .pet b { font-size: 16px; } .pet span { display: block; font-size: 13px; opacity: .75; }
+    .pet button { width: auto; padding: 6px 12px; font-size: 14px; }
+    .btn.danger { background: #c2452e; color: #fff8e6; }
+  </style>
+</head>
+<body class="phone">
+  <main class="wrap">
+    <div class="kicker">The Commons · keeper</div>
+    <h1>Backstage</h1>
+
+    <section class="card" id="login">
+      <h2>Password</h2>
+      <div class="row2"><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="go" style="width:auto">Enter</button></div>
+      <p class="err" id="lerr" hidden></p>
+    </section>
+
+    <section id="panel" hidden>
+      <section class="card">
+        <h2 id="summary"></h2>
+        <button class="btn danger" id="clear" type="button">Clear all visitor pets and extra rooms</button>
+        <button class="btn alt" id="merge" type="button">Merge all rooms into one (keeps every pet)</button>
+        <button class="btn alt" id="scene" type="button">Reset the room photo to the void deck</button>
+        <p class="small" id="msg"></p>
+      </section>
+      <section class="card">
+        <h2>In the Commons</h2>
+        <div id="pets"></div>
+      </section>
+    </section>
+  </main>
+<script>
+const $ = (i) => document.getElementById(i);
+let PW = sessionStorage.getItem("commons.keeper") || "";
+const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+async function call(action, body) {
+  const r = await fetch("/api/keeper/" + action, { method: "POST", headers: { "content-type": "application/json", "x-admin-pass": PW }, body: JSON.stringify(body || {}) });
+  const d = await r.json().catch(() => ({}));
+  if (r.status === 401) { sessionStorage.removeItem("commons.keeper"); $("panel").hidden = true; $("login").hidden = false; }
+  if (!r.ok) throw new Error(d.error || "Something went wrong.");
+  return d;
+}
+async function load() {
+  const d = await call("list");
+  sessionStorage.setItem("commons.keeper", PW);
+  $("login").hidden = true; $("panel").hidden = false;
+  const visitors = d.pets.filter((p) => p.kind !== "resident");
+  $("summary").textContent = `${d.room || "Unnamed room"} · ${visitors.length} visitor pets · ${d.rooms} room${d.rooms === 1 ? "" : "s"}`;
+  $("pets").innerHTML = d.pets.map((p) => `<div class="pet"><div><b>#${p.n} ${esc(p.name)}</b><span>${esc(p.text)} · ${esc(p.status)}${p.kind === "resident" ? " · resident" : ""}</span></div>${p.kind === "resident" ? "" : `<button class="btn alt" data-id="${esc(p.id)}">Remove</button>`}</div>`).join("") || "<p>Empty.</p>";
+  document.querySelectorAll("#pets button").forEach((b) => b.onclick = async () => { b.disabled = true; await call("remove", { id: b.dataset.id }); load(); });
+}
+$("go").onclick = async () => { PW = $("pw").value; $("lerr").hidden = true; try { await load(); } catch (e) { $("lerr").textContent = e.message; $("lerr").hidden = false; } };
+$("pw").onkeydown = (e) => { if (e.key === "Enter") $("go").click(); };
+$("clear").onclick = async () => {
+  if (!confirm("Remove every visitor pet and close the extra rooms? The resident cat stays.")) return;
+  const d = await call("clear"); $("msg").textContent = `Removed ${d.removed}.`; load();
+};
+$("merge").onclick = async () => { await call("merge-rooms"); $("msg").textContent = "All pets are in one room."; load(); };
+$("scene").onclick = async () => { await call("reset-scene"); $("msg").textContent = "Back at the void deck."; };
+if (PW) load().catch(() => {});
+</script>
+</body>
+</html>

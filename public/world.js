@@ -2,6 +2,7 @@
 // Keys: T timelapse · V veto hovered thing · Q toggle QR · F fullscreen · (dev only) N new fake wish · D depart · S swap scene
 import { createWorld } from '/engine.js';
 import { createFeed, bindWorld, counts, DEV } from '/feed.js';
+import { voteCard } from '/vote.js';
 
 const $ = (s) => document.querySelector(s);
 const canvas = $('#c'), ctx = canvas.getContext('2d');
@@ -68,6 +69,11 @@ engine.onQuarantine = (t, err) => addLog({ n: t.wish && t.wish.n, line: `${t.nam
 const qrCard = $('#qrcard'), setQr = (on) => { qrCard.hidden = !on; $('#qrBtn').classList.toggle('on', on); };
 $('#qrImg').src = DEV ? '/dev/qr.svg' : '/qr.svg';
 $('#qrUrl').textContent = location.origin + '/wish';
+for (const a of [$('#wishBtn'), $('#qrUrl')]) a.addEventListener('click', (e) => { // a phone-sized window beside the room, so you watch it walk in
+  if (innerWidth < 900) return;
+  e.preventDefault();
+  window.open('/wish', 'commons-wish', `popup,width=430,height=${Math.min(900, screen.availHeight - 40)},left=${screen.availWidth - 450},top=20`);
+});
 $('#qrBtn').addEventListener('click', () => setQr(qrCard.hidden));
 
 // ---- pointer, hover, poke ---------------------------------------------------------------------------
@@ -200,6 +206,10 @@ feed.on('wish', (w, prev) => { // an arrival: go see it
   const fresh = !prev || (prev.status !== 'live' && w.status === 'live');
   if (fresh && !w.resident && feed.rooms.length > 1 && !['declined', 'failed', 'vetoed', 'departed'].includes(w.status) && binder.roomOf(w) !== binder.room) goRoom(binder.roomOf(w));
 });
+// vote card: after you've watched a creature walk in, or after 90s of watching
+const showVote = voteCard((c) => $('#qrcard').after(c), { className: 'votecard' }), openedAt = Date.now();
+setTimeout(() => showVote(), /[?&]vote=now\b/.test(location.search) ? 0 : 90000); // ?vote=now previews it
+feed.on('wish', (w, prev) => { if (Date.now() - openedAt > 3000 && !w.resident && w.status === 'live' && (!prev || prev.status !== 'live')) showVote(8000); });
 feed.on('rooms', (list, prev) => { if (list.length > prev && prev > 0) toast('A new room opened!'); });
 feed.on('hello', () => { if (feed.rooms.length > 1) goRoom(binder.room); });
 window.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1); });

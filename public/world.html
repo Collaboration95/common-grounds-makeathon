@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <title>The Commons</title>
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -19,9 +21,11 @@
     <aside id="rail">
       <div id="qrcard">
         <b>Add one thing to the Commons</b>
+        <a id="wishBtn" href="/wish" target="commons-wish">Add yours in this browser &rarr;</a>
+        <span>or scan with your phone</span>
         <img id="qrImg" alt="QR code to make a wish">
-        <span>scan &middot; wish &middot; watch it walk in</span>
-        <code id="qrUrl"></code>
+        <a id="qrUrl" href="/wish" target="commons-wish"></a>
+        <a id="roomBtn" href="/host" target="_blank">Change the room &rarr;</a>
       </div>
       <h2>Codex workbench <i id="conn">connecting…</i> <button id="qrBtn" type="button" class="on" title="Toggle QR (Q)">QR</button></h2>
       <div id="log"></div>
