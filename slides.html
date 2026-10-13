@@ -60,9 +60,16 @@ pre.code .k{color:var(--amber)}pre.code .s{color:var(--teal)}pre.code .c{color:#
 /* light slides */
 .slide.cream{background:radial-gradient(ellipse at 50% 30%,#fff8e8,#f0dfb8 80%);color:var(--ink)}
 .cream h2{color:var(--ink);text-shadow:4px 4px 0 var(--amber)}.cream p,.cream li{color:var(--ink)}.cream b{color:#b5651d}
+/* page tabs, outside the stage */
+#tabs{position:fixed;top:12px;right:14px;z-index:100;display:flex;gap:6px;opacity:.55;transition:opacity .2s}
+#tabs:hover{opacity:1}
+#tabs a{font:700 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--dim);padding:6px 12px;border-radius:999px;background:rgba(18,11,24,.8);border:2px solid #4a3556}
+#tabs a.on{background:var(--lamp);color:var(--night);border-color:var(--lamp)}
+@media print{#tabs{display:none}}
 </style>
 </head>
 <body>
+<nav id="tabs"><a class="on" href="slides.html">Slides</a><a href="costs.html">The cost</a></nav>
 <div id="stage">
 
 <!-- 1 TITLE -->
