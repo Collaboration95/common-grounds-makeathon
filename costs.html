@@ -95,6 +95,13 @@ svg text{font-family:var(--mono)}
 .big{white-space:nowrap;font:900 40px var(--disp);letter-spacing:-.02em;color:var(--lamp);line-height:1}
 .big small{font:700 14px var(--mono);color:var(--dim);letter-spacing:.06em;display:block;margin-top:8px}
 input[type=range]{width:100%;accent-color:var(--amber);margin:14px 0 4px}
+/* speed */
+.srow{display:grid;grid-template-columns:170px 1fr 70px;gap:12px;align-items:center;margin:12px 0;font:600 13px var(--mono)}
+.srow .nm{color:var(--cream)}.srow .nm small{display:block;color:var(--mute);font-size:11px}
+.srow .track{height:34px;background:#1c1324;border-radius:8px;position:relative;overflow:hidden}
+.srow .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:8px;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.srow .val{text-align:right;color:var(--cream);font-weight:800}
+.speedx{font:900 clamp(64px,9vw,110px)/1 var(--disp);color:var(--teal);text-shadow:5px 5px 0 rgba(0,0,0,.35)}
 /* hosting */
 .host{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .hcard{border:3px solid var(--line);border-radius:14px;padding:20px 22px;background:rgba(18,11,24,.55)}
@@ -259,8 +266,27 @@ footer a{color:var(--dim)}
   </div>
 </section>
 
+<section id="speed">
+  <div class="kicker reveal">06 &middot; Making it faster</div>
+  <h2 class="reveal">Three minutes<br>to 44 seconds</h2>
+  <div class="prose reveal">
+    <p>Once the room was public, real people were waiting on their pets. Under load a pet took about <b>3 minutes</b>. The Codex logs showed why: the drawing step called the image tool three to six times per pet, because saving the picture kept failing.</p>
+    <p>Two fixes did most of the work. The model now draws exactly once and the server picks the image up itself. And drawing and coding start while the wish is still being screened, instead of after it.</p>
+  </div>
+  <div class="panel reveal">
+    <div class="bar"><s></s><s></s><s></s><span class="ttl">average time per pet &middot; 6 wishes at once</span></div>
+    <div class="body" id="speedBody">
+      <div class="srow"><div class="nm">Before<small>12 Oct, under load</small></div><div class="track"><div class="fill" style="background:var(--amber)" data-w="100"></div></div><div class="val">~3 min</div></div>
+      <div class="srow"><div class="nm">Mac, default tier<small>after the fixes</small></div><div class="track"><div class="fill" style="background:var(--lamp)" data-w="28.9"></div></div><div class="val">52 s</div></div>
+      <div class="srow"><div class="nm">Mac, fast tier</div><div class="track"><div class="fill" style="background:var(--lamp)" data-w="25.6"></div></div><div class="val">46 s</div></div>
+      <div class="srow"><div class="nm">Server, fast tier<small>live for the vote</small></div><div class="track"><div class="fill" style="background:var(--teal)" data-w="24.4"></div></div><div class="val">44 s</div></div>
+      <div style="display:flex;align-items:flex-end;gap:18px;margin-top:16px"><div class="speedx">4&times;</div><div class="readout" style="margin:0 0 12px">faster, measured with six wishes in flight. The slowest pet on the server took 51 s.</div></div>
+    </div>
+  </div>
+</section>
+
 <section id="host">
-  <div class="kicker reveal">06 &middot; Keeping it alive</div>
+  <div class="kicker reveal">07 &middot; Keeping it alive</div>
   <h2 class="reveal">The biggest bill<br>is the server</h2>
   <div class="prose reveal">
     <p>Public voting runs for three days, so the room has to stay up for three days. On the day it ran on my laptop: close the lid and the link dies, restart it and you get a new URL. So I moved it to AWS.</p>
@@ -411,6 +437,9 @@ onView(document.getElementById("modBody"), drawModels, .3);
 
 /* 04 receipt stamp */
 onView(document.getElementById("receipt"), r => r.classList.add("in"), .6);
+
+/* 06 speed */
+onView(document.getElementById("speedBody"), b => b.querySelectorAll(".fill").forEach((f, i) => setTimeout(() => f.style.width = f.dataset.w + "%", 150 * i)), .3);
 
 /* 05 per pet */
 const PET = {now: [["Screen", 2.6, C.cx], ["Write + test", 4.8, "#3f7f72"], ["Animate", .5, C.lamp], ["Sprite image", 3, C.cc, [1, 5]]],
