@@ -1,4 +1,7 @@
 assets/frames/
-assets/clips/
+assets/clips
 out/tmp/
 out/commons-motion-*.mp4
+out/commons-slow-*.mp4
+out/share-commons-slow-*.mp4
+out/preview-slow-*.png

@@ -62,3 +62,44 @@ Plan: 9x16 (chunks) -> 16x9 -> 1x1 -> contact sheet. Resumable: rerun `node src/
 - 07:25:53 1x1 chunk 3 frames 360-479 done
 - 07:25:53 1x1 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/video/out/commons-motion-1x1.mp4 (18s)
 - final contact-sheet-motion.png; ALL DELIVERABLES DONE
+
+# Slow cut (60 s) render
+
+Slow re-cut: same design/music, longer holds. `node src/render-par.mjs <aspect> --jobs=8 --name=commons-slow` (duration read from audio/cues.json).
+
+- 12:05:47 commons-slow 9x16 start (8 chunks, 1800 frames, 60s)
+- 12:06:51 9x16 chunk 2 frames 450-674 done
+- 12:06:52 9x16 chunk 7 frames 1575-1799 done
+- 12:06:52 9x16 chunk 1 frames 225-449 done
+- 12:06:52 9x16 chunk 6 frames 1350-1574 done
+- 12:06:52 9x16 chunk 0 frames 0-224 done
+- 12:06:52 9x16 chunk 4 frames 900-1124 done
+- 12:06:52 9x16 chunk 3 frames 675-899 done
+- 12:06:52 9x16 chunk 5 frames 1125-1349 done
+- 12:06:53 9x16 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/.claude/worktrees/agent-a938127547605d5d6/video/out/commons-slow-9x16.mp4 (66s)
+- 12:06:53 commons-slow 16x9 start (8 chunks, 1800 frames, 60s)
+- 12:07:58 16x9 chunk 7 frames 1575-1799 done
+- 12:07:58 16x9 chunk 0 frames 0-224 done
+- 12:07:58 16x9 chunk 2 frames 450-674 done
+- 12:07:58 16x9 chunk 6 frames 1350-1574 done
+- 12:07:59 16x9 chunk 1 frames 225-449 done
+- 12:07:59 16x9 chunk 5 frames 1125-1349 done
+- 12:07:59 16x9 chunk 3 frames 675-899 done
+- 12:07:59 16x9 chunk 4 frames 900-1124 done
+- 12:08:00 16x9 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/.claude/worktrees/agent-a938127547605d5d6/video/out/commons-slow-16x9.mp4 (67s)
+- 12:08:00 commons-slow 1x1 start (8 chunks, 1800 frames, 60s)
+- 12:08:38 1x1 chunk 0 frames 0-224 done
+- 12:08:39 1x1 chunk 2 frames 450-674 done
+- 12:08:39 1x1 chunk 3 frames 675-899 done
+- 12:08:39 1x1 chunk 7 frames 1575-1799 done
+- 12:08:39 1x1 chunk 1 frames 225-449 done
+- 12:08:39 1x1 chunk 5 frames 1125-1349 done
+- 12:08:39 1x1 chunk 6 frames 1350-1574 done
+- 12:08:39 1x1 chunk 4 frames 900-1124 done
+- 12:08:40 1x1 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/.claude/worktrees/agent-a938127547605d5d6/video/out/commons-slow-1x1.mp4 (40s)
+- 1x1: re-render chunks 5-7 (pet subline fit fix)
+- 12:10:32 commons-slow 1x1 start (8 chunks, 1800 frames, 60s)
+- 12:10:48 1x1 chunk 7 frames 1575-1799 done
+- 12:10:49 1x1 chunk 6 frames 1350-1574 done
+- 12:10:49 1x1 chunk 5 frames 1125-1349 done
+- 12:10:50 1x1 DONE -> /Users/speedpowermac/personal/common-grounds-makeathon/.claude/worktrees/agent-a938127547605d5d6/video/out/commons-slow-1x1.mp4 (18s)

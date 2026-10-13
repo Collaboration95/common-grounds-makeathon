@@ -2,7 +2,7 @@
 import { serve, openPage, ROOT } from "./lib.mjs";
 import fs from "node:fs"; import { execFileSync } from "node:child_process";
 const w = +process.argv[2] || 1080, h = +process.argv[3] || 1920;
-const times = (process.argv[4] || "0.9,2.7,3.9,5.7,7.0,8.5,10.0,11.5,13.8,15.0,16.3,18.0,19.0,20.5,21.8,23.0").split(",").map(Number);
+const times = (process.argv[4] || "2.6,5.5,8.0,10.5,12.8,15.0,17.0,20.5,23.4,25.0,27.5,30.0,33.0,35.0,36.5,39.0,41.5,43.5,45.5,47.5,49.5,51.5,53.5,57.5").split(",").map(Number);
 const { srv, port } = await serve();
 const pg = await openPage(`http://127.0.0.1:${port}/video/src/composition.html?w=${w}&h=${h}`, w, h);
 fs.mkdirSync(`${ROOT}/video/out/tmp`, { recursive: true });

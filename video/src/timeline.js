@@ -1,4 +1,4 @@
-// The Commons, 24s. Deterministic: window.renderAt(t) draws the exact frame; window.ensure(t) preloads then draws.
+// The Commons, 60s (slow cut). Deterministic: window.renderAt(t) draws the exact frame; window.ensure(t) preloads then draws.
 // Motif: every creature is a 4x3 sprite sheet (12 frames). Transitions are cell flips + pixel dissolves.
 (() => {
 const Q = new URLSearchParams(location.search);
@@ -17,10 +17,10 @@ const BEAT = 0.5;
 
 // ---------- timing (overridden by media.json / cues.json) ----------
 const T = {
-  build: 2, sheet: 6, arrival: 9, room: 13, pet: 17, end: 21, dur: 24,
-  steps: [2.0, 2.5, 3.0, 4.0, 4.5, 5.5],
+  build: 4, sheet: 18, arrival: 24, room: 34, pet: 40, end: 54, dur: 60,
+  steps: [4.0, 6.0, 8.5, 11.5, 13.5, 16.0],
   stepWords: ["CHECKING", "IN THE\nQUEUE", "CODEX IS\nWRITING IT", "TESTING IT", "DRAWING IT", "LIVE!"],
-  petSegs: [["PICK", 17.0, 17.5], ["SURPRISE", 17.5, 18.0], ["PIN", 18.0, 18.5], ["STATUS", 18.5, 19.0], ["MOODY", 19.0, 20.0], ["SLEEP", 20.0, 20.5], ["POKE", 20.5, 21.0]],
+  petSegs: [["PICK", 40, 42], ["SURPRISE", 42, 44], ["PIN", 44, 46], ["STATUS", 46, 48], ["MOODY", 48, 50], ["SLEEP", 50, 52], ["POKE", 52, 54]],
 };
 let MJ = { clips: {}, wish: "a durian in sunglasses", arrival: {}, room: {} };
 let CUES = null;
@@ -160,7 +160,7 @@ function nightBg(g, t, o = {}) {
 function hudStrip(g, t, onCream = false) {
   const n = 12, gap = 8 * S, m = 56 * S, y = (MODE === "v" ? 70 : 34) * S, w = (W - 2 * m - gap * (n - 1)) / n, h = 10 * S;
   for (let k = 0; k < n; k++) {
-    const p = cl(t / 2 - k), on = p >= 1, cur = p > 0 && p < 1;
+    const p = cl(t / (T.dur / 12) - k), on = p >= 1, cur = p > 0 && p < 1;
     g.fillStyle = onCream ? "rgba(59,36,20,.18)" : "rgba(251,243,226,.16)"; g.fillRect(m + k * (w + gap), y, w, h);
     g.fillStyle = on ? (onCream ? P.ink : P.cream) : P.amber;
     if (on || cur) g.fillRect(m + k * (w + gap), y, w * (on ? 1 : st(p, 12) ), h);
@@ -248,7 +248,7 @@ function sceneBuild(g, t) {
   // streaming real thing.js
   if (t > T.build - 0.2) {
     const fs = Math.round((MODE === "h" ? 26 : 30) * S), lh = fs * 1.35, rows = Math.ceil(H / lh) + 1;
-    const total = Math.max(0, (t - T.build) * 70 * (MODE === "h" ? 1.4 : 1)), lines = [];
+    const total = Math.max(0, (t - T.build) * 50 * (MODE === "h" ? 1.4 : 1)), lines = [];
     let rem = total, i = 0;
     while (rem > 0 && i < CODE.length * 2) { const ln = CODE[i % CODE.length]; const take = Math.min(ln.length, rem); lines.push(ln.slice(0, Math.floor(take))); rem -= ln.length + 4; i++; }
     const visible = lines.slice(-rows); const y0 = H - visible.length * lh - 20 * S;
@@ -284,9 +284,9 @@ function sceneBuild(g, t) {
     // underline bar sweeping at 12fps
     if (!last) { const bw = Math.min(wb.maxW, size * 0.6 * Math.max(...word.split("\n").map((l) => l.length))) * st(E.out(lt / 0.4), 12); g.fillStyle = colors[si]; g.globalAlpha = 0.9; g.fillRect(wb.cx - bw / 2, wb.cy + (word.includes("\n") ? 1.05 : 0.62) * size * 0.9, bw, 8 * S); g.globalAlpha = 1; }
   }
-  if (t > 1.9) text(g, "wish \u2192 live creature in about a minute", MODE === "s" ? Math.min(wb.cx, W - 40 * S - 300 * S) : wb.cx, wb.cy + (MODE === "v" ? 330 : 360) * S - (MODE === "v" ? 0 : 20), { mono: true, size: (MODE === "s" ? 18 : 22) * S, color: "rgba(251,243,226,.6)", align: "center", sp: MODE === "s" ? 0 : 2, alpha: cl((t - 2) / 0.5) });
+  if (t > T.build - 0.1) text(g, "wish \u2192 live creature in about a minute", MODE === "s" ? Math.min(wb.cx, W - 40 * S - 300 * S) : wb.cx, wb.cy + (MODE === "v" ? 330 : 360) * S - (MODE === "v" ? 0 : 20), { mono: true, size: (MODE === "s" ? 18 : 22) * S, color: "rgba(251,243,226,.6)", align: "center", sp: MODE === "s" ? 0 : 2, alpha: cl((t - T.build) / 0.5) });
   // phone
-  const r = phoneRect(), rise = E.out(cl((t - 0.9) / 0.5));
+  const r = phoneRect(), rise = E.out(cl((t - 1.0) / 0.5));
   const slide = MODE === "v" ? { y: r.y + (1 - st(rise, 12)) * (H - r.y + 40) } : { x: r.x - (1 - st(rise, 12)) * (r.x + r.w + 80) };
   const pr = { ...r, ...slide };
   phone(g, pr, t < T.build ? hookPhone(t) : buildPhone(t));
@@ -296,7 +296,7 @@ function sceneBuild(g, t) {
 function sceneHookText(g, t) {
   const wish = MJ.wish, wb = MODE === "v" ? { cx: W / 2, cy: 400, w: W - 150, size: 128 } : MODE === "s" ? { cx: 765, cy: 520, w: 460, size: 84 } : { cx: 1290, cy: 520, w: 900, size: 130 };
   if (t > T.build - 0.0) return; // text yields to the first kinetic word
-  const n = Math.floor(cl((t - 0.35) / 1.2) * wish.length), s = wish.slice(0, n);
+  const n = Math.floor(cl((t - 0.35) / 2.0) * wish.length), s = wish.slice(0, n);
   g.save(); g.font = font(wb.size); const words = s.split(" "), lines = []; let cur = "";
   for (const w of (wish.split(" "))) { /* layout on the full wish so lines don't reflow */ const test = cur ? cur + " " + w : w; if (g.measureText(test).width > wb.w && cur) { lines.push(cur); cur = w; } else cur = test; }
   lines.push(cur); g.restore();
@@ -324,7 +324,7 @@ const cellXY = (G, i) => ({ x: G.x + (i % 4) * (G.cw + G.gap), y: G.y + Math.flo
 function sceneSheet(g, t) {
   nightBg(g, t, { gx: W * 0.5, gy: H * 0.45 }); hudStrip(g, t);
   const lt = t - T.sheet, G = sheetGeom(), img = IM.durian;
-  const playing = t >= T.sheet + 2, pf = playing ? Math.floor((t - (T.sheet + 2)) * 12) % 12 : -1;
+  const playing = t >= T.sheet + 3, pf = playing ? Math.floor((t - (T.sheet + 3)) * 12) % 12 : -1;
   // heading
   const hy = MODE === "v" ? 250 : MODE === "s" ? 150 : 150, hx = MODE === "h" ? G.x : W / 2;
   const head = lt < 2 ? "TWELVE CELLS" : "ONE CREATURE";
@@ -333,7 +333,7 @@ function sceneSheet(g, t) {
   text(g, "drawn by Codex  ·  walk · fly · idle · rest · sleep · special", MODE === "h" ? G.x : W / 2, MODE === "v" ? 430 : MODE === "s" ? 270 : G.y - 30 * S, { mono: true, size: 22 * S, color: P.teal, align: MODE === "h" ? "left" : "center", sp: 1, alpha: cl((lt - 0.4) / 0.4) });
   // cells
   for (let i = 0; i < 12; i++) {
-    const { x, y } = cellXY(G, i), ti = i * 0.125, q = st(cl((lt - ti) / 0.28), 12);
+    const { x, y } = cellXY(G, i), ti = i * 0.25, q = st(cl((lt - ti) / 0.28), 12);
     const hot = i === pf;
     g.save();
     if (q <= 0) { g.strokeStyle = "rgba(251,243,226,.18)"; g.setLineDash([8 * S, 8 * S]); g.lineWidth = 2; rr(g, x, y, G.cw, G.ch, 10 * S); g.stroke(); g.restore(); continue; }
@@ -351,8 +351,8 @@ function sceneSheet(g, t) {
     g.restore();
   }
   // hero: plays the 12 frames at 12fps
-  if (lt >= 1.9) {
-    const h = G.hero, k = E.back(cl((lt - 1.9) / 0.3)), f = pf < 0 ? 0 : pf;
+  if (lt >= 2.9) {
+    const h = G.hero, k = E.back(cl((lt - 2.9) / 0.3)), f = pf < 0 ? 0 : pf;
     g.save();
     if (MODE === "s") { g.fillStyle = "rgba(29,20,36,.78)"; g.fillRect(0, 0, W, H); }
     g.translate(h.x + h.w / 2, h.y + h.h / 2); g.scale(k, k); g.translate(-h.w / 2, -h.h / 2);
@@ -414,8 +414,8 @@ function sceneRoom(g, t) {
   const tb = MODE === "v" ? { cx: W / 2, cy: 360, size: 150, maxW: W - 120 } : MODE === "s" ? { cx: W / 2, cy: 150, size: 100, maxW: W - 100 } : { cx: 1480, cy: 400, size: 150, maxW: 700 };
   const words = [["POINT\nA PHONE", 0], ["AT ANY\nROOM.", 1.0]];
   const idx = lt >= 1.0 ? 1 : 0, sz = fitSize(g, "AT ANY", tb.maxW, tb.size);
-  if (MODE === "s") { slam(g, lt >= 1 ? "POINT A PHONE\nAT ANY ROOM." : "POINT A PHONE", tb.cx, tb.cy, fitSize(g, "POINT A PHONE", tb.maxW, tb.size), lt, { color: P.cream }); }
-  else slam(g, "POINT\nA PHONE", tb.cx, tb.cy, sz, lt - 0, { color: P.cream, dur: 0.95 }), slam(g, "AT ANY\nROOM.", tb.cx, tb.cy, sz, lt - 1.0, { color: P.lamp });
+  if (MODE === "s") { slam(g, lt >= 2 ? "POINT A PHONE\nAT ANY ROOM." : "POINT A PHONE", tb.cx, tb.cy, fitSize(g, "POINT A PHONE", tb.maxW, tb.size), lt, { color: P.cream }); }
+  else slam(g, "POINT\nA PHONE", tb.cx, tb.cy, sz, lt - 0, { color: P.cream, dur: 1.95 }), slam(g, "AT ANY\nROOM.", tb.cx, tb.cy, sz, lt - 2.0, { color: P.lamp });
   // photo card (tilted polaroid) -> dissolve
   const tilt = (MODE === "h" ? -0.025 : 0) * (1 - E.out(lt / 0.6));
   g.save(); g.translate(R.x + R.w / 2, R.y + R.h / 2); g.rotate(tilt); g.translate(-R.w / 2, -R.h / 2);
@@ -423,7 +423,7 @@ function sceneRoom(g, t) {
   g.save(); g.beginPath(); g.rect(0, 0, R.w, R.h); g.clip();
   const drawPhoto = (c, x, y, w, h) => { const a = still("photo"); drawMedia(c, a, x, y, w, h); };
   const drawRedraw = (c, x, y, w, h) => { drawMedia(c, still("redraw"), x, y, w, h, { fx: 0.5, fy: 0.5 }); };
-  const dp = cl((lt - 0.75) / 1.5), pw = Math.ceil(R.w / 8), ph = Math.ceil(R.h / 8);
+  const dp = cl((lt - 1.25) / 1.5), pw = Math.ceil(R.w / 8), ph = Math.ceil(R.h / 8);
   drawPhoto(g, 0, 0, R.w, R.h);
   if (dp > 0) {
     // pixel-grid dissolve inside the card
@@ -435,9 +435,9 @@ function sceneRoom(g, t) {
     g.drawImage(tc, 0, 0);
   }
   // the real projector capture of that redraw, creatures walking in, pixel-dissolves over it
-  const sp = cl((lt - 2.0) / 0.5);
+  const sp = cl((lt - 3.0) / 0.5);
   if (sp > 0) {
-    const sm = media("swap", lt - 2.0, null), tc2 = mk(Math.ceil(R.w), Math.ceil(R.h)), t2 = tc2.getContext("2d");
+    const sm = media("swap", lt - 3.0, null), tc2 = mk(Math.ceil(R.w), Math.ceil(R.h)), t2 = tc2.getContext("2d");
     drawMedia(t2, sm, 0, 0, tc2.width, tc2.height);
     if (sp < 1) { const bs = 24 * S, mw = Math.ceil(R.w / bs), mh = Math.ceil(R.h / bs), mc = mk(mw, mh), mg = mc.getContext("2d"), d = mg.createImageData(mw, mh), pp = st(sp, 12) * 1.2 - 0.1;
       for (let y = 0; y < mh; y++) for (let x = 0; x < mw; x++) { const o = (y * mw + x) * 4; d.data[o + 3] = rnd(y * 433 + x * 29 + 11) < pp ? 255 : 0; }
@@ -445,7 +445,7 @@ function sceneRoom(g, t) {
     g.drawImage(tc2, 0, 0);
   }
   // characters walk in (real sprites, 12fps stepping) once the redraw has landed
-  const wt = lt - 2.5;
+  const wt = lt - 3.5;
   if (wt > 0) {
     const walkers = MJ.room.clip ? [] : WALKERS.slice(0, 5);
     walkers.forEach((k, i) => {
@@ -455,7 +455,7 @@ function sceneRoom(g, t) {
     });
   }
   g.restore();
-  text(g, lt < 1.4 ? "the venue photo" : lt < 2.25 ? "its paper redraw" : "now it's the room", R.w / 2, R.h + 36 * S, { mono: true, size: 24 * S, color: P.ink, align: "center", sp: 3 });
+  text(g, lt < 1.75 ? "the venue photo" : lt < 3.25 ? "its paper redraw" : "now it's the room", R.w / 2, R.h + 36 * S, { mono: true, size: 24 * S, color: P.ink, align: "center", sp: 3 });
   g.restore();
 }
 
@@ -478,8 +478,10 @@ function scenePet(g, t) {
   const wbx = MODE === "v" ? { cx: W / 2, cy: 380, size: 260, maxW: W - 120 } : MODE === "s" ? { cx: 765, cy: 330, size: 170, maxW: 520 } : { cx: 1280, cy: 330, size: 300, maxW: 900 };
   slam(g, PET_LABEL[seg[0]], wbx.cx, wbx.cy, fitSize(g, PET_LABEL[seg[0]], wbx.maxW, wbx.size), lt, { color: seg[0] === "POKE" ? P.lamp : P.cream });
   g.save(); g.font = `600 ${26 * S}px ${MONO}`; const subW = g.measureText(PET_SUB[seg[0]]).width + 6 * S * PET_SUB[seg[0]].length * 0.5; g.restore();
-  const subX = MODE === "v" ? wbx.cx : Math.min(wbx.cx, W - 40 * S - subW / 2);
-  text(g, PET_SUB[seg[0]], subX, wbx.cy - wbx.size * (MODE === "v" ? 0.62 : 0.55), { mono: true, size: 26 * S, color: P.teal, align: "center", sp: 3, alpha: cl((lt - 0.15) / 0.2) });
+  // keep the subline clear of the phone (1x1 is tight now that each beat holds long enough to read)
+  const subAvail = MODE === "v" ? W : W - (pr.x + pr.w) - 80 * S, subK = Math.min(1, subAvail / subW);
+  const subX = MODE === "v" ? wbx.cx : Math.min(wbx.cx, W - 40 * S - subW * subK / 2);
+  text(g, PET_SUB[seg[0]], subX, wbx.cy - wbx.size * (MODE === "v" ? 0.62 : 0.55), { mono: true, size: 26 * S * subK, color: P.teal, align: "center", sp: 3, alpha: cl((lt - 0.15) / 0.2) });
   // mirrored creature on a cell card + mini 12-grid
   const cardR = MODE === "v" ? { x: pr.x + pr.w + 30, y: pr.y + 30, w: W - (pr.x + pr.w + 30) - 30, h: 0 } : null;
   let cx, cy, cw, chh;
@@ -538,13 +540,13 @@ function sceneEnd(g, t) {
   const fs = (MODE === "v" ? 36 : 28) * S; g.save(); g.font = `700 ${fs}px ${MONO}`; const lw = g.measureText(line1).width; g.restore();
   const maxw = W - 100 * S, fs2 = lw > maxw ? fs * maxw / lw : fs;
   if (lt >= 1.5) {
-    const n = Math.floor(cl((lt - 1.5) / 0.7) * line1.length);
+    const n = Math.floor(cl((lt - 1.5) / 1.5) * line1.length);
     text(g, line1.slice(0, n), W / 2 - (lw * fs2 / fs) / 2, cy2 + (MODE === "v" ? 40 : 0), { mono: true, size: fs2, color: P.ink, weight: 700 });
     if (n < line1.length || Math.floor(lt * 4) % 2 === 0) { g.fillStyle = P.coral; g.fillRect(W / 2 - (lw * fs2 / fs) / 2 + g.measureText("").width + (g.save(), g.font = `700 ${fs2}px ${MONO}`, g.measureText(line1.slice(0, n)).width) + 4, cy2 + (MODE === "v" ? 40 : 0) - fs2 * 0.85, fs2 * 0.5, fs2); g.restore(); }
   }
-  if (lt >= 2.0) text(g, "Common Ground Makeathon  ·  Singapore  ·  11 Oct 2026", W / 2, H - (MODE === "v" ? 120 : 52) * S, { mono: true, size: 24 * S, color: P.ink, align: "center", sp: 2, alpha: cl((lt - 2.0) / 0.3) * 0.75 });
+  if (lt >= 3.0) text(g, "Common Ground Makeathon  ·  Singapore  ·  11 Oct 2026", W / 2, H - (MODE === "v" ? 120 : 52) * S, { mono: true, size: 24 * S, color: P.ink, align: "center", sp: 2, alpha: cl((lt - 3.0) / 0.3) * 0.75 });
   // the creature walks along the bottom row of the paper
-  if (lt >= 0.8) { const p = cl((lt - 0.8) / 2.2), x = lerp(-120, W + 120, p); sprite(g, IM.durian, Math.floor(t * 12) % 4, x - 90, (MODE === "v" ? gy - 20 : gy - 140) - 120 * 0, 180, 150, { top: false }); }
+  if (lt >= 0.8) { const p = cl((lt - 0.8) / 4.5), x = lerp(-120, W + 120, p); sprite(g, IM.durian, Math.floor(t * 12) % 4, x - 90, (MODE === "v" ? gy - 20 : gy - 140) - 120 * 0, 180, 150, { top: false }); }
 }
 
 // ---------- composition ----------
