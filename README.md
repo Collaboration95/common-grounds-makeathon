@@ -8,10 +8,15 @@ Everyone in the room scans a QR code and adds one thing: a creature, an object, 
 
 ## Demo video and slides
 
-- 🎬 **Demo video:** [Google Drive](https://drive.google.com/drive/folders/15TLprzAGYpoS4LF6HIbWjBr1fcV32Ekv?usp=sharing). Three formats: 9:16, 16:9 and 1:1. Compressed copies are in [`video/out/`](video/out).
-- 🖼️ **Slides:** [`public/slides.html`](public/slides.html). The slides need the server, so after `npm start` open `http://localhost:8787/slides.html`.
+- 🎬 **Demo video:** [YouTube](https://www.youtube.com/watch?v=SN3WXWuIOi8). All three formats (9:16, 16:9 and 1:1) are on [Google Drive](https://drive.google.com/drive/folders/15TLprzAGYpoS4LF6HIbWjBr1fcV32Ekv?usp=sharing). Compressed copies are in [`video/out/`](video/out).
+- 🖼️ **Slides:** [online](https://collaboration95.github.io/common-grounds-makeathon/slides.html), or [`public/slides.html`](public/slides.html) locally after `npm start` at `http://localhost:8787/slides.html`.
+- 💸 **What it cost:** [tokens, the API bill and the price of one pet](https://collaboration95.github.io/common-grounds-makeathon/costs.html).
 
 ## How it works
+
+![How The Commons works: wish, screen, write and test, draw, walk in](docs/how-it-works.jpg)
+
+<sub>Source: [`docs/how-it-works.html`](docs/how-it-works.html).</sub>
 
 1. **Scan.** A phone opens `/wish` and offers three ways in:
    - **Wish for one:** you describe it, and Codex writes and tests it.

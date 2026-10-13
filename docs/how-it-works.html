@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Commons · how it works</title>
+<!-- Source for docs/how-it-works.png. Render: serve the repo root, open /docs/how-it-works.html at 1600x1000. -->
+<style>
+:root{--night:#1d1424;--deep:#120b18;--ink:#3b2414;--cream:#fbf3e2;--amber:#f2a65a;--lamp:#ffd27a;--teal:#5fb3a1;--dim:#cdbfa8;--mute:#8f7d9c;--line:#4a3556;
+  --disp:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0e0914}
+#c{position:relative;width:1600px;height:1000px;overflow:hidden;color:var(--cream);font-family:var(--disp);
+  background:radial-gradient(ellipse at 18% 0%,#3a2440 0%,var(--night) 55%,#170f1d 100%);padding:52px 64px}
+#c::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.15;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5 0 0 0 0 .4 0 0 0 0 .3 0 0 0 1.4 -.2'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+#c::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 60%,rgba(10,5,15,.5) 100%)}
+.px{image-rendering:pixelated}
+.kicker{font:700 17px var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--teal)}
+h1{font:900 66px/.95 var(--disp);letter-spacing:-.02em;text-transform:uppercase;color:var(--cream);text-shadow:6px 6px 0 var(--amber);margin-top:12px}
+h1 span{color:var(--lamp);text-shadow:6px 6px 0 rgba(0,0,0,.35)}
+.cells{position:absolute;right:64px;top:56px;width:196px;height:147px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:6px}
+.cells i{border:2px solid rgba(255,210,122,.18);border-radius:5px;background:rgba(255,210,122,.03)}
+.cells i.on{background:rgba(255,210,122,.25);border-color:rgba(255,210,122,.55)}
+
+/* steps */
+.steps{position:absolute;left:64px;right:64px;top:250px;display:flex;align-items:stretch;gap:0}
+.step{width:268px;display:flex;flex-direction:column}
+.arrow{flex:1;display:flex;align-items:center;justify-content:center;color:var(--amber);font:900 34px var(--mono);padding-bottom:120px}
+.vis{height:270px;border-radius:14px;overflow:hidden;position:relative;border:3px solid var(--line);background:var(--deep);box-shadow:0 12px 0 rgba(0,0,0,.28),0 24px 44px rgba(0,0,0,.4)}
+.vis.paper{background:var(--cream);border:8px solid var(--cream)}
+.num{position:absolute;left:12px;top:12px;z-index:3;width:38px;height:38px;border-radius:50%;background:var(--amber);color:var(--night);font:900 20px var(--disp);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 rgba(0,0,0,.3)}
+.who{font:700 13px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-top:22px}
+.who.you{color:var(--amber)}
+.st{font:900 30px/1 var(--disp);text-transform:uppercase;letter-spacing:-.01em;color:var(--lamp);margin-top:8px}
+.cap{font:500 18px/1.35 var(--disp);color:var(--dim);margin-top:8px}
+/* step visuals */
+.phone img{position:absolute;left:50%;top:14px;width:290px;transform:translateX(-50%);clip-path:inset(38px 0 0 0)}
+.term{padding:58px 16px 0;font:500 15px/1.6 var(--mono);color:#e9ddc6}
+.term .d{color:var(--mute)}.term .g{color:var(--teal)}.term .y{color:var(--lamp)}.term .a{color:var(--amber)}
+.code{padding:54px 14px 0;font:500 13.5px/1.34 var(--mono);color:#e9ddc6;white-space:pre}
+.code .k{color:var(--amber)}.code .s{color:var(--teal)}.code .f{color:var(--lamp)}.code .c{color:var(--mute)}
+.loop{position:absolute;left:12px;right:12px;bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px;font:700 14px var(--mono);border:2px dashed var(--teal);border-radius:10px;padding:8px;color:var(--teal);background:rgba(95,179,161,.08)}
+.loop b{color:var(--amber)}
+.sheet img{position:absolute;left:50%;top:50%;width:250px;transform:translate(-50%,-44%)}
+.room img{position:absolute;height:100%;left:50%;transform:translateX(-49%)}
+.tag{position:absolute;z-index:3;background:var(--cream);color:var(--ink);font:800 13px var(--mono);padding:4px 9px;border-radius:8px;box-shadow:0 3px 0 rgba(0,0,0,.3)}
+.time{position:absolute;right:12px;top:12px;z-index:3;font:800 14px var(--mono);padding:4px 10px;border-radius:999px;background:rgba(18,11,24,.85);border:2px solid var(--lamp);color:var(--lamp)}
+.vis.paper .time{background:var(--cream)}
+
+/* timeline */
+.track{position:absolute;left:64px;right:64px;top:690px;height:2px;background:var(--line)}
+.track .fill{position:absolute;left:0;top:-1px;height:4px;width:100%;border-radius:2px;background:linear-gradient(90deg,var(--amber),var(--lamp) 60%,var(--teal))}
+.tick{position:absolute;top:-7px;width:16px;height:16px;border-radius:50%;background:var(--night);border:3px solid var(--lamp);transform:translateX(-50%)}
+.tick span{position:absolute;top:20px;left:50%;transform:translateX(-50%);white-space:nowrap;font:700 14px var(--mono);color:var(--dim)}
+.tick.live{background:var(--teal);border-color:var(--teal);width:20px;height:20px;top:-9px;box-shadow:0 0 14px var(--teal)}
+.tick.live span{color:var(--teal);top:24px}
+
+/* bottom */
+.bottom{position:absolute;left:64px;right:64px;top:752px;bottom:50px;display:flex;gap:28px}
+.panel{border:3px solid var(--line);border-radius:16px;background:rgba(18,11,24,.6);padding:16px 22px;display:flex;flex-direction:column}
+.panel h3{font:900 24px var(--disp);text-transform:uppercase;color:var(--cream);letter-spacing:-.01em}
+.panel h3 small{font:700 13px var(--mono);letter-spacing:.14em;color:var(--teal);margin-left:10px}
+.rooms{display:flex;align-items:center;gap:14px;margin-top:10px}
+.rooms figure{position:relative}
+.rooms img{display:block;height:92px;border:5px solid var(--cream);border-radius:6px;box-shadow:0 6px 0 rgba(0,0,0,.3)}
+.rooms figcaption{font:700 13px var(--mono);color:var(--dim);margin-top:7px}
+.rooms .ar{color:var(--amber);font:900 26px var(--mono);margin-bottom:22px}
+.rooms .ph{position:relative}.rooms svg{position:absolute;left:5px;top:5px;width:calc(100% - 10px);height:calc(100% - 10px)}
+.yours{flex:1;min-width:0}
+.pup{margin-top:12px;height:56px;overflow:hidden;width:100%}
+.pup img{height:56px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{font:700 14px var(--mono);padding:5px 12px;border-radius:999px;border:2px solid var(--amber);color:var(--amber)}
+.chip.t{border-color:var(--teal);color:var(--teal)}
+.foot{position:absolute;left:64px;bottom:14px;font:600 13px var(--mono);color:var(--mute);letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div id="c">
+  <div class="cells"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i class="on"></i></div>
+  <div class="kicker">The Commons &middot; how it works</div>
+  <h1>Scan. Wish.<br><span>Watch it walk in.</span></h1>
+
+  <div class="steps">
+    <div class="step">
+      <div class="vis paper phone"><div class="num">1</div><img src="../public/slides/06-wish-wish-tab.png" alt=""></div>
+      <div class="who you">You</div><div class="st">Wish</div><div class="cap">Scan the QR and type one line.</div>
+    </div>
+    <div class="arrow">&rarr;</div>
+    <div class="step">
+      <div class="vis term"><div class="num">2</div><div class="time">~7 s</div>
+        <div class="d">&gt; a durian in sunglasses</div>
+        <div class="d">checking the wish…</div>
+        <div class="g">✓ allowed</div>
+        <div><span class="y">name</span> Too Cool Durian</div>
+        <div><span class="y">sprite</span> spiky fruit,</div>
+        <div>&nbsp; dark shades</div>
+        <div class="a">→ queue (3 at a time)</div>
+      </div>
+      <div class="who">Codex</div><div class="st">Screen</div><div class="cap">Checks it's safe and plans it.</div>
+    </div>
+    <div class="arrow">&rarr;</div>
+    <div class="step">
+      <div class="vis code"><div class="num">3</div><div class="time">~30 s</div><span class="k">export default</span> {
+  name: <span class="s">"Too Cool Durian"</span>,
+  <span class="f">update</span>(me, world) {
+    me.<span class="f">steer</span>(world.<span class="f">nearby</span>());
+  },
+  <span class="f">onPoke</span>(me) {
+    me.<span class="f">fx</span>(<span class="s">"spin"</span>);
+  }
+}<div class="loop">check <b>✗</b> → fix → check <b style="color:var(--teal)">✓</b></div></div>
+      <div class="who">Codex</div><div class="st">Write + test</div><div class="cap">Writes the behaviour, fixes its own bugs.</div>
+    </div>
+    <div class="arrow">&rarr;</div>
+    <div class="step">
+      <div class="vis paper sheet"><div class="num">4</div><div class="time">parallel</div><img class="px" src="../public/slides/durian-sheet.png" alt=""></div>
+      <div class="who">Codex</div><div class="st">Draw</div><div class="cap">A 12-frame sprite sheet.</div>
+    </div>
+    <div class="arrow">&rarr;</div>
+    <div class="step">
+      <div class="vis room"><div class="num">5</div><div class="time" style="border-color:var(--teal);color:var(--teal)">~65 s</div>
+        <img src="../public/slides/room.png" alt="">
+        <div class="tag" style="left:58px;bottom:58px">wished by you</div></div>
+      <div class="who you">Everyone</div><div class="st">It walks in</div><div class="cap">Live on the big screen, with your name.</div>
+    </div>
+  </div>
+
+  <div class="track"><div class="fill"></div>
+    <div class="tick" style="left:0"><span>0 s</span></div>
+    <div class="tick" style="left:24.6%"><span>7 s</span></div>
+    <div class="tick" style="left:49.6%"><span>~40 s</span></div>
+    <div class="tick" style="left:74.7%"><span>sprite ready</span></div>
+    <div class="tick live" style="left:100%"><span style="left:auto;right:-8px;transform:none">LIVE</span></div>
+  </div>
+
+  <div class="bottom">
+    <div class="panel">
+      <h3>Any room<small>photo &rarr; world</small></h3>
+      <div class="rooms">
+        <figure><img src="../public/slides/venue-photo.jpg" alt=""><figcaption>your venue</figcaption></figure>
+        <div class="ar">&rarr;</div>
+        <figure><img src="../public/slides/venue-redraw.png" alt=""><figcaption>redrawn</figcaption></figure>
+        <div class="ar">&rarr;</div>
+        <figure><div class="ph"><img src="../public/slides/venue-redraw.png" alt="">
+          <svg viewBox="0 0 199 112" preserveAspectRatio="none"><polygon points="20,108 179,108 150,62 50,62" fill="rgba(95,179,161,.35)" stroke="#5fb3a1" stroke-width="2.5"/><line x1="0" y1="26" x2="199" y2="26" stroke="#ffd27a" stroke-width="2" stroke-dasharray="5 4"/><circle cx="72" cy="78" r="5" fill="#f2a65a"/><circle cx="128" cy="84" r="5" fill="#f2a65a"/><circle cx="100" cy="70" r="5" fill="#f2a65a"/></svg></div>
+          <figcaption>mapped by Codex</figcaption></figure>
+      </div>
+    </div>
+    <div class="panel yours">
+      <h3>It's yours<small>3-digit PIN</small></h3>
+      <div class="pup"><img class="px" src="../public/slides/merlion-pup.png" alt=""></div>
+      <div class="chips"><span class="chip">poke it</span><span class="chip">sleep</span><span class="chip">moody</span><span class="chip t">set a status</span><span class="chip t">give it a hat</span></div>
+    </div>
+  </div>
+  <div class="foot">Codex is the runtime &middot; every creature is written, tested and drawn live</div>
+</div>
+</body>
+</html>
