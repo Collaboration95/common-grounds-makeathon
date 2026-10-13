@@ -6,8 +6,9 @@ import path from "node:path";
 import { Codex } from "@openai/codex-sdk";
 import { ROOT, thingDir, checkThing } from "./store.mjs";
 
-const MODEL = process.env.CODEX_MODEL || "gpt-6.1-sol";
-const EFFORT = process.env.CODEX_EFFORT || "low";
+export const MODEL = process.env.CODEX_MODEL || "gpt-6-luna";
+export const EFFORT = process.env.CODEX_EFFORT || "medium";
+const TIER = process.env.CODEX_TIER || ""; // "fast" = priority processing on the ChatGPT plan
 const TIMEOUT_MS = Number(process.env.CODEX_TIMEOUT_MS) || 4 * 60 * 1000;
 
 const expand = (p) => (p.startsWith("~") ? path.join(os.homedir(), p.slice(1)) : p);
@@ -16,7 +17,7 @@ const binPath = expand(process.env.CODEX_BIN || "~/.local/bin/codex");
 // Codex uses the ChatGPT login. Keep our API keys out of its environment.
 const env = Object.fromEntries(Object.entries(process.env).filter(([k, v]) => v !== undefined && !/^(OPENAI_API_KEY|CODEX_API_KEY)$/.test(k)));
 let codex;
-const getCodex = () => (codex ||= new Codex({ ...(fs.existsSync(binPath) ? { codexPathOverride: binPath } : {}), env }));
+const getCodex = () => (codex ||= new Codex({ ...(fs.existsSync(binPath) ? { codexPathOverride: binPath } : {}), env, ...(TIER ? { config: { service_tier: TIER } } : {}) }));
 
 const CONTRACT = fs.readFileSync(path.join(ROOT, "template", "CONTRACT.md"), "utf8");
 const sample = (f) => fs.readFileSync(path.join(ROOT, "template", "samples", f), "utf8");
@@ -48,10 +49,14 @@ Your job:
 - Write ONLY thing.js in the current directory (the only file you create). Do not read other files.
 - Run \`node check-thing.mjs .\` and fix thing.js until it prints {"ok":true,...}. If it prints "warnings", fix those too (one quick pass), but ok:true is what matters.
 - Every thing MUST: (1) move in depth (y) with world.steer, not just left and right; (2) use at least one spot kind (world.goTo / world.leave: seat, table, rest or perch), choosing the spot once and keeping its id in me.state; (3) react to neighbours via onMeet, nearby or onSignal (tags like cat, bird, food, hat, warm, spiky).
+- Spot recipe (this is what the checker looks for): in init pick ONE spot once, e.g. \`me.state.spot = world.spots(me.zone === "air" ? "perch" : "seat")[0]?.id\`. In update run a small state machine in me.state: "wander" (world.steer to a point it keeps in me.state, chosen with world.random, a new point on arrival) for about 6-10 seconds, then "visit" (world.goTo(me, me.state.spot, speed) every frame until it returns true), then rest there about 4-6 seconds (me.anim = "sit" or "sleep"), then world.leave(me) and back to "wander". Count time with world.time.
+- zone: "air" for anything that flies, floats or hovers (birds, dragons, ghosts, clouds, balloons, anything the visitor said flies or floats); otherwise "ground". Put the wish's own words (what it is, what it wears or eats) in name, tags and the speech line.
 - Make it charming and readable from across a room. Big, legible motion; react to the pointer and to pokes (onPoke). Give it one funny line of speech (at most 6 words).
 - Be quick. Do not explain. When it passes, reply with the JSON {name, tags, zone, size, oneLine} (oneLine: a charming sentence under 80 chars about what it does).`;
 
-const followUp = (errors) => `The authoritative checker still rejects thing.js:\n${errors.map((e) => "- " + e).join("\n")}\nFix thing.js, re-run \`node check-thing.mjs .\` until it prints {"ok":true,...}, then reply with the JSON {name, tags, zone, size, oneLine} again.`;
+const followUp = (errors) => errors.some((e) => /thing\.js missing/.test(e))
+  ? `thing.js does not exist yet. Create it NOW in the current directory (write the whole file, nothing else), run \`node check-thing.mjs .\` until it prints {"ok":true,...}, then reply with the JSON {name, tags, zone, size, oneLine}.`
+  : `The authoritative checker still rejects thing.js:\n${errors.map((e) => "- " + e).join("\n")}\nFix thing.js, re-run \`node check-thing.mjs .\` until it prints {"ok":true,...}, then reply with the JSON {name, tags, zone, size, oneLine} again.`;
 
 const isCheck = (cmd) => /check-thing/.test(cmd || "");
 

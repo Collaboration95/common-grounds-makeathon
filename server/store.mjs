@@ -146,6 +146,15 @@ export function publicRooms() {
   });
 }
 
+/** Keeper "clear": back to one room (call after the visitors' things are vetoed). */
+export function resetRooms() {
+  if (!ROOMS_ON || rooms.length < 2) return;
+  rooms = [rooms[0]];
+  for (const w of wishes) if (w.room && w.room !== rooms[0].id && !ENDED.includes(w.status)) w.room = rooms[0].id;
+  save();
+  bus.emit("rooms", publicRooms());
+}
+
 // ---------- the cap ----------
 export const MAX_CHARACTERS = Number(process.env.MAX_CHARACTERS) || 10;
 

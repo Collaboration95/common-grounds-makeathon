@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+# Linux stand-in for the macOS `sips` calls The Commons makes (-g, -c [+--cropOffset], -z, -Z, --out), via ImageMagick.
+import subprocess, sys
+a = sys.argv[1:]; i = 0; get = crop = off = z = Z = out = inp = None
+while i < len(a):
+    t = a[i]
+    if t == "-g": get = True; i += 2
+    elif t == "-c": crop = (a[i+1], a[i+2]); i += 3
+    elif t == "--cropOffset": off = (a[i+1], a[i+2]); i += 3
+    elif t == "-z": z = (a[i+1], a[i+2]); i += 3
+    elif t == "-Z": Z = a[i+1]; i += 2
+    elif t == "--out": out = a[i+1]; i += 2
+    elif t in ("-s", "--setProperty"): i += 3
+    else: inp = t; i += 1
+if get:
+    w, h = subprocess.check_output(["identify", "-format", "%w %h", inp + "[0]"], text=True).split()
+    print(f"{inp}\n  pixelWidth: {w}\n  pixelHeight: {h}"); sys.exit(0)
+cmd = ["convert", inp]
+if crop:
+    H, W = crop
+    cmd += (["-crop", f"{W}x{H}+{off[1]}+{off[0]}"] if off else ["-gravity", "center", "-crop", f"{W}x{H}+0+0"]) + ["+repage"]
+if z: cmd += ["-resize", f"{z[1]}x{z[0]}!"]
+if Z: cmd += ["-resize", f"{Z}x{Z}"]
+sys.exit(subprocess.call(cmd + [out or inp]))

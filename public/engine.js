@@ -662,7 +662,7 @@ export function createWorld({ width = 1600, height = 900, background = null } = 
   // ---- geometry (all driven by the scene) ----------------------------------------------------
   const depthY = (y) => clamp((y - sc.floor.backY) / (sc.floor.frontY - sc.floor.backY), 0, 1);
   const airT = (y) => clamp((y - sc.air.top) / (sc.air.bottom - sc.air.top), 0, 1);
-  const dsAt = (k) => lerp(sc.depthScale[0], sc.depthScale[1], k);
+  const dsAt = (k) => lerp(sc.depthScale[0], sc.depthScale[1], k) * (1 + 0.4 * k * k); // perspective: things near the viewer loom a little larger than the scene's linear scale
   const depthOf = (t) => (t.zone === 'ground' ? depthY(t.me.y) : airT(t.me.y));
   const floorRange = (y) => {
     const k = depthY(y), f = sc.floor;

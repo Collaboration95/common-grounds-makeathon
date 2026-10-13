@@ -148,19 +148,20 @@ for (const [id, vid, key] of [['#sBack', '#vBack', 'backY'], ['#sFront', '#vFron
 // ---------- actions ----------
 function startOver() { jobId = null; store(null); clearInterval(poll); say($('#err'), ''); $('#file').value = ''; show('start'); }
 
-$('#file').addEventListener('change', async () => {
-  const file = $('#file').files[0];
-  if (!file) return;
+async function send(getBlob) {
   say($('#err'), '');
   $('#pick').textContent = 'Sending…';
+  document.querySelectorAll('.samples button').forEach((b) => { b.disabled = true; });
   try {
-    const blob = await toJpeg(file);
+    const blob = await toJpeg(await getBlob());
     const r = await api('/api/host/scene', { method: 'POST', body: blob, headers: { 'content-type': 'image/jpeg' } });
     if (!r.ok) { say($('#err'), r.error); return; }
     watch(r.data.id);
   } catch (e) { say($('#err'), e.message || "Couldn't read that photo."); }
-  finally { $('#pick').textContent = 'Take a photo'; }
-});
+  finally { $('#pick').textContent = 'Take or upload a photo'; document.querySelectorAll('.samples button').forEach((b) => { b.disabled = false; }); }
+}
+$('#file').addEventListener('change', () => { const file = $('#file').files[0]; if (file) send(() => file); });
+document.querySelectorAll('.samples button').forEach((b) => b.addEventListener('click', () => send(() => fetch(b.dataset.src).then((r) => r.blob()))));
 
 $('#use').addEventListener('click', async () => {
   $('#use').disabled = true; $('#use').textContent = 'Switching…'; say($('#rvErr'), '');
@@ -183,7 +184,7 @@ for (const id of ['#reset', '#reset2']) $(id).addEventListener('click', reset);
 
 // ---------- boot ----------
 (async function boot() {
-  if (!KEY) return show('denied');
+  if ((await api('/api/host/scene/-')).status === 401) return show('denied'); // 404 = allowed (public, or a good key)
   let saved = null;
   try { saved = sessionStorage.getItem('commons.hostJob'); } catch { /* ignore */ }
   if (saved) {
