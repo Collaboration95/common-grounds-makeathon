@@ -8,18 +8,20 @@ import path from "node:path";
 import { spawn } from "node:child_process";
 import * as store from "./store.mjs";
 import { sliceSheet } from "../tools/slice-sheet.mjs";
+import { setting, tier } from "./flags.mjs";
 
 export const STYLE = "high-detail pixel art sprite (like Octopath / Celeste HD), clearly pixel-rendered with crisp square pixels, not blurry, rich warm palette, dark outline, readable silhouette";
 
-export const MODEL = process.env.ANIM_MODEL || "gpt-6-luna";
-export const EFFORT = process.env.ANIM_EFFORT || "low";
-const TIER = process.env.CODEX_TIER || ""; // "fast" = priority processing on the ChatGPT plan
+const ENV = { model: process.env.ANIM_MODEL || "gpt-6-luna", effort: process.env.ANIM_EFFORT || "low" };
+const ENV_TIER = process.env.CODEX_TIER || ""; // "fast" = priority processing on the ChatGPT plan
+/** The drawing model: models.json "draw" (read per sheet). A claude-* id is ignored, since Claude cannot draw. */
+const drawCfg = () => { const c = setting("draw", ENV); return { ...(/^claude-/.test(c.model) ? ENV : c), tier: tier(ENV_TIER) }; };
 const TIMEOUT_MS = 4 * 60 * 1000;
 const ATTEMPTS = 2;
 const CONCURRENCY = Number(process.env.ANIM_CONCURRENCY) || 3;
 const IMAGES = path.join(process.env.CODEX_HOME || path.join(os.homedir(), ".codex"), "generated_images");
 const bin = (process.env.CODEX_BIN || "~/.local/bin/codex").replace(/^~/, os.homedir());
-const env = Object.fromEntries(Object.entries(process.env).filter(([k, v]) => v !== undefined && !/^(OPENAI_API_KEY|CODEX_API_KEY)$/.test(k)));
+const env = Object.fromEntries(Object.entries(process.env).filter(([k, v]) => v !== undefined && !/^(OPENAI_API_KEY|CODEX_API_KEY|ANTHROPIC_API_KEY)$/.test(k)));
 
 /** The unified action map (template/ACTION_MAP.md) as ONE prompt fragment. */
 export const SHEET_SPEC = `Layout: landscape 1536x1024, a 4-column x 3-row grid of equal cells, NO grid lines, NO text, NO labels, fully TRANSPARENT background, the SAME character drawn identically in every cell (same size, colours, proportions), centred in each cell, side view facing RIGHT.
@@ -52,11 +54,11 @@ const firstImage = (thread) => {
 };
 
 /** One Codex run. Resolves {thread, png} as soon as the image lands (the run is stopped then), or when Codex exits. */
-function runCodex(cwd, prompt, signal) {
+function runCodex(cwd, prompt, signal, cfg) {
   return new Promise((resolve, reject) => {
     if (signal?.aborted) return reject(new Error("stopped"));
-    const args = ["exec", "--json", "--skip-git-repo-check", "-s", "workspace-write", "-m", MODEL, "-c", `model_reasoning_effort=${EFFORT}`];
-    if (TIER) args.push("-c", `service_tier=${JSON.stringify(TIER)}`);
+    const args = ["exec", "--json", "--skip-git-repo-check", "-s", "workspace-write", "-m", cfg.model, "-c", `model_reasoning_effort=${cfg.effort}`];
+    if (cfg.tier) args.push("-c", `service_tier=${JSON.stringify(cfg.tier)}`);
     const p = spawn(bin, [...args, prompt], { cwd, env, stdio: ["ignore", "pipe", "pipe"] });
     let err = "", out = "", thread = null, done = false;
     const onAbort = () => finish(() => { stop(); reject(new Error("stopped")); });
@@ -83,7 +85,7 @@ function runCodex(cwd, prompt, signal) {
  * `wish` is the visitor's own words, so the picture keeps what they asked for. Returns the slice info plus `run` timings.
  */
 export async function makeFrames(outDir, description, { wish = null, signal = null } = {}) {
-  const work = path.join(outDir, "anim-work"), t0 = Date.now(), run = { model: MODEL, effort: EFFORT, tier: TIER || "default", attempts: 0, waitMs: 0, imageMs: [], errors: [] };
+  const work = path.join(outDir, "anim-work"), t0 = Date.now(), cfg = drawCfg(), run = { model: cfg.model, effort: cfg.effort, tier: cfg.tier || "default", attempts: 0, waitMs: 0, imageMs: [], errors: [] };
   fs.mkdirSync(work, { recursive: true });
   await slot();
   run.waitMs = Date.now() - t0;
@@ -93,7 +95,7 @@ export async function makeFrames(outDir, description, { wish = null, signal = nu
       const ta = Date.now();
       try {
         fs.rmSync(path.join(work, "sheet.png"), { force: true });
-        const r = await runCodex(work, sheetPrompt(description, wish), signal);
+        const r = await runCodex(work, sheetPrompt(description, wish), signal, cfg);
         run.imageMs.push(Date.now() - ta);
         fs.writeFileSync(path.join(work, "sheet.png"), r.png);
         const a = sliceSheet(path.join(work, "sheet.png"), outDir);

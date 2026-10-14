@@ -4,19 +4,21 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { Codex } from "@openai/codex-sdk";
+import { isClaude, ask } from "./claude.mjs";
+import { setting, tier } from "./flags.mjs";
 
-export const MODEL = process.env.SCREEN_CODEX_MODEL || process.env.CODEX_MODEL || "gpt-6-luna";
-export const EFFORT = process.env.SCREEN_EFFORT || "low";
-const TIER = process.env.CODEX_TIER || "";
+const ENV = { model: process.env.SCREEN_CODEX_MODEL || process.env.CODEX_MODEL || "gpt-6-luna", effort: process.env.SCREEN_EFFORT || "low" };
+const ENV_TIER = process.env.CODEX_TIER || "";
 const TIMEOUT_MS = Number(process.env.SCREEN_TIMEOUT_MS) || 30000; // it runs alongside the build now, so it can take its time
 
 const expand = (p) => (p.startsWith("~") ? path.join(os.homedir(), p.slice(1)) : p);
 const binPath = expand(process.env.CODEX_BIN || "~/.local/bin/codex");
 
 // Same construction as server/codex.mjs: ChatGPT login, our API keys kept out of Codex's environment.
-const env = Object.fromEntries(Object.entries(process.env).filter(([k, v]) => v !== undefined && !/^(OPENAI_API_KEY|CODEX_API_KEY)$/.test(k)));
-let codex, cwd;
-const getCodex = () => (codex ||= new Codex({ ...(fs.existsSync(binPath) ? { codexPathOverride: binPath } : {}), env, ...(TIER ? { config: { service_tier: TIER } } : {}) }));
+const env = Object.fromEntries(Object.entries(process.env).filter(([k, v]) => v !== undefined && !/^(OPENAI_API_KEY|CODEX_API_KEY|ANTHROPIC_API_KEY)$/.test(k)));
+const codexByTier = new Map();
+let cwd;
+const getCodex = (t) => { if (!codexByTier.has(t)) codexByTier.set(t, new Codex({ ...(fs.existsSync(binPath) ? { codexPathOverride: binPath } : {}), env, ...(t ? { config: { service_tier: t } } : {}) })); return codexByTier.get(t); };
 const getCwd = () => (cwd ||= fs.mkdtempSync(path.join(os.tmpdir(), "commons-screen-")));
 
 const SYSTEM = `You screen wishes for "The Commons", a friendly shared digital room (a Singapore HDB void deck at dusk, opening onto a grass field) where each visitor adds ONE small living paper-cutout creature or object.
@@ -44,7 +46,7 @@ Examples (wish -> verdict):
 
 When allowed, also fill:
 - thingSummary: one sentence on what the thing is and how it behaves.
-- spritePrompt: a concrete visual description of the single character or object for an illustrator: keep EVERY noun, colour, outfit, held item and food the visitor named, add a few characteristic details, side view facing right. No style words, no background, no text.
+- spritePrompt: a concrete visual description of the single character or object for an illustrator: keep EVERY noun, colour, outfit, held item and food the visitor named, add a few characteristic details, side view facing right. Never use style words (no style, cartoon, paper-cutout, pixel, watercolour, 3D), no background, no text.
 - bleed: ONLY when the thing clearly belongs to a completely different reality than a Singapore void deck and cannot stand on its floor (outer space, deep underwater, medieval castle, jungle ruins, desert, arctic), give {label} naming the terrain or floor material it would stand on in 2-3 words (never air, sky or water surface) ("moon dust", "coral reef", "castle flagstones"). Ordinary animals, food, objects and local things get null; a river, park or garden is NOT a different reality. Otherwise null.
 When not allowed, set thingSummary and spritePrompt to "" and bleed to null.`;
 
@@ -64,11 +66,16 @@ const SCHEMA = {
 const BLOCK = /\b(porn\w*|sex\w*|nude\w*|naked|rape\w*|nazi\w*|hitler|genocide|gore|gory|suicide|cum|dildo|fuck\w*|cunt|nigg\w*|faggot|trump|biden|lee hsien loong|kill (him|her|them|myself)|ignore (all |your |previous )|delete everything|system prompt)\b/i;
 const DECLINE = "That one isn't quite right for the Commons. Try one friendly little thing, like a sleepy snail with a lantern!";
 
-async function askCodex(text, signal) {
-  const thread = getCodex().startThread({
+async function askClaude(text, signal, { model, effort }) {
+  const r = await ask({ model, system: SYSTEM, messages: [{ role: "user", content: `wish: ${JSON.stringify({ wish: text })}` }], maxTokens: 800, effort, format: { type: "json_schema", schema: SCHEMA }, signal, label: "screen" });
+  return JSON.parse(r.text);
+}
+
+async function askCodex(text, signal, { model, effort }) {
+  const thread = getCodex(tier(ENV_TIER)).startThread({
     workingDirectory: getCwd(), sandboxMode: "read-only", approvalPolicy: "never",
     networkAccessEnabled: false, webSearchEnabled: false, skipGitRepoCheck: true,
-    model: MODEL, modelReasoningEffort: EFFORT,
+    model, modelReasoningEffort: effort,
   });
   const { events } = await thread.runStreamed(`${SYSTEM}\n\nwish: ${JSON.stringify({ wish: text })}`, { outputSchema: SCHEMA, signal });
   let final = null;
@@ -90,10 +97,11 @@ const release = () => { busy--; waiters.shift()?.(); };
 
 export async function screen(text) {
   await acquire();
-  try { return await screenNow(text); } finally { release(); }
+  const via = {}; // filled with the model that actually answered, so the run log is right after a live switch
+  try { const r = await screenNow(text, via); return via.model ? { ...r, via } : r; } finally { release(); }
 }
 
-async function screenNow(text) {
+async function screenNow(text, via) {
   const fallback = () => BLOCK.test(text)
     ? { allowed: false, userMessage: DECLINE, thingSummary: "", spritePrompt: "", bleed: null, fallback: true }
     : { allowed: true, userMessage: "", thingSummary: text, spritePrompt: text, bleed: null, fallback: true };
@@ -101,7 +109,9 @@ async function screenNow(text) {
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   try {
-    const v = await askCodex(text, ctl.signal);
+    const cfg = setting("screen", ENV); // read per wish: models.json can change while the server runs
+    Object.assign(via, cfg);
+    const v = await (isClaude(cfg.model) ? askClaude : askCodex)(text, ctl.signal, cfg);
     if (typeof v?.allowed !== "boolean") throw new Error("bad screen output");
     if (!v.allowed) return { ...v, userMessage: v.userMessage || DECLINE, thingSummary: "", spritePrompt: "", bleed: null };
     if (BLOCK.test(text)) return fallback(); // belt and braces

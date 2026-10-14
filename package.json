@@ -11,8 +11,10 @@
     "presets": "node --env-file-if-exists=.env tools/gen-presets.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
     "@openai/codex-sdk": "^0.162.1",
     "pngjs": "^7.0.0",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "undici": "^8.11.2"
   }
 }
