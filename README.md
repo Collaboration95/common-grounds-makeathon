@@ -11,6 +11,7 @@ Everyone in the room scans a QR code and adds one thing: a creature, an object, 
 - 🎬 **Demo video:** [YouTube](https://www.youtube.com/watch?v=SN3WXWuIOi8). All three formats (9:16, 16:9 and 1:1) are on [Google Drive](https://drive.google.com/drive/folders/15TLprzAGYpoS4LF6HIbWjBr1fcV32Ekv?usp=sharing). Compressed copies are in [`video/out/`](video/out).
 - 🖼️ **Slides:** [online](https://collaboration95.github.io/common-grounds-makeathon/slides.html), or [`public/slides.html`](public/slides.html) locally after `npm start` at `http://localhost:8787/slides.html`.
 - 💸 **What it cost:** [tokens, the API bill and the price of one pet](https://collaboration95.github.io/common-grounds-makeathon/costs.html).
+- 🔀 **Now on Claude:** screening and code moved from Codex to Claude Haiku 5.5, [the numbers](https://collaboration95.github.io/common-grounds-makeathon/claude.html) and [the full writeup](docs/gist-claude-switch.md).
 
 ## How it works
 
