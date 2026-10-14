@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <title>I switched The Commons to Claude · a room that builds itself</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Screening and code for every wished-for pet moved from Codex to Claude Haiku 5.5. 3.7x faster code, 43/43 right verdicts, a tenth of a cent a pet, switchable live from one file.">
+<meta name="description" content="Screening and code for every wished-for pet moved from Codex to Claude Haiku 5.5, and drawing moved to the OpenAI image API. A pet goes live in 15 s instead of 47, with 43/43 right verdicts and switchable live from one file.">
 <meta property="og:title" content="I switched my pets to Claude">
-<meta property="og:description" content="3.7x faster code, 43/43 right verdicts, $0.001 a pet, and the one step Claude can't do.">
+<meta property="og:description" content="A pet live in 15 s instead of 47. Claude writes the code, the image API draws it, and one file switches it all.">
 <meta property="og:image" content="slides/room.png">
 <style>
 :root{--night:#1d1424;--deep:#120b18;--ink:#3b2414;--cream:#fbf3e2;--amber:#f2a65a;--lamp:#ffd27a;--teal:#5fb3a1;--dim:#cdbfa8;--mute:#8f7d9c;--line:#4a3556;--red:#e0685a;
@@ -80,7 +80,8 @@ section{padding-top:96px}
 .chip.cl{border-color:var(--amber);color:var(--night);background:var(--amber)}
 .chip.old{text-decoration:line-through;color:var(--mute);border-color:var(--line)}
 .step.moved{border-color:var(--amber)}
-.step.kept{border-style:dashed}
+.step.img{border-color:var(--lamp)}
+.chip.im{border-color:var(--lamp);color:var(--night);background:var(--lamp)}
 /* wish grid */
 .wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:6px}
 .wgrid i{aspect-ratio:1;border-radius:6px;border:2px solid var(--teal);background:rgba(95,179,161,.18);transform:scale(.4);opacity:0;transition:transform .4s cubic-bezier(.3,1.6,.5,1),opacity .3s;cursor:default}
@@ -93,7 +94,7 @@ section{padding-top:96px}
 .checks ul{list-style:none;font:600 13px/1.75 var(--mono);color:var(--dim)}
 .checks li::before{content:"✓ ";color:var(--teal)}
 /* speed */
-.srow{display:grid;grid-template-columns:170px 1fr 92px;gap:12px;align-items:center;margin:11px 0;font:600 13px var(--mono)}
+.srow{display:grid;grid-template-columns:var(--nw,170px) 1fr 92px;gap:12px;align-items:center;margin:11px 0;font:600 13px var(--mono)}
 .srow .nm{color:var(--cream)}.srow .nm small{display:block;color:var(--mute);font-size:11px}
 .srow .track{height:30px;background:#1c1324;border-radius:8px;position:relative;overflow:hidden}
 .srow .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:8px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
@@ -130,7 +131,7 @@ input[type=range]{width:100%;accent-color:var(--amber);margin:14px 0 4px}
 .sw{display:grid;grid-template-columns:1fr 1fr;gap:0}
 .sw .code{padding:20px;font:600 14px/1.7 var(--mono);color:var(--dim);white-space:pre;border-right:3px solid var(--line);overflow-x:auto}
 .sw .code .k{color:var(--teal)}.sw .code .s{color:var(--lamp)}.sw .code .m{color:var(--amber);background:rgba(242,166,90,.12);border-radius:4px}
-.sw .log{padding:20px;font:600 13px/1.8 var(--mono);color:var(--dim);height:270px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.sw .log{padding:20px;font:600 13px/1.8 var(--mono);color:var(--dim);height:350px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
 .sw .log div{animation:pop .35s ease}
 .sw .log .h{color:var(--cream)}
 @keyframes pop{from{opacity:0;transform:translateY(8px)}}
@@ -198,33 +199,33 @@ footer a{color:var(--dim)}
 <header class="hero">
   <div class="kicker reveal">The Commons &middot; after Claude Code SG &middot; 13 Oct 2026</div>
   <h1 class="reveal">I switched<br>to Claude</h1>
-  <p class="sub reveal">Two of three steps. Code 3.7&times; faster. A tenth of a cent a pet.</p>
+  <p class="sub reveal">A pet goes live in 15 seconds. It took 47.</p>
   <div class="prose reveal">
-    <p class="lede"><b>The Commons</b> is a room that builds itself. You wish for a creature, and about a minute later it walks onto the projector, written, tested and drawn by AI.</p>
-    <p>Until 13 Oct every step ran on my ChatGPT subscription through Codex. Now the screening and the code run on <span class="am">Claude Haiku 5.5</span> through the API, paid from the $100 of credit I get each month. I tested it first, with checks and a spending cap. It's live on the vote server now.</p>
+    <p class="lede"><b>The Commons</b> is a room that builds itself. You wish for a creature, and seconds later it walks onto the projector, written, tested and drawn by AI.</p>
+    <p>Until 13 Oct every step ran on my ChatGPT subscription through Codex. Now the screening and the code run on <span class="am">Claude Haiku 5.5</span> through the API, paid from the $100 of credit I get each month. Claude can't draw, so the drawing calls <span style="color:var(--lamp)">OpenAI's image API</span> directly, with Codex as the fallback. I tested each step before switching. It's live on the vote server now.</p>
   </div>
   <div class="stats reveal">
+    <div class="stat l"><div class="v"><span data-count="15" data-fmt="int">0</span> s</div><div class="k">from wish to a live pet, was 47 s</div></div>
     <div class="stat a"><div class="v"><span data-count="4.9" data-fmt="1">0</span> s</div><div class="k">to write a pet's code, was 17&ndash;19 s</div></div>
     <div class="stat t"><div class="v"><span data-count="43" data-fmt="int">0</span>/43</div><div class="k">right allow / decline verdicts</div></div>
-    <div class="stat l"><div class="v">$<span data-count="0.001" data-fmt="3">0</span></div><div class="k">per pet, screen + code</div></div>
-    <div class="stat"><div class="v">~<span data-count="98" data-fmt="int">0</span>K</div><div class="k">pets per $100 of credit</div></div>
+    <div class="stat"><div class="v">$<span data-count="0.001" data-fmt="3">0</span></div><div class="k">per pet for screen + code</div></div>
   </div>
   <div class="stage reveal" id="heroStage"><span class="hint">poke the dog</span></div>
 </header>
 
 <section id="pipeline">
   <div class="kicker reveal">01 &middot; What moved</div>
-  <h2 class="reveal">Three steps,<br>two moved</h2>
+  <h2 class="reveal">Three steps,<br>all moved</h2>
   <div class="prose reveal">
-    <p>Every wish goes through three steps. Drawing and coding start together while the wish is still being screened. Claude took over the two text steps. It can't make images, so the drawing stays on Codex.</p>
+    <p>Every wish goes through three steps. Drawing and coding start together while the wish is still being screened. Claude took over the two text steps. It can't make images, so the drawing skips the agent and calls an image model directly.</p>
   </div>
   <div class="steps3 reveal">
     <div class="step moved"><span class="n">1</span><h3>Screen</h3><p>Allow or decline the wish, and write the illustrator's prompt.</p>
       <div class="swap"><span class="chip old">Codex Luna</span>&rarr;<span class="chip cl">Haiku 5.5</span></div></div>
     <div class="step moved"><span class="n">2</span><h3>Build</h3><p>Write <span class="mono">thing.js</span>, the creature's behaviour, and pass a simulator.</p>
       <div class="swap"><span class="chip old">Codex Luna</span>&rarr;<span class="chip cl">Haiku 5.5</span></div></div>
-    <div class="step kept"><span class="n">3</span><h3>Draw</h3><p>A 12-frame pixel-art sprite sheet. Claude can't generate images.</p>
-      <div class="swap"><span class="chip cx">Codex image tool</span><span style="color:var(--mute)">unchanged</span></div></div>
+    <div class="step img"><span class="n">3</span><h3>Draw</h3><p>A 12-frame pixel-art sprite sheet. Claude can't generate images.</p>
+      <div class="swap"><span class="chip old">Codex image tool</span>&rarr;<span class="chip im">Image API</span></div></div>
   </div>
   <div class="prose reveal" style="margin-top:26px">
     <p>Codex worked as an <em>agent</em>: open a shell, write the file, run the checker, read the error, try again. Claude does it in <span class="am">one request</span>. The rules and two sample creatures sit in a cached system prompt, the wish goes in, and the whole file comes back. My server runs the same checker, and a failure gets one repair turn.</p>
@@ -285,7 +286,7 @@ footer a{color:var(--dim)}
   <div class="kicker reveal">05 &middot; Cost</div>
   <h2 class="reveal">Sonnet: 20&times; the<br>price, same score</h2>
   <div class="prose reveal">
-    <p>The bigger model didn't win anything. For a small job with a tight contract, the smallest model that passes the checks is the right one. Drag to pick how many pets a month.</p>
+    <p>The bigger model didn't win anything. For a small job with a tight contract, the smallest model that passes the checks is the right one. Drag to pick how many pets a month. Drawing isn't in these numbers: it's on my OpenAI bill now, and I haven't priced it yet.</p>
   </div>
   <div class="calc">
     <div class="panel reveal" style="margin-top:0">
@@ -317,7 +318,7 @@ footer a{color:var(--dim)}
   <div class="kicker reveal">06 &middot; The switch</div>
   <h2 class="reveal">One file,<br>no restart</h2>
   <div class="prose reveal">
-    <p>The model lives in a file, not in the code. The server checks the file's timestamp on every wish, so a change applies to the next one. Pets already in flight finish on the model they started with. A broken file is ignored. Try it.</p>
+    <p>The models live in a file, not in the code. The server checks the file's timestamp on every wish, so a change applies to the next one. Pets already in flight finish on the model they started with. A broken file is ignored. Drawing has its own switch, <span class="mono">draw api</span> or <span class="mono">draw codex</span>. Try the text steps.</p>
   </div>
   <div class="panel reveal">
     <div class="bar"><s></s><s></s><s></s><span class="ttl">commons-world/models.json &middot; server log</span></div>
@@ -327,25 +328,39 @@ footer a{color:var(--dim)}
 </section>
 
 <section id="draw">
-  <div class="kicker reveal">07 &middot; The honest part</div>
-  <h2 class="reveal">The picture<br>still takes 46 s</h2>
+  <div class="kicker reveal">07 &middot; The picture</div>
+  <h2 class="reveal">47 seconds<br>to 15</h2>
   <div class="prose reveal">
-    <p>Two real wishes on the live server. The code now arrives in 5 seconds instead of about 18, but it was already finishing long before the drawing. So a pet doesn't arrive any sooner. What I got is two of three steps off my ChatGPT plan, cheap and switchable.</p>
+    <p>Moving the text steps to Claude didn't make a pet arrive sooner. The drawing was 46 of its 47 seconds. It went through Codex: start a CLI, boot an agent, let a model decide to call its image tool, then wait for a file to land on disk.</p>
+    <p>The image itself takes about <b>12 seconds</b>. The rest was the agent wrapped around it. So the server now calls OpenAI's image API directly.</p>
   </div>
   <div class="panel reveal">
     <div class="bar"><s></s><s></s><s></s><span class="ttl">one wish, start to live</span>
-      <div class="seg" id="gSeg"><button class="on" data-m="claude">Now</button><button data-m="codex">Before</button></div></div>
+      <div class="seg" id="gSeg"><button data-m="codex">All Codex</button><button data-m="claude">Claude text</button><button data-m="now">Now</button></div></div>
     <div class="body" id="gBody">
       <div class="gl"><span>Screen</span><div class="gtrack"><div class="gbar" id="gS"></div></div></div>
       <div class="gl"><span>Write code</span><div class="gtrack"><div class="gbar" id="gC"></div></div></div>
-      <div class="gl"><span>Draw</span><div class="gtrack"><div class="gbar" id="gD" style="background:var(--teal)">Codex image tool &middot; 46 s</div></div></div>
-      <div class="gaxis"><span>0 s</span><span>10</span><span>20</span><span>30</span><span>40</span><span>LIVE 47 s</span></div>
+      <div class="gl"><span>Draw</span><div class="gtrack"><div class="gbar" id="gD"></div></div></div>
+      <div class="gaxis"><span>0 s</span><span>10</span><span>20</span><span>30</span><span>40</span><span>47 s</span></div>
       <div class="readout" id="gRead"></div>
     </div>
   </div>
+  <div class="prose reveal"><p>I timed the same sprite-sheet prompt on four image models, one sheet each at low quality. The fastest one was also the only one with clean pixel art and real transparency.</p></div>
+  <div class="panel reveal">
+    <div class="bar"><s></s><s></s><s></s><span class="ttl">seconds per sprite sheet &middot; same prompt</span></div>
+    <div class="body" id="imgBody" style="--nw:210px">
+      <div class="legend"><span><i style="background:var(--lamp)"></i>image API</span><span><i style="background:var(--teal)"></i>through Codex</span></div>
+      <div class="srow"><div class="nm">gpt-image-2.5-flare<small>pixel art, transparent &check;</small></div><div class="track"><div class="fill" style="background:var(--lamp)" data-w="25.4"></div></div><div class="val">12.2 s</div></div>
+      <div class="srow"><div class="nm">gpt-image-1-mini<small>fuzzy fur, not pixel art</small></div><div class="track"><div class="fill" style="background:rgba(255,210,122,.45)" data-w="28.5"></div></div><div class="val">13.7 s</div></div>
+      <div class="srow"><div class="nm">gpt-image-2<small>no transparency</small></div><div class="track"><div class="fill" style="background:rgba(255,210,122,.45)" data-w="35.6"></div></div><div class="val">17.1 s</div></div>
+      <div class="srow"><div class="nm">gpt-image-2.5-sunburst<small>good, but slower</small></div><div class="track"><div class="fill" style="background:rgba(255,210,122,.45)" data-w="39.8"></div></div><div class="val">19.1 s</div></div>
+      <div class="srow"><div class="nm">Codex image tool<small>the old route</small></div><div class="track"><div class="fill" style="background:var(--teal)" data-w="95.8"></div></div><div class="val">~46 s</div></div>
+      <div class="readout">Six at once, five finished in 12&ndash;14 s. The sixth took 24 s because it queued behind a cap of 5 image calls, now 8. If the image API fails, that pet falls back to Codex. I tested it with a wrong key and the pet was still drawn, in 43 s.</div>
+    </div>
+  </div>
   <div class="gal reveal" id="gal"></div>
-  <div class="sheet reveal"><img src="claude/sheet-dog.webp" alt="The 12 frames of the dog's sprite sheet: 4 walk, 4 fly, idle, rest, sleep and a special move" loading="lazy"></div>
-  <div class="cap reveal">One wish, one sheet: 4 walk, 4 fly, idle, rest, sleep, special. Drawn by Codex, not Claude.</div>
+  <div class="sheet reveal"><img src="claude/sheet-api-dog.webp" alt="The 12 frames of the dog drawn through the image API: 4 walk, 4 fly, idle, rest, sleep and a special move" loading="lazy"></div>
+  <div class="cap reveal">One wish, one sheet: 4 walk, 4 fly, idle, rest, sleep, special. Drawn through the image API in 12 s. It added a red bandana nobody asked for.</div>
 </section>
 
 <section id="wrong">
@@ -366,7 +381,7 @@ footer a{color:var(--dim)}
     <div><i>01</i>Pick the smallest model that passes your checks.</div>
     <div><i>02</i>Write the checks before you pick the model.</div>
     <div><i>03</i>Put the model choice in a file, not in code.</div>
-    <div><i>04</i>Time your own plumbing before you blame the API.</div>
+    <div><i>04</i>Time your own plumbing. Twice the slow part was mine.</div>
   </div>
 </section>
 
@@ -384,7 +399,7 @@ footer a{color:var(--dim)}
 </section>
 
 <footer>
-  <p style="font:inherit;color:inherit;margin:0 0 8px">How these numbers were made. Measured 13&ndash;14 Oct 2026 with the repo's eval harness: 43 labelled wishes, deterministic checks only, 4 at a time. Claude: 43 screens and 29 builds per model. Codex: 43 screens and 9 builds per run, so the build head-to-head is rough. Costs come from the token counts the API returned, at list prices (Haiku 5.5 $0.10 / $0.50 per million tokens in / out, Sonnet 5.5 $2 / $10, cache reads at a tenth). Pets per $100 assume a warm prompt cache; cold, Haiku is about $0.0017 a pet. Drawing isn't on that bill.</p>
+  <p style="font:inherit;color:inherit;margin:0 0 8px">How these numbers were made. Measured 13&ndash;14 Oct 2026 with the repo's eval harness: 43 labelled wishes, deterministic checks only, 4 at a time. Claude: 43 screens and 29 builds per model. Codex: 43 screens and 9 builds per run, so the build head-to-head is rough. Costs come from the token counts the API returned, at list prices (Haiku 5.5 $0.10 / $0.50 per million tokens in / out, Sonnet 5.5 $2 / $10, cache reads at a tenth). Pets per $100 assume a warm prompt cache; cold, Haiku is about $0.0017 a pet. Drawing isn't on that bill. Image models were timed on 11 sheets (4 models alone, 6 at once, 4 pets end to end on the vote server) and checked by eye; the image API's price isn't measured yet.</p>
   <p style="font:inherit;color:inherit;margin:0"><a href="https://github.com/Collaboration95/common-grounds-makeathon/blob/main/docs/gist-claude-switch.md">Full writeup</a> &middot; <a href="https://github.com/Collaboration95/common-grounds-makeathon/blob/main/docs/claude-vs-codex.md">Claude vs Codex notes</a> &middot; <a href="costs.html">What the makeathon cost</a> &middot; <a href="slides.html">Slides</a> &middot; Built with Claude Code</p>
 </footer>
 </main>
@@ -408,7 +423,7 @@ document.querySelectorAll("[data-count]").forEach(el => onView(el, t => {
 }));
 
 /* pets: 12-frame strips. 0-3 walk, 4-7 fly, 8 idle, 9 rest, 10 sleep, 11 special */
-const SHEETS = {dog: {src: "claude/sheet-dog.webp", r: 245 / 200}, rice: {src: "claude/sheet-chicken-rice.webp", r: 263 / 200}, kopi: {src: "claude/sheet-kopi-cup.webp", r: 225 / 200}};
+const SHEETS = {dog: {src: "claude/sheet-dog.webp", r: 245 / 200}, rice: {src: "claude/sheet-chicken-rice.webp", r: 263 / 200}, kopi: {src: "claude/sheet-kopi-cup.webp", r: 225 / 200}, apidog: {src: "claude/sheet-api-dog.webp", r: 268 / 200}, dragon: {src: "claude/sheet-api-noodle-dragon.webp", r: 257 / 200}};
 function makePet(parent, key, h, lines) {
   const s = SHEETS[key], w = Math.round(h * s.r), el = document.createElement("div");
   el.className = "pet"; el.style.cssText += `width:${w}px;height:${h}px;background-image:url(${s.src})`;
@@ -511,7 +526,7 @@ let cur = "haiku", wn = 41;
 const swCode = document.getElementById("swCode"), swLog = document.getElementById("swLog");
 function code(m, typed) {
   const v = `<span class="m">"${typed}"</span>`, cl = m !== "luna", ef = e => `<span class="k">"effort"</span>: <span class="s">"${e}"</span>`;
-  swCode.innerHTML = `{\n  <span class="k">"screen"</span>: {\n    <span class="k">"model"</span>: ${v},\n    ${ef(cl ? "none" : "low")}\n  },\n  <span class="k">"build"</span>: {\n    <span class="k">"model"</span>: ${v},\n    ${ef(cl ? "none" : "medium")}\n  },\n  <span class="k">"claudeBudgetUsd"</span>: <span class="s">80</span>\n}`;
+  swCode.innerHTML = `{\n  <span class="k">"screen"</span>: {\n    <span class="k">"model"</span>: ${v},\n    ${ef(cl ? "none" : "low")}\n  },\n  <span class="k">"build"</span>: {\n    <span class="k">"model"</span>: ${v},\n    ${ef(cl ? "none" : "medium")}\n  },\n  <span class="k">"draw"</span>: {\n    <span class="k">"model"</span>: <span class="s">"gpt-image-2.5-flare"</span>,\n    ${ef("low")}\n  },\n  <span class="k">"claudeBudgetUsd"</span>: <span class="s">80</span>\n}`;
 }
 function log(html, cls) { const d = document.createElement("div"); d.innerHTML = html; if (cls) d.className = cls; swLog.appendChild(d); while (swLog.children.length > 9) swLog.firstChild.remove(); }
 function wish() { const m = MODELS[cur], w = WISHES[wn % WISHES.length]; wn++;
@@ -526,21 +541,26 @@ code("haiku", MODELS.haiku[0]); log("server up &middot; reading commons-world/mo
 setInterval(() => { if (!document.hidden) wish(); }, 4200);
 
 /* 07 gantt + gallery */
-const G = {claude: {s: [0, 2, "Haiku 2 s"], c: [0, 5, "Haiku 5 s"], col: "var(--amber)", read: "Code done at <b>5 s</b>, then it waits 41 s for the picture. Pet live at <b>47 s</b>."},
-           codex: {s: [0, 5.2, "Luna 5 s"], c: [0, 18, "Luna ~18 s"], col: "var(--teal)", read: "Code done at about <b>18 s</b>, and it still waits for the picture. Pet live at about the same <b>47 s</b>."}};
+const G = {codex: {s: [0, 5.2, "Luna 5 s", C.cx], c: [0, 18, "Luna ~18 s", C.cx], d: [1, 47, "Codex image tool · 46 s", C.cx], read: "Everything on Codex. Code done at about <b>18 s</b>, picture at <b>47 s</b>."},
+           claude: {s: [0, 2, "Haiku 2 s", C.cl], c: [0, 5, "Haiku 5 s", C.cl], d: [1, 47, "Codex image tool · 46 s", C.cx], read: "Claude writes the code in <b>5 s</b>, then it waits 41 s for the picture. Still <b>47 s</b>."},
+           now: {s: [0, 3, "Haiku 3 s", C.cl], c: [0, 12, "Haiku 12 s", C.cl], d: [0, 15, "image API 15 s", "var(--lamp)"], read: "Four pets at once on the vote server went live in <b>13&ndash;16 s</b>. Screen 3 s, code 10&ndash;14 s, picture 13&ndash;16 s."}};
 const T = 47, pct = v => v / T * 100 + "%";
-function drawG(m) { const g = G[m], s = document.getElementById("gS"), c = document.getElementById("gC"), d = document.getElementById("gD");
-  [[s, g.s], [c, g.c]].forEach(([el, [a, b, l]]) => { el.style.left = pct(a); el.style.width = pct(b - a); el.style.background = g.col; el.className = "gbar out"; el.innerHTML = `<span>${l}</span>`; });
-  d.style.left = pct(1); d.style.width = pct(46); document.getElementById("gRead").innerHTML = g.read; }
-document.querySelectorAll("#gSeg button").forEach(b => b.onclick = () => { document.querySelectorAll("#gSeg button").forEach(x => x.classList.toggle("on", x === b)); drawG(b.dataset.m); });
+function drawG(m) { const g = G[m];
+  document.querySelectorAll("#gSeg button").forEach(x => x.classList.toggle("on", x.dataset.m === m));
+  [["gS", g.s], ["gC", g.c], ["gD", g.d]].forEach(([id, [a, b, l, col]]) => { const el = document.getElementById(id);
+    el.style.left = pct(a); el.style.width = pct(b - a); el.style.background = col; el.className = "gbar out"; el.innerHTML = `<span>${l}</span>`; });
+  document.getElementById("gRead").innerHTML = g.read; }
+let gAuto = [];
+document.querySelectorAll("#gSeg button").forEach(b => b.onclick = () => { gAuto.forEach(clearTimeout); drawG(b.dataset.m); });
 ["gS", "gC", "gD"].forEach(id => { const e = document.getElementById(id); e.style.left = "0"; e.style.width = "0"; });
-onView(document.getElementById("gBody"), () => drawG("claude"), .4);
+onView(document.getElementById("gBody"), () => { if (reduce) return drawG("now"); drawG("codex"); gAuto = [setTimeout(() => drawG("claude"), 2200), setTimeout(() => drawG("now"), 4600)]; }, .4);
+onView(document.getElementById("imgBody"), b => b.querySelectorAll(".fill").forEach((f, i) => setTimeout(() => f.style.width = f.dataset.w + "%", reduce ? 0 : 140 * i)), .3);
 
 const gal = document.getElementById("gal"), pets = [];
-[["dog", "a dog with sunglasses eating icecream", "drawn in 44 s", ["Wah! My ice cream!", "Shades on. Chill."]],
- ["rice", "a chicken rice plate that runs away from hungry people", "drawn in 80 s", ["Don't eat me!", "Chope! Taken!"]],
- ["kopi", "a kopi cup that hops around looking for a stool", "drawn in 32 s", ["Wah! Awake!", "Kopi-O, kosong!"]]].forEach(([k, q, t, lines], i) => {
-  const card = document.createElement("div"); card.className = "gcard"; card.innerHTML = `<div class="box"></div><q>${q}</q><small>${t} &middot; poke it</small>`; gal.appendChild(card);
+[["dog", "<q>a dog with sunglasses eating icecream</q>", "through Codex in 44 s", ["Wah! My ice cream!", "Shades on. Chill."]],
+ ["apidog", "<q>a dog with sunglasses eating icecream</q>", "image API in 12 s", ["Same dog, faster!", "New bandana. Nice?"]],
+ ["dragon", "<q style=\"quotes:none\">a noodle dragon</q>", "image API in 14 s", ["Slurp... ROAR!", "Extra spicy!"]]].forEach(([k, q, t, lines], i) => {
+  const card = document.createElement("div"); card.className = "gcard"; card.innerHTML = `<div class="box"></div>${q}<small>${t} &middot; poke it</small>`; gal.appendChild(card);
   const p = makePet(card.querySelector(".box"), k, 140, lines); p.cycle = ["walk", "fly", "idle", "sleep"]; p.ci = i; p.next = "walk"; pets.push(p);
 });
 let lastCycle = 0;
