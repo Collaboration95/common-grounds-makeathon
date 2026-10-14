@@ -9,12 +9,15 @@ import { spawn } from "node:child_process";
 import * as store from "./store.mjs";
 import { sliceSheet } from "../tools/slice-sheet.mjs";
 import { setting, tier } from "./flags.mjs";
+import { generate } from "./image.mjs";
 
 export const STYLE = "high-detail pixel art sprite (like Octopath / Celeste HD), clearly pixel-rendered with crisp square pixels, not blurry, rich warm palette, dark outline, readable silhouette";
 
 const ENV = { model: process.env.ANIM_MODEL || "gpt-6-luna", effort: process.env.ANIM_EFFORT || "low" };
 const ENV_TIER = process.env.CODEX_TIER || ""; // "fast" = priority processing on the ChatGPT plan
-/** The drawing model: models.json "draw" (read per sheet). A claude-* id is ignored, since Claude cannot draw. */
+/** A gpt-image-* draw model is called straight on the OpenAI image API (about 12 s a sheet); anything else goes through the Codex CLI (about 45 s). */
+const isImageApi = (m) => /^(gpt-image|chatgpt-image)/.test(m);
+/** The drawing model: models.json "draw" (read per sheet). A claude-* id is ignored, since Claude cannot draw. For an image-API model, effort is the image quality. */
 const drawCfg = () => { const c = setting("draw", ENV); return { ...(/^claude-/.test(c.model) ? ENV : c), tier: tier(ENV_TIER) }; };
 const TIMEOUT_MS = 4 * 60 * 1000;
 const ATTEMPTS = 2;
@@ -87,15 +90,26 @@ function runCodex(cwd, prompt, signal, cfg) {
 export async function makeFrames(outDir, description, { wish = null, signal = null } = {}) {
   const work = path.join(outDir, "anim-work"), t0 = Date.now(), cfg = drawCfg(), run = { model: cfg.model, effort: cfg.effort, tier: cfg.tier || "default", attempts: 0, waitMs: 0, imageMs: [], errors: [] };
   fs.mkdirSync(work, { recursive: true });
-  await slot();
-  run.waitMs = Date.now() - t0;
+  let held = false; // the 3-wide slot guards the Codex CLI only; image-API sheets run freely (generate() has its own cap of 5)
+  const hold = async () => { if (!held) { await slot(); held = true; run.waitMs = Date.now() - t0; } };
+  if (!isImageApi(cfg.model)) await hold();
   try {
     for (;;) {
       run.attempts++;
       const ta = Date.now();
       try {
         fs.rmSync(path.join(work, "sheet.png"), { force: true });
-        const r = await runCodex(work, sheetPrompt(description, wish), signal, cfg);
+        let r;
+        if (isImageApi(cfg.model) && !run.apiFailed) {
+          try {
+            r = { thread: null, png: await generate(imagePrompt(description, wish), { size: "1536x1024", model: cfg.model, quality: /^(low|medium|high)$/.test(cfg.effort) ? cfg.effort : "low", timeoutMs: 90000 }) };
+          } catch (e) { // no key, rate limit, outage: this pet falls back to the Codex path rather than going undrawn
+            run.apiFailed = true; run.errors.push("image api: " + String(e.message).slice(0, 120)); run.attempts--;
+            run.model = ENV.model; run.effort = ENV.effort;
+            await hold();
+            continue;
+          }
+        } else r = await runCodex(work, sheetPrompt(description, wish), signal, run.apiFailed ? { ...cfg, model: ENV.model, effort: ENV.effort } : cfg);
         run.imageMs.push(Date.now() - ta);
         fs.writeFileSync(path.join(work, "sheet.png"), r.png);
         const a = sliceSheet(path.join(work, "sheet.png"), outDir);
@@ -105,7 +119,7 @@ export async function makeFrames(outDir, description, { wish = null, signal = nu
         if (run.attempts >= ATTEMPTS || signal?.aborted) throw Object.assign(new Error(e.message), { run: { ...run, ms: Date.now() - t0 } });
       }
     }
-  } finally { release(); }
+  } finally { if (held) release(); }
 }
 
 /** Never throws: on any failure the static sprite stays. */

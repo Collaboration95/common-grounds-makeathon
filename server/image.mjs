@@ -68,7 +68,7 @@ export function keyOutWhite(pngBuf) {
 const sips = (args) => new Promise((res, rej) => execFile("sips", args, { timeout: 30000 }, (e) => (e ? rej(e) : res())));
 
 let busy = 0; const waiting = [];
-const slot = async () => { if (busy >= 5) await new Promise((r) => waiting.push(r)); busy++; return () => { busy--; waiting.shift()?.(); }; };
+const slot = async () => { if (busy >= 8) await new Promise((r) => waiting.push(r)); busy++; return () => { busy--; waiting.shift()?.(); }; };
 
 /**
  * Returns PNG bytes. opts: { size, quality, model, transparent }.
