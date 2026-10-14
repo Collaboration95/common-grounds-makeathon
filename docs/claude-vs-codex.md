@@ -6,9 +6,9 @@
 
 - **Haiku 5.5 is the pick.** It matched or beat Sonnet 5.5 and the Codex models on every check, runs about 4× faster than Luna, and costs about **$0.001 per pet**.
 - **Sonnet 5.5 is not worth it here.** It cost about 20× more than Haiku and scored no better.
-- **Claude only covers two of the three steps.** It can screen a wish and write the creature's code. It cannot draw the sprite sheet, which is the slowest step (about 45 s) and still runs on the ChatGPT login.
+- **Claude only covers two of the three steps.** It can screen a wish and write the creature's code. It cannot draw the sprite sheet. That was the slowest step (about 46 s through Codex on the ChatGPT login), so drawing now calls the OpenAI image API directly (`gpt-image-2.5-flare`, about 12 s). A whole pet goes live in 13–16 s on the box. Codex stays as the automatic fallback, and `draw codex` switches back. The image API's price is not measured.
 - **$100 of API credit buys about 98,000 pets on Haiku** (about 3,300 a day for a month), or about 5,000 on Sonnet (about 170 a day).
-- **A pet won't appear sooner.** The wait is the drawing, and the code is already written while it draws. The gain is not depending on one subscription for two of three steps.
+- **A pet appears about 3× sooner once drawing moves to the image API.** With Codex drawing, the wait was the drawing (about 47 s total). With the image API it is about 15 s.
 
 ## What a wish goes through
 
@@ -16,7 +16,7 @@
 |---|---|---|---|
 | **Screen** | Allows or declines the wish, and writes the illustrator's prompt | Codex (Luna) | Yes |
 | **Build** | Writes the creature's behaviour as a `thing.js`, checked by a simulator | Codex (Luna) | Yes |
-| **Draw** | Makes a 12-frame pixel-art sprite sheet | Codex image tool (about 45 s, 70 s when 6 run at once) | No, Claude can't generate images |
+| **Draw** | Makes a 12-frame pixel-art sprite sheet | OpenAI image API, `gpt-image-2.5-flare` (about 12 s; Codex image tool is the fallback, about 45 s) | No, Claude can't generate images |
 
 ## How it was tested
 
@@ -92,7 +92,7 @@ Luna's runs predate the shared-prompt change above, and 9 wishes is a small samp
 
 - **A cold prompt cache** (nothing built for 5 minutes) adds about $0.0006 on Haiku and $0.013 on Sonnet to the next build. Even at Sonnet's worst case that is about 3,000 pets a month.
 - **Rate limits** on this key are 1,000 requests a minute and 400,000 output tokens a minute for both models, far above what a vote needs.
-- **Drawing is not included.** It stays on the ChatGPT subscription unless it is moved to the OpenAI image API, which I did not price.
+- **Drawing is not included.** It now runs on the OpenAI image API (OpenAI billing, not this $100), which I did not price. `draw codex` puts it back on the ChatGPT subscription.
 - **Codex has no per-pet price** on the subscription, but it has a quota. That quota running out is the risk this work is meant to reduce.
 
 ## What I got wrong on the way
@@ -103,7 +103,7 @@ Luna's runs predate the shared-prompt change above, and 9 wishes is a small samp
 ## Not tested
 
 - **How the creatures look and move in the room.** The checks read the code and simulate it. Nobody watched the output, so a visual pass is still worth doing before putting this on the vote box.
-- **Drawing on the API.** Claude can't do it, and the OpenAI image route isn't measured.
+- **The image API's price, and its quality over many wishes.** Timed on 11 sheets and checked by eye; no bill read, no rubric.
 - **A busy day.** Everything ran at 4 wishes at a time from one laptop.
 
 ## Switching models on a running server

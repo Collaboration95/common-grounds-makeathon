@@ -6,11 +6,11 @@
 
 Now the brains run on **Claude Haiku 5.5 through the API**, paid for by the **$100 a month of API credit Anthropic gives me**. Claude Code built the switch, I tested it with a harness that costs pennies, and it's **live on the public vote box right now**.
 
-> One honest line up front: Claude can't draw, so the **sprite drawing still runs on ChatGPT**. I'll show the image-gen numbers too (section 7), because that's where the wait actually is.
+> One honest line up front: Claude can't draw. The sprite drawing was the slowest step (~46 s through Codex on my ChatGPT login), so I moved it to **OpenAI's image API called directly: ~12 s a sheet, a whole pet live in ~15 s**. Numbers in section 7.
 
 ![A sprite sheet from the Commons: a golden dog in sunglasses eating ice cream, 12 frames: walk, fly, idle, rest, sleep, special move](claude-switch/sheet-dog.png)
 
-*One wish → one 12-frame sheet (4 walk, 4 fly, idle, rest, sleep, special). Drawn by Codex's image tool, not Claude.*
+*One wish → one 12-frame sheet (4 walk, 4 fly, idle, rest, sleep, special). Drawn by an image model, not Claude. This one came from the Codex route; the API route's sheets are in section 7.*
 
 ---
 
@@ -26,7 +26,8 @@ Now the brains run on **Claude Haiku 5.5 through the API**, paid for by the **$1
 | 🧠 Right allow / decline verdict | **43 / 43** (including prompt-injection and brand traps) |
 | 🔁 Switching models | **no restart**: edit one file, the next wish uses the new model |
 | 💵 What the whole experiment cost me | **$2.62** of a $10 test allowance I set myself |
-| 🖼️ Where the real wait is | **~45 s of image generation**, the one step Claude can't do |
+| 🖼️ Drawing the sprite sheet | **~12 s** via the image API vs **~46 s** through Codex (≈ **3.8× faster**) |
+| 🚀 A whole pet, wish to live | **13–16 s** on the real box (was ~47 s) |
 
 ---
 
@@ -237,7 +238,7 @@ node tools/set-models.mjs haiku | sonnet | luna | budget 80 | show
 
 ## 7. Image generation: what Claude can't do (and the numbers)
 
-Claude doesn't generate images, so the 12-frame sprite sheets are still drawn by **Codex's image tool on my ChatGPT login**. This is the step that sets how long a pet takes:
+Claude doesn't generate images, so the 12-frame sprite sheets come from an image model. **Through Codex's image tool on my ChatGPT login** (the original route) this is the step that sets how long a pet takes:
 
 | Drawing setup (6 sheets at once) | Median | p90 |
 |---|---|---|
@@ -265,9 +266,45 @@ I ran two wishes at once on the live AWS box, on a throwaway world so I didn't t
 2  live    47s    2s      47s   5s    a durian wearing sunglasses [party]
 ```
 
-**So the honest summary:** the *text* steps went from "roughly 17 s of waiting on code" to "5 s", and now cost a tenth of a cent. But a pet still takes about **47 seconds**, because the picture takes 46. The win isn't a faster pet. It's **two of three steps no longer depending on my ChatGPT plan, and being cheap, fast, and flip-able on a flag.**
+**That was the state when I first wrote this**: the text steps were fast, but a pet still took ~47 s because the picture took 46. So I attacked the picture.
 
-> **Next experiment (not done yet):** moving the drawing to the OpenAI image API, so the whole pipeline stops depending on the ChatGPT login. The code path exists; I haven't measured or priced it.
+![Sunglasses dog drawn via the image API in 12 s](claude-switch/sheet-api-dog.png)
+![Noodle dragon drawn via the image API in 14 s](claude-switch/sheet-api-noodle-dragon.png)
+
+*Both drawn through the image API (12 s and 14 s). The dog gained a red bandana nobody asked for; the sheet prompt here omitted the server's "add nothing they did not ask for" line.*
+
+### Why drawing took 46 s, and the fix
+
+Drawing went through the **Codex CLI**: start a process, boot an agent, have a language model decide to call an image tool, wait for the image, find the file on disk. The image itself isn't the slow part. The agent wrapped around it is. Calling the **image API directly** removes all of that.
+
+I timed the same sheet prompt on four image models (one sheet each, low quality, run alone):
+
+| Image model (API, 1536×1024, low quality) | Time | Verdict |
+|---|---|---|
+| **gpt-image-2.5-flare** | **12.2 s** | clean pixel art, real transparency, slices to 12 frames ✅ |
+| gpt-image-1-mini | 13.7 s | fuzzy painted fur, not pixel art ❌ |
+| gpt-image-2 | 17.1 s | no transparency (needs keying) |
+| gpt-image-2.5-sunburst | 19.1 s | good, but slower than flare |
+
+Then 6 different wishes at once through the real `makeFrames` code: **five finished in 12–14 s**, the sixth in 24 s because it queued behind a cap of 5 (now 8). Compare Codex's 32–80 s spread with 6 at once.
+
+And the same four-wish test on the real box (Haiku screen + build, image-API drawing, throwaway world):
+
+```
+#  status  total  screen  draw  code  wish
+4  live    13s    3s      13s   12s   a robot cat that sells newspapers
+2  live    15s    3s      15s   10s   a pigeon wearing a tiny crown that steals chips
+3  live    15s    3s      15s   14s   a durian that rolls away from my cursor
+1  live    16s    3s      16s   12s   a sleepy kopi cup that hops around looking for a stool
+
+live 4/4, average 15s, slowest 16s
+```
+
+**47 s → 15 s per pet**, and the pet no longer needs my ChatGPT login at all.
+
+- **It's a flag too:** `node tools/set-models.mjs draw api` / `draw codex`, no restart.
+- **It can't leave a pet undrawn:** if the image API errors (bad key, rate limit, outage) that pet falls back to Codex. I tested it with a deliberately wrong key: the error was logged and the pet still got drawn, in 43 s.
+- **Cost:** this is OpenAI API money, not the Anthropic $100, and I haven't priced it. The API reports the image as ~158 output tokens at low quality, but I'd rather read your OpenAI usage page than trust that. Do that before quoting a number.
 
 ## 8. Bugs I hit (and one thing I got wrong)
 
@@ -280,8 +317,8 @@ I ran two wishes at once on the live AWS box, on a throwaway world so I didn't t
 
 - **How the creatures look and move in the room.** The checks read and simulate the code; I haven't visually reviewed 29 creatures. Worth a pass.
 - **A busy day.** Everything ran 4–8 wishes at a time from one laptop (plus 6 at once on the box).
-- **The image API.** Not measured or priced.
-- **Failure mode.** If the Claude API is down or the cap is hit, a pet fails, since there's no automatic fallback to Luna yet (a fallback is the obvious next addition).
+- **The image API's price, and quality at scale.** Timed and visually checked on 11 sheets (4 models, 6 wishes at once, 4 on the box); I did not read a bill. Low quality is also a lower detail ceiling than Codex's tool; I compared by eye on one prompt, not with a rubric.
+- **Failure mode.** If the Claude API is down or the cap is hit, a pet fails, since there's no automatic fallback to Luna for screen and build yet. (Drawing does fall back to Codex.)
 - **Sample sizes.** Claude: 29 builds / 43 screens per model. Luna: 9 builds per run. Treat the head-to-head as "comparable".
 
 ## 10. Reproduce it
