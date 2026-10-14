@@ -13,6 +13,9 @@ sys.path.insert(0, str(HERE))
 CFG = json.loads((HERE / "configs.json").read_text())
 WISHES = [json.loads(l) for l in (HERE / "wishes.jsonl").read_text().splitlines()]
 BY_ID = {w["id"]: w for w in WISHES}
+if "ANTHROPIC_API_KEY" not in os.environ:  # the repo's .env holds it; only that one key is taken
+    for l in (HERE.parent / ".env").read_text().splitlines() if (HERE.parent / ".env").exists() else []:
+        if l.startswith("ANTHROPIC_API_KEY="): os.environ["ANTHROPIC_API_KEY"] = l.split("=", 1)[1].strip().strip("\"'")
 
 
 def arg(name, default=None):
@@ -37,7 +40,8 @@ def run_stage(stage, cfg):
     out = HERE / "results" / cfg
     sel = HERE / "results" / f".sel-{cfg}.jsonl"
     sel.write_text("\n".join(json.dumps(w, ensure_ascii=False) for w in selected()))
-    env = {**os.environ, **CFG[cfg]["env"], "COMMONS_WORLD": str(out / "world")}
+    env = {**os.environ, **CFG[cfg]["env"], "COMMONS_WORLD": str(out / "world"),
+           "CLAUDE_LEDGER": str(HERE / "results" / "claude-spend.jsonl"), "CLAUDE_BUDGET_USD": os.environ.get("CLAUDE_BUDGET_USD", "8")}  # hard stop on the shared Anthropic test ledger
     subprocess.run(["node", str(HERE / "stage.mjs"), stage, str(sel), str(out), "--conc", arg("--conc", "4")], env=env, check=False)
     sel.unlink(missing_ok=True)
 
@@ -45,7 +49,9 @@ def run_stage(stage, cfg):
 def score(stage, cfg):
     out, rows = HERE / "results" / cfg, []
     mod = importlib.import_module("checks." + {"build": "thing"}.get(stage, stage))
+    ids = {w["id"] for w in selected()}  # only what this invocation asked for: older files in the folder are not re-scored
     for f in sorted((out / stage).glob("*.json")):
+        if f.stem not in ids: continue
         w, r = BY_ID[f.stem], json.loads(f.read_text())
         if stage == "screen":
             checks = mod.check(w, r)

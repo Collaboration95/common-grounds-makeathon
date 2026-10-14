@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Commons: the new cost</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #6b6a65;
+    --grid: #e1e0d9; --axis: #c3c2b7; --ring: rgba(11,11,11,.10);
+    --haiku: #2a78d6; --sonnet: #eb6834; --good: #006300;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #a09f98;
+      --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,.10);
+      --haiku: #3987e5; --sonnet: #d95926; --good: #0ca30c;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #a09f98;
+    --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,.10);
+    --haiku: #3987e5; --sonnet: #d95926; --good: #0ca30c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 880px; margin: 0 auto; padding: 40px 20px 80px; }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .eyebrow { color: var(--muted); font-size: 13px; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 6px; }
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px; }
+  h2 { font-size: 19px; margin: 0 0 4px; }
+  .lede { color: var(--ink-2); margin: 0; max-width: 62ch; }
+  .sub { color: var(--ink-2); font-size: 14px; margin: 0 0 16px; max-width: 70ch; }
+  button { font: inherit; font-size: 13px; color: var(--ink-2); background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  button:hover { color: var(--ink); }
+  button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--haiku); outline-offset: 2px; }
+  .card { background: var(--surface); border: 1px solid var(--ring); border-radius: 14px; padding: 22px; margin-top: 18px; }
+  .hero { padding: 30px 26px; }
+  .hero-fig { font-size: 64px; line-height: 1; font-weight: 650; letter-spacing: -.02em; margin: 6px 0 4px; }
+  .hero-fig small { font-size: 22px; font-weight: 500; color: var(--ink-2); letter-spacing: 0; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 22px; }
+  .tile { border: 1px solid var(--ring); border-radius: 12px; padding: 14px 16px; }
+  .tile b { display: block; font-size: 26px; line-height: 1.15; font-weight: 650; }
+  .tile span { color: var(--ink-2); font-size: 13px; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin: 0 0 12px; font-size: 14px; color: var(--ink-2); }
+  .key { display: inline-flex; align-items: center; gap: 8px; }
+  .key i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .bars { display: grid; gap: 14px; }
+  .row { display: grid; grid-template-columns: 112px 1fr; align-items: center; gap: 12px; }
+  .row .name { font-size: 14px; color: var(--ink-2); }
+  .track { position: relative; height: 24px; border-bottom: 1px solid var(--axis); display: flex; align-items: center; }
+  .bar { height: 24px; min-width: 4px; border-radius: 0 4px 4px 0; transition: width .25s; cursor: default; }
+  .val { margin-left: 10px; font-size: 14px; font-weight: 600; }
+  .val em { font-style: normal; font-weight: 400; color: var(--ink-2); }
+  .h { background: var(--haiku); } .s { background: var(--sonnet); }
+  .slider-wrap { display: grid; gap: 6px; margin: 6px 0 18px; }
+  .slider-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+  .slider-top b { font-size: 30px; font-weight: 650; }
+  input[type=range] { width: 100%; accent-color: var(--haiku); }
+  .scale { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; }
+  .check { display: flex; gap: 8px; align-items: center; color: var(--ink-2); font-size: 14px; margin: 8px 0 14px; }
+  .cap { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 1px solid var(--ink-2); }
+  .cap span { position: absolute; top: -17px; left: 4px; font-size: 11px; color: var(--ink-2); white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--grid); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--ink-2); font-weight: 600; }
+  td { font-variant-numeric: tabular-nums; }
+  details { margin-top: 14px; } summary { cursor: pointer; color: var(--ink-2); font-size: 14px; }
+  ul { margin: 8px 0 0; padding-left: 20px; color: var(--ink-2); } li { margin: 4px 0; }
+  .note { color: var(--ink-2); font-size: 14px; }
+  .pill { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--ring); color: var(--ink-2); }
+  #tip { position: fixed; z-index: 10; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--ring); box-shadow: 0 4px 16px rgba(0,0,0,.18); border-radius: 10px; padding: 8px 12px; font-size: 13px; max-width: 260px; opacity: 0; transition: opacity .1s; }
+  #tip b { display: block; margin-bottom: 2px; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 28px; }
+  code { font-size: 13px; background: var(--page); padding: 1px 6px; border-radius: 5px; }
+  @media (max-width: 560px) { .hero-fig { font-size: 48px; } .row { grid-template-columns: 84px 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <p class="eyebrow">The Commons · 13 Oct 2026</p>
+      <h1>The new cost of a wish</h1>
+      <p class="lede">The creature brains moved from my ChatGPT subscription to Claude through the API. Here is what that costs, how far $100 goes, and what is still not on that bill.</p>
+    </div>
+    <button id="theme" aria-label="Toggle dark mode">Dark mode</button>
+  </header>
+
+  <section class="card hero" aria-labelledby="hero-h">
+    <p class="eyebrow" id="hero-h">Cost of one pet on Claude Haiku 5.5 (screen + write the code)</p>
+    <p class="hero-fig">$0.001 <small>≈ a tenth of a cent</small></p>
+    <p class="lede">1,000 pets is about <b>$1</b>. The $100 of monthly API credit covers roughly <b>98,000</b> of them.</p>
+    <div class="tiles">
+      <div class="tile"><b>≈ 98,000</b><span>pets per $100 on Haiku (warm cache)</span></div>
+      <div class="tile"><b>≈ 5,000</b><span>pets per $100 if I had picked Sonnet</span></div>
+      <div class="tile"><b>$2.62</b><span>spent testing, of a $10 allowance (692 calls)</span></div>
+      <div class="tile"><b>$80</b><span>hard stop set on the live server</span></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Cost of 1,000 pets</h2>
+    <p class="sub">Same work, two models. Screening a wish and writing its code, prompt cache warm. Hover a bar for the split.</p>
+    <div class="legend" aria-label="Legend">
+      <span class="key"><i style="background:var(--haiku)"></i>Claude Haiku 5.5</span>
+      <span class="key"><i style="background:var(--sonnet)"></i>Claude Sonnet 5.5</span>
+    </div>
+    <div class="bars" id="chart-cost"></div>
+  </section>
+
+  <section class="card" aria-labelledby="c2">
+    <h2 id="c2">What $100 buys</h2>
+    <p class="sub">Pets you can make before the credit is gone. Drawing is not included (see the last section).</p>
+    <div class="bars" id="chart-pets"></div>
+  </section>
+
+  <section class="card" aria-labelledby="c3">
+    <h2 id="c3">Try your own number</h2>
+    <p class="sub">Drag to pick how many pets get made. The thin line marks the $100 of credit; the label shows my $80 cap.</p>
+    <div class="slider-wrap">
+      <div class="slider-top"><b id="pets-out">1,000 pets</b><span class="note" id="pets-note"></span></div>
+      <input id="pets" type="range" min="0" max="100" step="0.01" value="33.33" aria-label="Number of pets, 100 to 100,000">
+      <div class="scale"><span>100</span><span>1,000</span><span>10,000</span><span>100,000</span></div>
+    </div>
+    <label class="check"><input type="checkbox" id="cold"> Cold prompt cache every time (a pet only every 5+ minutes)</label>
+    <div class="legend" aria-label="Legend">
+      <span class="key"><i style="background:var(--haiku)"></i>Claude Haiku 5.5</span>
+      <span class="key"><i style="background:var(--sonnet)"></i>Claude Sonnet 5.5</span>
+    </div>
+    <div class="bars" id="chart-slider"></div>
+  </section>
+
+  <section class="card" aria-labelledby="c4">
+    <h2 id="c4">Cost at a glance</h2>
+    <table id="scen">
+      <thead><tr><th>Pets made</th><th>Haiku 5.5</th><th>Sonnet 5.5</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="note" style="margin:10px 0 0">Warm cache. Per pet: Haiku $0.00102, Sonnet $0.0198. Cold cache: Haiku $0.0017, Sonnet $0.033.</p>
+  </section>
+
+  <section class="card" aria-labelledby="c5">
+    <h2 id="c5">Where each pet's money goes</h2>
+    <table>
+      <thead><tr><th>Per pet</th><th>Screen</th><th>Build (code)</th><th>Total</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Haiku 5.5</td><td>$0.00022</td><td>$0.0008</td><td><b>$0.00102</b></td></tr>
+        <tr><td>Claude Sonnet 5.5</td><td>$0.0046</td><td>$0.0152</td><td><b>$0.0198</b></td></tr>
+      </tbody>
+    </table>
+    <details>
+      <summary>How these are worked out</summary>
+      <ul>
+        <li><b>List prices per million tokens:</b> Haiku 5.5 $0.10 in / $0.50 out; Sonnet 5.5 $2 in / $10 out. Cached input is billed at a tenth of the input price; writing the cache costs 1.25×.</li>
+        <li><b>A screen</b> sends about 1,600 tokens and gets about 130 back.</li>
+        <li><b>A build</b> sends a ~5,000-token prompt (the creature contract, two samples, the rules). About 90% of it is read from the prompt cache. The reply is about 1,200 tokens of code.</li>
+        <li><b>Averages come from 29 builds and 43 screens per model</b>, measured from the token counts the API returns, including the occasional repair turn.</li>
+        <li>Pet counts above divide $100 by these averages. They are estimates, not a quote.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="card" aria-labelledby="c6">
+    <h2 id="c6">What the experiment cost</h2>
+    <table>
+      <thead><tr><th>Model</th><th>API calls</th><th>Spend</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Haiku 5.5</td><td>438</td><td>$0.17</td></tr>
+        <tr><td>Claude Sonnet 5.5</td><td>254</td><td>$2.45</td></tr>
+        <tr><td><b>Total</b></td><td><b>692</b></td><td><b>$2.62</b></td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin:10px 0 0">Every call is priced and logged, and the test harness refused to go past $8. Sonnet was 7% of the calls and 93% of the bill. A few extra cents went on the box tests.</p>
+  </section>
+
+  <section class="card" aria-labelledby="c7">
+    <h2 id="c7">Not on the $100</h2>
+    <ul>
+      <li><b>Drawing the sprite sheet</b> (~45 s per pet). Claude can't generate images, so it still runs on the ChatGPT login through Codex. This is the step that could still hit a ChatGPT limit.</li>
+      <li><b>The AWS box</b> that hosts the vote: a Lightsail instance at roughly $84 a month list price, tagged to be deleted after 15 Oct.</li>
+      <li><b>Room-photo redraws</b> use an OpenAI API key, so that is its own small bill.</li>
+      <li><b>The next step:</b> price the OpenAI image API for the sprite sheets, so the whole pipeline can leave the ChatGPT login. Not measured yet.</li>
+    </ul>
+    <p class="note" style="margin:12px 0 0"><span class="pill">Safeguards</span> The live server stops calling Claude once the spend log reaches $80, and the model can be flipped back to Codex with one command, no restart: <code>node tools/set-models.mjs luna</code></p>
+  </section>
+
+  <footer>Numbers measured 13 Oct 2026 with the repo's eval harness (<code>eval/</code>): 43 wishes, 29 builds per model. Prices are Anthropic's list prices for prompts under 100K tokens. Full write-up: <code>gist-claude-switch.md</code>.</footer>
+</main>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const PER = { haiku: { warm: 0.00102, cold: 0.0017, screen: 0.00022, build: 0.0008 }, sonnet: { warm: 0.0198, cold: 0.033, screen: 0.0046, build: 0.0152 } };
+const fmt$ = (n) => n >= 100 ? "$" + Math.round(n).toLocaleString() : n >= 10 ? "$" + n.toFixed(1) : "$" + n.toFixed(2);
+const fmtN = (n) => Math.round(n).toLocaleString();
+const tip = document.getElementById("tip");
+function showTip(e, html) { tip.innerHTML = html; tip.style.opacity = 1; const w = tip.offsetWidth; tip.style.left = Math.min(e.clientX + 14, innerWidth - w - 8) + "px"; tip.style.top = (e.clientY + 14) + "px"; }
+function hideTip() { tip.style.opacity = 0; }
+
+function bars(el, rows, max, extra = "") {
+  el.innerHTML = rows.map((r) => `<div class="row"><span class="name">${r.name}</span><div class="track">
+    <div class="bar ${r.cls}" style="width:${Math.max(0.6, 100 * r.v / max) * 0.62}%" data-tip="${r.tip.replace(/"/g, "&quot;")}"></div>
+    <span class="val">${r.label}</span></div></div>`).join("") + extra;
+  el.querySelectorAll(".bar").forEach((b) => { b.addEventListener("mousemove", (e) => showTip(e, b.dataset.tip)); b.addEventListener("mouseleave", hideTip); });
+}
+
+// Chart 1: cost of 1,000 pets
+const cost1k = (m) => PER[m].warm * 1000;
+bars(document.getElementById("chart-cost"), [
+  { name: "Haiku 5.5", cls: "h", v: cost1k("haiku"), label: `${fmt$(cost1k("haiku"))} <em>per 1,000</em>`, tip: `<b>Haiku 5.5</b>Screen ${fmt$(PER.haiku.screen * 1000)} + code ${fmt$(PER.haiku.build * 1000)} per 1,000 pets` },
+  { name: "Sonnet 5.5", cls: "s", v: cost1k("sonnet"), label: `${fmt$(cost1k("sonnet"))} <em>per 1,000 (${Math.round(cost1k("sonnet") / cost1k("haiku"))}×)</em>`, tip: `<b>Sonnet 5.5</b>Screen ${fmt$(PER.sonnet.screen * 1000)} + code ${fmt$(PER.sonnet.build * 1000)} per 1,000 pets` },
+], cost1k("sonnet"));
+
+// Chart 2: pets per $100
+const pets100 = (m) => 100 / PER[m].warm;
+bars(document.getElementById("chart-pets"), [
+  { name: "Haiku 5.5", cls: "h", v: pets100("haiku"), label: `≈ ${fmtN(Math.round(pets100("haiku") / 1000) * 1000)} <em>pets</em>`, tip: `<b>Haiku 5.5</b>$100 ÷ $${PER.haiku.warm} ≈ ${fmtN(pets100("haiku"))} pets<br>Cold cache: ≈ ${fmtN(100 / PER.haiku.cold)}` },
+  { name: "Sonnet 5.5", cls: "s", v: pets100("sonnet"), label: `≈ ${fmtN(Math.round(pets100("sonnet") / 500) * 500)} <em>pets</em>`, tip: `<b>Sonnet 5.5</b>$100 ÷ $${PER.sonnet.warm} ≈ ${fmtN(pets100("sonnet"))} pets<br>Cold cache: ≈ ${fmtN(100 / PER.sonnet.cold)}` },
+], pets100("haiku"));
+
+// Slider
+const slider = document.getElementById("pets"), cold = document.getElementById("cold");
+function drawSlider() {
+  const n = Number(Math.pow(10, 2 + slider.value * 3 / 100).toPrecision(2));
+  const k = cold.checked ? "cold" : "warm";
+  document.getElementById("pets-out").textContent = fmtN(n) + " pets";
+  const h = n * PER.haiku[k], s = n * PER.sonnet[k];
+  document.getElementById("pets-note").textContent = `Haiku uses ${(h).toFixed(h < 10 ? 1 : 0)}% of the $100; Sonnet ${s.toFixed(s < 10 ? 1 : 0)}%`;
+  const max = 120; // the axis runs to $120 so the $100 line is visible
+  const line = `<div class="row" aria-hidden="true"><span></span><div class="track" style="border:0;height:0"><div class="cap" style="left:${100 / max * 62}%"><span>$100</span></div><div class="cap" style="left:${80 / max * 62}%;border-left-style:dotted"><span style="top:auto;bottom:-16px">$80 cap</span></div></div></div>`;
+  bars(document.getElementById("chart-slider"), [
+    { name: "Haiku 5.5", cls: "h", v: Math.min(h, max), label: `${fmt$(h)} ${h > 100 ? "<em>over the credit</em>" : ""}`, tip: `<b>Haiku 5.5</b>${fmtN(n)} pets × $${PER.haiku[k]} = ${fmt$(h)}` },
+    { name: "Sonnet 5.5", cls: "s", v: Math.min(s, max), label: `${fmt$(s)} ${s > 100 ? "<em>over the credit</em>" : ""}`, tip: `<b>Sonnet 5.5</b>${fmtN(n)} pets × $${PER.sonnet[k]} = ${fmt$(s)}` },
+  ], max, line);
+}
+slider.addEventListener("input", drawSlider); cold.addEventListener("change", drawSlider); drawSlider();
+
+// Scenario table
+document.querySelector("#scen tbody").innerHTML = [100, 1000, 10000, 50000, 100000].map((n) => `<tr><td>${fmtN(n)}</td><td>${fmt$(n * PER.haiku.warm)}</td><td>${fmt$(n * PER.sonnet.warm)}${n * PER.sonnet.warm > 100 ? " <span class='pill'>over $100</span>" : ""}</td></tr>`).join("");
+
+// Theme toggle
+const root = document.documentElement, btn = document.getElementById("theme");
+btn.addEventListener("click", () => {
+  const dark = (root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark";
+  root.dataset.theme = dark ? "light" : "dark";
+  btn.textContent = dark ? "Dark mode" : "Light mode";
+});
+</script>
+</body>
+</html>

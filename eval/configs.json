@@ -116,5 +116,104 @@
    "CODEX_EFFORT": "medium",
    "CODEX_TIER": "fast"
   }
+ },
+ "haiku-off": {
+  "note": "claude-haiku-5-5, thinking off, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-haiku-5-5",
+   "SCREEN_EFFORT": "none",
+   "CODEX_MODEL": "claude-haiku-5-5",
+   "CODEX_EFFORT": "none"
+  }
+ },
+ "sonnet-off": {
+  "note": "claude-sonnet-5-5, thinking off, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-sonnet-5-5",
+   "SCREEN_EFFORT": "none",
+   "CODEX_MODEL": "claude-sonnet-5-5",
+   "CODEX_EFFORT": "none"
+  }
+ },
+ "haiku-low": {
+  "note": "claude-haiku-5-5, adaptive thinking, effort low, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-haiku-5-5",
+   "SCREEN_EFFORT": "low",
+   "CODEX_MODEL": "claude-haiku-5-5",
+   "CODEX_EFFORT": "low"
+  }
+ },
+ "sonnet-low": {
+  "note": "claude-sonnet-5-5, adaptive thinking, effort low, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-sonnet-5-5",
+   "SCREEN_EFFORT": "low",
+   "CODEX_MODEL": "claude-sonnet-5-5",
+   "CODEX_EFFORT": "low"
+  }
+ },
+ "haiku-c1": {
+  "note": "claude-haiku-5-5, thinking off, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-haiku-5-5",
+   "SCREEN_EFFORT": "none",
+   "CODEX_MODEL": "claude-haiku-5-5",
+   "CODEX_EFFORT": "none"
+  }
+ },
+ "sonnet-c1": {
+  "note": "claude-sonnet-5-5, thinking off, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-sonnet-5-5",
+   "SCREEN_EFFORT": "none",
+   "CODEX_MODEL": "claude-sonnet-5-5",
+   "CODEX_EFFORT": "none"
+  }
+ },
+ "haiku-s1": {
+  "note": "claude-haiku-5-5, thinking off, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-haiku-5-5",
+   "SCREEN_EFFORT": "none",
+   "CODEX_MODEL": "claude-haiku-5-5",
+   "CODEX_EFFORT": "none"
+  }
+ },
+ "haiku-s4": {
+  "note": "claude-haiku-5-5, thinking off, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-haiku-5-5",
+   "SCREEN_EFFORT": "none",
+   "CODEX_MODEL": "claude-haiku-5-5",
+   "CODEX_EFFORT": "none"
+  }
+ },
+ "sonnet-s1": {
+  "note": "claude-sonnet-5-5, thinking off, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-sonnet-5-5",
+   "SCREEN_EFFORT": "none",
+   "CODEX_MODEL": "claude-sonnet-5-5",
+   "CODEX_EFFORT": "none"
+  }
+ },
+ "haiku-v2": {
+  "note": "claude-haiku-5-5, thinking off, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-haiku-5-5",
+   "SCREEN_EFFORT": "none",
+   "CODEX_MODEL": "claude-haiku-5-5",
+   "CODEX_EFFORT": "none"
+  }
+ },
+ "sonnet-v2": {
+  "note": "claude-sonnet-5-5, thinking off, Anthropic API",
+  "env": {
+   "SCREEN_CODEX_MODEL": "claude-sonnet-5-5",
+   "SCREEN_EFFORT": "none",
+   "CODEX_MODEL": "claude-sonnet-5-5",
+   "CODEX_EFFORT": "none"
+  }
  }
 }

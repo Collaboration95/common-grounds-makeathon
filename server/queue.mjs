@@ -5,9 +5,9 @@ import fs from "node:fs";
 import path from "node:path";
 import * as store from "./store.mjs";
 import * as runlog from "./runlog.mjs";
-import { screen, MODEL as SCREEN_MODEL, EFFORT as SCREEN_EFFORT } from "./screen.mjs";
+import { screen } from "./screen.mjs";
 import { drawSprite, drawPatch } from "./image.mjs";
-import { buildThing, MODEL as BUILD_MODEL, EFFORT as BUILD_EFFORT } from "./codex.mjs";
+import { buildThing } from "./codex.mjs";
 import * as presets from "./presets.mjs";
 import { animateThing, makeFrames } from "./animate.mjs";
 import { execFile } from "node:child_process";
@@ -130,7 +130,7 @@ export function resume() {
   }
 }
 
-const screenNote = (r, ms) => ({ ms, model: SCREEN_MODEL, effort: SCREEN_EFFORT, allowed: r.allowed, fallback: !!r.fallback, spritePrompt: r.spritePrompt, thingSummary: r.thingSummary, bleed: r.bleed?.label || null });
+const screenNote = (r, ms) => ({ ms, model: r.via?.model ?? "keyword list", effort: r.via?.effort ?? null, allowed: r.allowed, fallback: !!r.fallback, spritePrompt: r.spritePrompt, thingSummary: r.thingSummary, bleed: r.bleed?.label || null });
 
 async function intake(w) {
   store.log(w, `#${w.n} checking the wish…`);
@@ -209,7 +209,7 @@ async function build(w) {
   rs.building = false;
   if (settled(w)) return; // vetoed or declined while it was building
   const stats = { buildMs: Date.now() - t0, turns: res.turns, checkRuns: res.checkRuns, checkFails: res.checkFails };
-  runlog.note(w.id, { build: { ms: stats.buildMs, waitMs: t0 - rs.queuedAt, model: BUILD_MODEL, effort: BUILD_EFFORT, turns: res.turns, checkRuns: res.checkRuns, checkFails: res.checkFails, ok: res.ok, ...(res.ok ? {} : { error: String(res.error).slice(0, 200) }) } });
+  runlog.note(w.id, { build: { ms: stats.buildMs, waitMs: t0 - rs.queuedAt, model: res.model, effort: res.effort, turns: res.turns, checkRuns: res.checkRuns, checkFails: res.checkFails, ok: res.ok, ...(res.ok ? {} : { error: String(res.error).slice(0, 200) }) } });
   if (!res.ok) {
     console.error(`wish ${w.id} failed: ${res.error}`);
     store.log(w, `#${w.n} failed: ${res.error?.slice(0, 80)}`);
