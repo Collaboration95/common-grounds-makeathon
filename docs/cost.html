@@ -175,16 +175,16 @@
         <tr><td><b>Total</b></td><td><b>692</b></td><td><b>$2.62</b></td></tr>
       </tbody>
     </table>
-    <p class="note" style="margin:10px 0 0">Every call is priced and logged, and the test harness refused to go past $8. Sonnet was 7% of the calls and 93% of the bill. A few extra cents went on the box tests.</p>
+    <p class="note" style="margin:10px 0 0">Every call is priced and logged, and the test harness refused to go past $8. Sonnet was 37% of the calls and 93% of the bill. A few extra cents went on the box tests.</p>
   </section>
 
   <section class="card" aria-labelledby="c7">
     <h2 id="c7">Not on the $100</h2>
     <ul>
-      <li><b>Drawing the sprite sheet</b> (~45 s per pet). Claude can't generate images, so it still runs on the ChatGPT login through Codex. This is the step that could still hit a ChatGPT limit.</li>
+      <li><b>Drawing the sprite sheet</b> (~12 s per pet). Claude can't generate images, so it calls the OpenAI image API directly (it was ~46 s through Codex on the ChatGPT login, which is still the automatic fallback). This is OpenAI billing, not the $100.</li>
       <li><b>The AWS box</b> that hosts the vote: a Lightsail instance at roughly $84 a month list price, tagged to be deleted after 15 Oct.</li>
       <li><b>Room-photo redraws</b> use an OpenAI API key, so that is its own small bill.</li>
-      <li><b>The next step:</b> price the OpenAI image API for the sprite sheets, so the whole pipeline can leave the ChatGPT login. Not measured yet.</li>
+      <li><b>Still to do:</b> price the OpenAI image API for the sprite sheets. I timed it but did not read a bill, so check your OpenAI usage page before quoting a number.</li>
     </ul>
     <p class="note" style="margin:12px 0 0"><span class="pill">Safeguards</span> The live server stops calling Claude once the spend log reaches $80, and the model can be flipped back to Codex with one command, no restart: <code>node tools/set-models.mjs luna</code></p>
   </section>
