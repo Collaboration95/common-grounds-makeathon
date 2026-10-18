@@ -1,5 +1,7 @@
 # Hosting The Commons on a Linux box
 
+Historical setup notes for the public vote. Later versions also support Claude for screening/building and the OpenAI image API for drawing; see [the model configuration notes](../docs/claude-vs-codex.md#switching-models-on-a-running-server). Local cleanup does not verify or shut down cloud resources.
+
 How The Commons ran for the three-day public vote: one Ubuntu 24.04 VM in Singapore (AWS Lightsail, 4 vCPU / 8 GB). Pets are still built by the Codex CLI on a ChatGPT login; only room-photo redraws use `OPENAI_API_KEY`.
 
 ## Setup

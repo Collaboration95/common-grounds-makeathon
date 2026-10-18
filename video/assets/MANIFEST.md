@@ -1,5 +1,7 @@
 # Real product footage, The Commons (captured 2026-10-11 from the live server, headless Chrome via CDP)
 
+Historical capture log. The source clips and decoded frames described below are no longer included; stills remain. Rendering the retained video composition requires compatible source clips.
+
 Clips are h264 / yuv420p / 30 fps CFR mp4 built from timestamped JPEG frame sequences (Page.startScreencast / captureScreenshot JPEG q92; PNG polling only reached 3 fps at 1080p). Frames are kept in `frames/<clip>/` (`timing.json` = per-frame time in seconds; frame sequences are variable-rate, the mp4 holds each frame for its real duration, so mp4 time == real time). Times below are mp4 seconds. Several clips are real-time, so a build runs ~100 s: speed-ramp the dull parts in the edit.
 
 NOTE: `/world?scene=1` is the app's room-only view: the 16:9 room is inset in a 1920x1080 night (#1d1424) frame, room rect approx x184..1737, y103..977 (1553x874). Crop to that rect for full-bleed.

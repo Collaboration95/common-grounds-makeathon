@@ -3,4 +3,11 @@ node_modules/
 commons-world/
 .DS_Store
 .claude/worktrees/
-video/out/commons-slow-*.mp4
+__pycache__/
+*.py[cod]
+video/out/
+output/*
+!output/sprites/
+output/sprites/*
+!output/sprites/water-cooler-walk/
+!output/sprites/water-cooler-walk.zip

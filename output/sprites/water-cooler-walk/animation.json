@@ -1,0 +1,154 @@
+{
+  "sheet": "sprite-sheet.png",
+  "frameWidth": 314,
+  "frameHeight": 314,
+  "columns": 4,
+  "rows": 4,
+  "frameCount": 16,
+  "fps": 8,
+  "loop": true,
+  "directions": [
+    "left",
+    "right",
+    "up",
+    "down"
+  ],
+  "animations": {
+    "left": [
+      {
+        "file": "left-01.png",
+        "index": 0,
+        "x": 0,
+        "y": 0,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "left-02.png",
+        "index": 1,
+        "x": 314,
+        "y": 0,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "left-03.png",
+        "index": 2,
+        "x": 628,
+        "y": 0,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "left-04.png",
+        "index": 3,
+        "x": 942,
+        "y": 0,
+        "width": 314,
+        "height": 314
+      }
+    ],
+    "right": [
+      {
+        "file": "right-01.png",
+        "index": 4,
+        "x": 0,
+        "y": 314,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "right-02.png",
+        "index": 5,
+        "x": 314,
+        "y": 314,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "right-03.png",
+        "index": 6,
+        "x": 628,
+        "y": 314,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "right-04.png",
+        "index": 7,
+        "x": 942,
+        "y": 314,
+        "width": 314,
+        "height": 314
+      }
+    ],
+    "up": [
+      {
+        "file": "up-01.png",
+        "index": 8,
+        "x": 0,
+        "y": 628,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "up-02.png",
+        "index": 9,
+        "x": 314,
+        "y": 628,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "up-03.png",
+        "index": 10,
+        "x": 628,
+        "y": 628,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "up-04.png",
+        "index": 11,
+        "x": 942,
+        "y": 628,
+        "width": 314,
+        "height": 314
+      }
+    ],
+    "down": [
+      {
+        "file": "down-01.png",
+        "index": 12,
+        "x": 0,
+        "y": 942,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "down-02.png",
+        "index": 13,
+        "x": 314,
+        "y": 942,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "down-03.png",
+        "index": 14,
+        "x": 628,
+        "y": 942,
+        "width": 314,
+        "height": 314
+      },
+      {
+        "file": "down-04.png",
+        "index": 15,
+        "x": 942,
+        "y": 942,
+        "width": 314,
+        "height": 314
+      }
+    ]
+  }
+}

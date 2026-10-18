@@ -1,5 +1,7 @@
 # Handoff: The Commons on AWS for the public vote (12 Oct 2026)
 
+Historical record of the 12 Oct deployment. PRs #2 and #3 were merged on 13 Oct; later model changes are described in [the writeup](gist-claude-switch.md). Local media exports, source clips and runtime data were removed during project cleanup on 18 Oct. Cloud resource state was not checked as part of that cleanup.
+
 Context for whoever picks this up next. How it is hosted, what changed on 12 Oct, and what to watch out for. Secrets (keeper password and path, API key, host key) live only in the server's `~/commons/.env` and pm2 env, never in git.
 
 ## Where it runs
@@ -76,8 +78,8 @@ It starts a throwaway server with its own temp world on a free port, prints timi
 
 ## Open items
 
-- **Merges:** PR #2 (`public-vote`, the site plus these fixes) and PR #3 (`video-slow-cut`) are not merged yet.
-- **Videos:** the slow-cut renders are in `video/out/`. The 230–410 MB `commons-slow-*.mp4` masters are git-ignored because they're too big for GitHub; the `share-commons-slow-*` cuts are committed.
+- **Merges:** PR #2 (`public-vote`) and PR #3 (`video-slow-cut`) were merged on 13 Oct 2026.
+- **Videos:** local renders were removed during cleanup. See the [README](../README.md#demo-video-and-slides) for the published video links.
 - **Budget:** set an OpenAI budget cap, since room-photo redraws are public and use the API key.
 - **Shut down after the vote (about 15 Oct), only when the user says so:**
   1. Disable, then delete, CloudFront `E75EB38XOK6UR`.

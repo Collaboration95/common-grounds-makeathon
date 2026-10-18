@@ -1,5 +1,7 @@
 # The Commons: 24s motion piece, creative brief
 
+Historical production brief. The retained source and stills document the edit; source recordings, decoded frames and rendered exports were removed during project cleanup. Re-rendering requires restoring compatible source recordings. Published video links are in the [README](../README.md#demo-video-and-slides).
+
 ## Concept: "Twelve cells"
 Every creature in The Commons is a 4×3 sprite sheet with 12 frames, in a fixed order: walk ×4, fly ×4, idle, rest, sleep, special.
 The film borrows that grid as its structure and motion language:
