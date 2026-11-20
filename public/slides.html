@@ -107,36 +107,31 @@ pre.code .k{color:var(--amber)}pre.code .s{color:var(--teal)}pre.code .c{color:#
 <!-- 4 CODEX LOOP -->
 <section class="slide">
   <div class="kicker rise">Behind the scenes</div>
-  <h2 class="rise" style="font-size:78px;margin-bottom:22px">The Codex loop</h2>
+  <h2 class="rise" style="font-size:78px;margin-bottom:22px">How a wish comes to life</h2>
   <div class="row" style="gap:50px;align-items:stretch">
     <div class="col rise" style="width:960px;gap:6px">
-      <div class="box">Phone &rarr; <span class="mono">POST /api/wish</span></div>
+      <div class="box" style="font-size:34px"><span class="am">1</span>&nbsp; You type a wish on your phone</div>
       <div class="arrow">&darr;</div>
-      <div class="box t">Screening &middot; local Codex, <span class="mono">gpt-6.1-sol</span> <span class="am">~7 s</span><small>structured output: allowed &middot; thingSummary &middot; spritePrompt &middot; bleed</small></div>
+      <div class="box t" style="font-size:34px"><span class="am">2</span>&nbsp; Codex checks it and plans the character</div>
       <div class="arrow">&darr;</div>
-      <div class="box">Queue &middot; concurrency <b>3</b> &middot; flood guard 40</div>
+      <div class="box l" style="font-size:34px"><span class="am">3</span>&nbsp; Codex writes its behaviour as a tiny program</div>
       <div class="arrow">&darr;</div>
-      <div class="box l">Codex SDK thread &middot; <span class="mono">gpt-6.1-sol</span> &middot; low effort<small>workspace-write sandbox &middot; no network &middot; writes thing.js &nbsp;<span class="am">~30 s</span></small></div>
-      <div class="arrow" style="font-size:26px;height:34px">&darr; runs <span class="mono">check-thing.mjs</span> &nbsp; &uarr; reads errors, fixes</div>
-      <div class="box t">Server re-check (authoritative) &middot; one follow-up turn max</div>
+      <div class="box t" style="font-size:34px"><span class="am">4</span>&nbsp; It tests the code and fixes its own bugs<small>meanwhile, the sprite sheet gets drawn</small></div>
       <div class="arrow">&darr;</div>
-      <div class="box l" style="font-weight:800">LIVE &middot; sprite sheet drawn in parallel (gpt-6-luna)</div>
+      <div class="box l" style="font-size:34px;font-weight:800"><span class="am">5</span>&nbsp; It walks into the room, with your name on it</div>
     </div>
     <div class="col rise" style="flex:1">
       <div class="term" style="flex:1">
-        <div class="bar"><s></s><s></s><s></s>&nbsp; codex workbench &middot; wish #11 &middot; "a durian in sunglasses"</div>
+        <div class="bar"><s></s><s></s><s></s>&nbsp; wish: "a durian in sunglasses"</div>
         <div class="l"><span class="d">checking the wish…</span></div>
         <div class="l"><span class="g">accepted:</span> A durian wearing sunglasses bobs confidently and gives a cheeky little wiggle.</div>
         <div class="l"><span class="d">drawing it</span></div>
         <div class="l"><span class="y">Codex is writing it</span></div>
-        <div class="l"><span class="a">wrote thing.js (91 lines)</span></div>
-        <div class="l"><span class="g">check → passed</span></div>
-        <div class="l"><span class="g">server re-check → passed</span></div>
-        <div class="l">code passed in <b>33.4s</b></div>
+        <div class="l"><span class="g">tests passed</span></div>
         <div class="l"><span class="g">sprite ready</span></div>
-        <div class="l"><span class="y">LIVE: Too Cool Durian (built by Codex in 33s)</span></div>
+        <div class="l"><span class="y">LIVE: Too Cool Durian</span></div>
       </div>
-      <div class="cap">real log lines from the workbench rail</div>
+      <div class="cap">what the room sees, from the real log</div>
     </div>
   </div>
 </section>
@@ -217,70 +212,20 @@ pre.code .k{color:var(--amber)}pre.code .s{color:var(--teal)}pre.code .c{color:#
   <div class="rise paper" style="margin-top:22px;padding:8px;width:1728px"><img class="px" src="slides/merlion-pup.png" style="width:100%;display:block" alt=""></div>
 </section>
 
-<!-- 8 ROOM -->
-<section class="slide">
-  <div class="kicker rise">Behind the scenes</div>
-  <h2 class="rise" style="font-size:84px;margin-bottom:20px">Point a phone at any room<small>photo &rarr; gpt-image redraw (~17 s) &rarr; Codex vision maps it (~15 s) &rarr; sliders &rarr; live</small></h2>
-  <div class="row rise" style="gap:30px;align-items:center">
-    <div class="col"><img class="shot" src="slides/venue-photo.jpg" style="width:600px;height:450px;object-fit:cover" alt=""><div class="cap">1. the real venue photo</div></div>
-    <div class="arrow" style="height:auto">&rarr;</div>
-    <div class="col"><img class="shot" src="slides/venue-redraw.png" style="width:600px;height:450px;object-fit:cover" alt=""><div class="cap">2. paper-style redraw</div></div>
-    <div class="arrow" style="height:auto">&rarr;</div>
-    <div class="col" style="flex:1"><div class="box t" style="font-size:26px">Codex vision, <span class="mono">outputSchema</span><small>floor trapezoid &middot; air band &middot; ceiling<br>depthScale &middot; up to 10 spots<br>(seat / table / rest / perch)</small></div><div class="cap" style="margin-top:14px">3. host nudges sliders &rarr; <b>Use this room</b></div></div>
-  </div>
-  <p class="rise" style="margin-top:44px;font-size:34px">Creatures re-clamp to the new floor with a hop. The only OpenAI API call in the whole system is this image edit.</p>
-</section>
-
-<!-- 9 ENGINE -->
-<section class="slide">
-  <div class="kicker rise">Behind the scenes</div>
-  <h2 class="rise" style="font-size:84px;margin-bottom:24px">The engine</h2>
-  <div class="row" style="gap:44px">
-    <ul class="col rise" style="list-style:none;gap:12px;width:880px">
-      <li><b>Depth floor.</b> Feet stay in the trapezoid; nearer = bigger.</li>
-      <li><b>Spots.</b> Stools, tables, rests, lamps: goTo pins you there.</li>
-      <li><b>Neighbours.</b> Tags, <span class="mono">onMeet</span>, <span class="mono">signal</span> &mdash; they react to each other.</li>
-      <li><b>Hats</b> &middot; <b>moods</b> (sleep, moody) &middot; <b>status</b> + 3-digit PIN.</li>
-      <li><b>Rooms grow.</b> A new room opens at 10 characters.</li>
-      <li><b>Quarantine.</b> A thing that throws goes "resting&hellip;", the show goes on.</li>
-    </ul>
-    <div class="col rise" style="flex:1"><img class="shot" src="slides/room.png" style="width:100%" alt=""><div class="cap">real room, real creatures</div></div>
-  </div>
-</section>
-
-<!-- 10 ARCHITECTURE -->
-<section class="slide">
-  <div class="kicker rise">Behind the scenes</div>
-  <h2 class="rise" style="font-size:84px;margin-bottom:26px">Architecture: one Node process</h2>
-  <div class="row" style="gap:40px;align-items:stretch">
-    <div class="col rise" style="flex:1;gap:18px">
-      <div class="box l" style="font-size:34px"><b>server/</b> plain <span class="mono">http</span><small>REST + SSE, with 2 s polling fallback for tunnels that buffer</small></div>
-      <div class="box">Persistence<small>manifest.json + per-thing folders (thing.js, frames.png, anim.json)</small></div>
-      <div class="box">Phones &rarr; <span class="mono">cloudflared</span> quick tunnel &rarr; localhost:8787<small>projector on localhost</small></div>
-    </div>
-    <div class="col rise" style="flex:1;gap:18px">
-      <div class="box t" style="font-size:34px"><b>Local Codex CLI</b> on a ChatGPT login<small>screening &middot; thing.js &middot; sprite sheets &middot; room mapping via @openai/codex-sdk</small></div>
-      <div class="box">gpt-6.1-sol (low effort) for text + code<br>gpt-6-luna for images</div>
-      <div class="box" style="border-color:#8f7d9c">OpenAI API key: <b>only</b> the room-photo redraw<small>kept out of Codex's environment</small></div>
-    </div>
-  </div>
-  <p class="rise" style="margin-top:34px;font-size:30px;color:var(--dim)">Honest note: the app was written with Claude Code agents. Codex is the runtime engine.</p>
-</section>
-
-<!-- 11 BEST USE OF CODEX -->
+<!-- 8 CODEX RUNTIME -->
 <section class="slide cream">
   <div class="cells" style="right:96px;top:70px;width:300px;height:225px"><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i><i style="border-color:rgba(59,36,20,.18)"></i></div>
-  <div class="kicker rise" style="color:#2f7f70">Best Use of Codex</div>
+  <div class="kicker rise" style="color:#2f7f70">Recap</div>
   <h2 class="rise" style="font-size:118px;margin-bottom:40px">Codex is the runtime</h2>
   <ul class="col rise" style="list-style:none;gap:14px;font-size:44px">
     <li style="font-size:44px"><b>Screens</b> every wish &nbsp;&middot;&nbsp; <b>writes</b> its program</li>
     <li style="font-size:44px"><b>Tests</b> it &nbsp;&middot;&nbsp; <b>fixes</b> its own bugs</li>
     <li style="font-size:44px"><b>Draws</b> the sprite sheet &nbsp;&middot;&nbsp; <b>maps</b> your room</li>
   </ul>
-  <p class="rise" style="font-size:52px;font-weight:900;margin-top:46px;color:var(--ink)">Live, in front of the audience.<br><span style="color:#b5651d">Remove Codex and nothing exists.</span></p>
+  <p class="rise" style="font-size:52px;font-weight:900;margin-top:46px;color:var(--ink)">Live, in front of the audience.</p>
 </section>
 
-<!-- 12 END -->
+<!-- 9 END -->
 <section class="slide" style="padding:0">
   <img src="slides/v10_5.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18" alt="">
   <div style="position:absolute;left:96px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center">

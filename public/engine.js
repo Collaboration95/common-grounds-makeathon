@@ -60,6 +60,7 @@ export function loadImage(url) {
 // ---------------------------------------------------------------------------------------------
 // sprites: crop to the opaque bounding box so "size 1 = 64px tall" is honest and feet touch the ground
 // ---------------------------------------------------------------------------------------------
+const CHAR_SCALE = 1.3 * 1.3; // every character drawn ~1.69x bigger on screen (meetup projector, bumped twice); sprite frames are untouched
 const boxCache = new WeakMap();
 function spriteBox(src) {
   let b = boxCache.get(src);
@@ -678,7 +679,7 @@ export function createWorld({ width = 1600, height = 900, background = null } = 
   const spotById = (id) => sc.spots.find((s) => s.id === id) || null;
 
   function geom(t) {
-    const H0 = t.size === 2 ? 96 : 64;
+    const H0 = (t.size === 2 ? 96 : 64) * CHAR_SCALE;
     const b = t.box;
     const s0 = Math.min(H0 / b.sh, (1.5 * H0) / b.sw);
     const k = dsAt(depthOf(t)) * (fin(t.me.scale) ? t.me.scale : 1);
@@ -1074,8 +1075,11 @@ export function createWorld({ width = 1600, height = 900, background = null } = 
     if (t.leaving) f.flip = m.flip;
     else if (thingRan && m.flip !== t.flipBefore) f.flip = m.flip;
     else if (Math.abs(m.vx) > 8) f.flip = m.vx < 0;
-    const forced = ANIMS.includes(m.anim) ? m.anim : null;
     const moving = speed > 15;
+    // A still pose (sit/idle/sleep) the thing set and forgot to clear must not freeze it while it walks away: that
+    // made pets glide around in their sitting frame. Owner moods (t.petAnim) and seated pets keep the forced pose.
+    const stale = moving && !t.spot && !t.petAnim && ['sit', 'idle', 'sleep'].includes(m.anim);
+    const forced = ANIMS.includes(m.anim) && !stale ? m.anim : null;
     if (moving || t.spot) f.idle = 0; else f.idle += dt;
     const an = A.meta.anims;
     let name;
@@ -1083,7 +1087,7 @@ export function createWorld({ width = 1600, height = 900, background = null } = 
     else if (forced) name = forced;
     else if (t.actionUntil > time && an.action) name = 'action';
     else if (t.zone === 'air' && !t.spot) name = an.fly ? 'fly' : moving ? 'walk' : 'idle';
-    else if (m.z > 4 || Math.abs(m.vz) > 150) name = an.fly ? 'fly' : 'action';
+    else if (m.z > 30 || Math.abs(m.vz) > 150) name = an.fly ? 'fly' : 'action'; // small hops keep the walk cycle; only real jumps switch to the airborne frames
     else if (t.spot) name = 'sit';
     else if (moving) name = 'walk';
     else name = f.idle > 8 ? 'sleep' : 'idle';
