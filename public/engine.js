@@ -1075,8 +1075,11 @@ export function createWorld({ width = 1600, height = 900, background = null } = 
     if (t.leaving) f.flip = m.flip;
     else if (thingRan && m.flip !== t.flipBefore) f.flip = m.flip;
     else if (Math.abs(m.vx) > 8) f.flip = m.vx < 0;
-    const forced = ANIMS.includes(m.anim) ? m.anim : null;
     const moving = speed > 15;
+    // A still pose (sit/idle/sleep) the thing set and forgot to clear must not freeze it while it walks away: that
+    // made pets glide around in their sitting frame. Owner moods (t.petAnim) and seated pets keep the forced pose.
+    const stale = moving && !t.spot && !t.petAnim && ['sit', 'idle', 'sleep'].includes(m.anim);
+    const forced = ANIMS.includes(m.anim) && !stale ? m.anim : null;
     if (moving || t.spot) f.idle = 0; else f.idle += dt;
     const an = A.meta.anims;
     let name;
@@ -1084,7 +1087,7 @@ export function createWorld({ width = 1600, height = 900, background = null } = 
     else if (forced) name = forced;
     else if (t.actionUntil > time && an.action) name = 'action';
     else if (t.zone === 'air' && !t.spot) name = an.fly ? 'fly' : moving ? 'walk' : 'idle';
-    else if (m.z > 4 || Math.abs(m.vz) > 150) name = an.fly ? 'fly' : 'action';
+    else if (m.z > 30 || Math.abs(m.vz) > 150) name = an.fly ? 'fly' : 'action'; // small hops keep the walk cycle; only real jumps switch to the airborne frames
     else if (t.spot) name = 'sit';
     else if (moving) name = 'walk';
     else name = f.idle > 8 ? 'sleep' : 'idle';
