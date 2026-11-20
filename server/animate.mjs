@@ -28,7 +28,7 @@ const env = Object.fromEntries(Object.entries(process.env).filter(([k, v]) => v 
 
 /** The unified action map (template/ACTION_MAP.md) as ONE prompt fragment. */
 export const SHEET_SPEC = `Layout: landscape 1536x1024, a 4-column x 3-row grid of equal cells, NO grid lines, NO text, NO labels, fully TRANSPARENT background, the SAME character drawn identically in every cell (same size, colours, proportions), centred in each cell, side view facing RIGHT.
-Cells 1-4 (row 1): WALK cycle (feet on the cell bottom, legs clearly alternating).
+Cells 1-4 (row 1): WALK cycle, four DIFFERENT poses in order: (1) left foot forward, right foot back, (2) feet passing under the body, body slightly raised, (3) right foot forward, left foot back, (4) feet passing again. Feet on the cell bottom. The legs (or whatever it moves on) must be visibly in a different position in every one of the four cells; no two walk cells may look the same.
 Cells 5-8 (row 2): FLY / hover cycle (character airborne, flapping, floating or bouncing in its own way — wings, propeller, steam, magic, whatever suits it).
 Cell 9: IDLE standing. Cell 10: RESTING, sitting down. Cell 11: SLEEPING curled up, eyes closed. Cell 12: SPECIAL ATTACK — a big signature move with a small effect burst (still the same character).`;
 
