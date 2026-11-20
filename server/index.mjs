@@ -122,8 +122,9 @@ const readRaw = (req, max) => new Promise((resolve, reject) => { // the JSON rea
 async function hostApi(req, res, p, m) {
   if (!hostOk(req)) return json(res, 401, { error: "Wrong or missing host key." });
   if (p === "/api/host/scene" && m === "POST") {
-    if (scene.busy()) return json(res, 429, { error: "Still working on the last photo." });
     let buf; try { buf = await readRaw(req, 3 * 1024 * 1024); } catch (e) { return json(res, e.code || 400, { error: e.code === 413 ? "That photo is too big (3 MB max)." : "Bad upload." }); }
+    const cur = scene.running(); // one photo at a time: read the upload first (an early reply loses its body), then follow the running job
+    if (cur) return json(res, 202, { id: cur.id, step: cur.step, joined: true });
     if (buf.length < 1000 || buf[0] !== 0xff || buf[1] !== 0xd8) return json(res, 400, { error: "Send a JPEG photo." });
     const job = scene.startJob(buf, (l) => console.log(l));
     return json(res, 202, { id: job.id, step: job.step });

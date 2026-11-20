@@ -94,6 +94,8 @@ export const getJob = (id) => {
   } catch { return null; }
 };
 export const busy = () => [...jobs.values()].some((j) => ["redrawing", "mapping"].includes(j.step));
+/** The photo job still in progress, if any (a second upload joins it instead of failing). */
+export const running = () => [...jobs.values()].find((j) => ["redrawing", "mapping"].includes(j.step)) || null;
 
 const run = (cmd, args) => new Promise((res, rej) => execFile(cmd, args, { timeout: 30000 }, (e) => (e ? rej(e) : res())));
 
