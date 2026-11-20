@@ -60,6 +60,7 @@ export function loadImage(url) {
 // ---------------------------------------------------------------------------------------------
 // sprites: crop to the opaque bounding box so "size 1 = 64px tall" is honest and feet touch the ground
 // ---------------------------------------------------------------------------------------------
+const CHAR_SCALE = 1.3; // every character drawn 1.3x bigger on screen (meetup projector); sprite frames are untouched
 const boxCache = new WeakMap();
 function spriteBox(src) {
   let b = boxCache.get(src);
@@ -678,7 +679,7 @@ export function createWorld({ width = 1600, height = 900, background = null } = 
   const spotById = (id) => sc.spots.find((s) => s.id === id) || null;
 
   function geom(t) {
-    const H0 = t.size === 2 ? 96 : 64;
+    const H0 = (t.size === 2 ? 96 : 64) * CHAR_SCALE;
     const b = t.box;
     const s0 = Math.min(H0 / b.sh, (1.5 * H0) / b.sw);
     const k = dsAt(depthOf(t)) * (fin(t.me.scale) ? t.me.scale : 1);
