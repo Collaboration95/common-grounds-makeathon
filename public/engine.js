@@ -60,7 +60,7 @@ export function loadImage(url) {
 // ---------------------------------------------------------------------------------------------
 // sprites: crop to the opaque bounding box so "size 1 = 64px tall" is honest and feet touch the ground
 // ---------------------------------------------------------------------------------------------
-const CHAR_SCALE = 1.3; // every character drawn 1.3x bigger on screen (meetup projector); sprite frames are untouched
+const CHAR_SCALE = 1.3 * 1.3; // every character drawn ~1.69x bigger on screen (meetup projector, bumped twice); sprite frames are untouched
 const boxCache = new WeakMap();
 function spriteBox(src) {
   let b = boxCache.get(src);
