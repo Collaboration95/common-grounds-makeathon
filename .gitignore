@@ -11,3 +11,5 @@ output/*
 output/sprites/*
 !output/sprites/water-cooler-walk/
 !output/sprites/water-cooler-walk.zip
+hack/
+temp-file.env
